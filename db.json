@@ -1,0 +1,13 @@
+{
+    "usuarios": [
+        {
+            "id" : 1,
+            "Nombres" : "Casandra",
+            "Apellidos" : "Calderon",
+            "Correo electronico" : "angie@gmail.com",
+            "RU" : "1234",
+            "Contraseña" : "81dc9bdb52d04dc20036dbd8313ed055"
+    
+        }
+    ] 
+}
