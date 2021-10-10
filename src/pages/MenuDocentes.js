@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-class Menu extends Component {
+class MenuDocentes extends Component {
   cerrarSesion = () => {
     cookies.remove("id", { path: "/" });
     cookies.remove("Nombres", { path: "/" });
@@ -31,7 +31,7 @@ class Menu extends Component {
     console.log("Cargo: " + cookies.get("Cargo"));
     return (
       <div>
-        Menu Principal ADMINISTRADOR
+        Menu Principal DOCENTES
         <br />
         <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
       </div>
@@ -39,4 +39,4 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+export default MenuDocentes;
