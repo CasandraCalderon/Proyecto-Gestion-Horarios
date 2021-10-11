@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
+import Navegador from "./Navegador";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 
 const cookies = new Cookies();
 
@@ -31,7 +34,9 @@ class Menu extends Component {
     console.log("Cargo: " + cookies.get("Cargo"));
     return (
       <div>
-        Menu Principal ADMINISTRADOR
+        <Router>
+          <Navegador />
+        </Router>
         <br />
         <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
       </div>

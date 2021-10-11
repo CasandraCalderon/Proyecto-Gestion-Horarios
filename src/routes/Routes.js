@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "../pages/Login";
-import Menu from "../pages/Menu";
-import MenuDocentes from "../pages/MenuDocentes";
-import MenuEstudiantes from "../pages/MenuEstudiantes";
+import Menu from "../pages/MenuAdministrador/Menu";
+import MenuDocentes from "../pages/MenuDocentes/MenuDocentes";
+import MenuEstudiantes from "../pages/MenuEstudiantes/MenuEstudiantes";
 
 function Routes() {
   return (
