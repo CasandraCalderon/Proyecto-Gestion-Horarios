@@ -1,7 +1,9 @@
+//Menu principal de administrador
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import Navegador from "./Navegador";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { PresentCard } from "../PresentCard";
 
 
 const cookies = new Cookies();
@@ -23,20 +25,16 @@ class Menu extends Component {
       window.location.href = "./";
     }
   }
-
   render() {
-    console.log("id: " + cookies.get("id"));
-    console.log("Nombres: " + cookies.get("Nombres"));
-    console.log("Apellidos: " + cookies.get("Apellidos"));
-    console.log("Correo Electronico: " + cookies.get("Correo Electronico"));
-    console.log("RU: " + cookies.get("RU"));
-    console.log("Usuario: " + cookies.get("Usuario"));
-    console.log("Cargo: " + cookies.get("Cargo"));
     return (
       <div>
         <Router>
           <Navegador />
+          <Switch>
+            <Route path='/Administrador'></Route>
+          </Switch>
         </Router>
+        < PresentCard Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
         <br />
         <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
       </div>

@@ -49,9 +49,9 @@ class Login extends Component {
           cookies.set("Usuario", respuesta.Usuario, { path: "/" });
           cookies.set("Cargo", respuesta.Cargo, { path: "/" });
           alert(`Bienvenido ${respuesta.Nombres} ${respuesta.Apellidos}`);
-          if (respuesta.Cargo === "Administrador") {
+          if (respuesta.Cargo === "ADMINISTRADOR") {
             window.location.href = "./menu";
-          } else if (respuesta.Cargo === "Docente") {
+          } else if (respuesta.Cargo === "DOCENTE") {
             window.location.href = "./menuDocentes";
           } else {
             window.location.href = "./menuEstudiantes";
@@ -68,9 +68,9 @@ class Login extends Component {
 
   componentDidMount() {
     if (cookies.get("Usuario")) {
-      if (cookies.get("Cargo") === "Administrador") {
+      if (cookies.get("Cargo") === "ADMINISTRADOR") {
         window.location.href = "./menu";
-      } else if (cookies.get("Cargo") === "Docente") {
+      } else if (cookies.get("Cargo") === "DOCENTE") {
         window.location.href = "./menuDocentes";
       } else {
         window.location.href = "./menuEstudiantes";

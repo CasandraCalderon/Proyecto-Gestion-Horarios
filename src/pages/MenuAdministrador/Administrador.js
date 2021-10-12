@@ -1,3 +1,4 @@
+//Administrar Usuarios-Administrador
 import React from 'react'
 
 const Administrador = () => {

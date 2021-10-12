@@ -1,76 +1,46 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
 import "./Navegador.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+
 
 const Navegador = () => {
+  const [dropdown, setDropdowm]=useState(false);
+  const abrirCerrarDrop=()=>{
+    setDropdowm(!dropdown);
+  }
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="collapse navbar-collapse">
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link className="nav-link active" to='/'>
-              Inicio
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link dropdown-toggle"
-              to='/'
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Usuarios
-            </Link>
-            <ul
-              className="dropdown-menu"
-            >
-              <li>
-                <Link className="dropdown-item" to='/'>
-                  Administrador
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to='/'>
-                  Docente
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to='/'>
-                  Estudiante
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to='/'>
-              Aulas
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to='/'>
-              Materias
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to='/'>
-              Horarios
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to='/'>
-              Reportes
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to='/'>
-              Cerrar Sesion
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
-};
-export default Navegador;
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav">
+            <Dropdown>
+              <DropdownToggle>Inicio</DropdownToggle>
+            </Dropdown>
+            <Dropdown isOpen={dropdown} toggle={abrirCerrarDrop} >
+              <DropdownToggle caret>Usuarios</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem>Administrador</DropdownItem>
+                <DropdownItem>Docentes</DropdownItem>
+                <DropdownItem>Estudiantes</DropdownItem>
+              </DropdownMenu>
+            </Dropdown><Dropdown>
+              <DropdownToggle>Aulas</DropdownToggle>
+            </Dropdown>
+            <Dropdown>
+              <DropdownToggle>Materias</DropdownToggle>
+            </Dropdown>
+            <Dropdown>
+              <DropdownToggle>Horarios</DropdownToggle>
+            </Dropdown>
+            <Dropdown>
+              <DropdownToggle>Reportes</DropdownToggle>
+            </Dropdown>
+            <Dropdown>
+              <DropdownToggle>Cerrar Sesion</DropdownToggle>
+            </Dropdown>
+          </ul>
+        </div>
+      </nav>
+);
+  }
+  export default Navegador;
