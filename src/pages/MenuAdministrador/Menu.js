@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import Navegador from "./Navegador";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { PresentCard } from "../PresentCard";
 
 
@@ -28,15 +27,9 @@ class Menu extends Component {
   render() {
     return (
       <div>
-        <Router>
-          <Navegador />
-          <Switch>
-            <Route path='/Administrador'></Route>
-          </Switch>
-        </Router>
+          <Navegador cerrarSesion={this.cerrarSesion}/>
         < PresentCard Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
         <br />
-        <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
       </div>
     );
   }

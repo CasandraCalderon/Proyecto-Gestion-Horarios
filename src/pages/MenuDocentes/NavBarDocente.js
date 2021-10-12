@@ -6,7 +6,7 @@ import {
   DropdownToggle,
 } from "reactstrap";
 
-const NavBarDocente = () => {
+const NavBarDocente = (props) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="collapse navbar-collapse">
@@ -21,7 +21,7 @@ const NavBarDocente = () => {
             <DropdownToggle>Disponibilidad</DropdownToggle>
           </Dropdown>
           <Dropdown>
-            <DropdownToggle>Cerrar Sesion</DropdownToggle>
+            <DropdownToggle onClick={() => props.cerrarSesion()}>Cerrar Sesion</DropdownToggle>
           </Dropdown>
         </ul>
       </div>

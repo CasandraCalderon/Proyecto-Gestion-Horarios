@@ -4,22 +4,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 
 
-const Navegador = () => {
+const Navegador = (props) => {
   const [dropdown, setDropdowm]=useState(false);
   const abrirCerrarDrop=()=>{
     setDropdowm(!dropdown);
   }
+  
   return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav">
             <Dropdown>
-              <DropdownToggle>Inicio</DropdownToggle>
+              <DropdownToggle onClick={() => window.location.href = "./menu"}>Inicio</DropdownToggle>
             </Dropdown>
             <Dropdown isOpen={dropdown} toggle={abrirCerrarDrop} >
               <DropdownToggle caret>Usuarios</DropdownToggle>
               <DropdownMenu>
-                <DropdownItem>Administrador</DropdownItem>
+                <DropdownItem >Administrador</DropdownItem>
                 <DropdownItem>Docentes</DropdownItem>
                 <DropdownItem>Estudiantes</DropdownItem>
               </DropdownMenu>
@@ -36,7 +37,7 @@ const Navegador = () => {
               <DropdownToggle>Reportes</DropdownToggle>
             </Dropdown>
             <Dropdown>
-              <DropdownToggle>Cerrar Sesion</DropdownToggle>
+              <DropdownToggle onClick={() => props.cerrarSesion()}>Cerrar Sesion</DropdownToggle>
             </Dropdown>
           </ul>
         </div>

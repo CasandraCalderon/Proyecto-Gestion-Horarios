@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavBarDocente from "./NavBarDocente";
 import { PresentCard } from "../PresentCard";
 
@@ -27,15 +26,9 @@ class MenuDocentes extends Component {
   render() {
     return (
       <div>
-        <Router>
-          <NavBarDocente />
-          <Switch>
-            <Route path='/Administrador'></Route>
-          </Switch>
-        </Router>
+          <NavBarDocente cerrarSesion={this.cerrarSesion}/>
         < PresentCard Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
         <br />
-        <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
       </div>
     );
   }
