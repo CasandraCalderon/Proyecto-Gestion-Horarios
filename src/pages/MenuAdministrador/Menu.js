@@ -27,9 +27,7 @@ class Menu extends Component {
   render() {
     return (
       <div>
-        < Navegador Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
-
-        <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
+        < Navegador Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")} cerrar={this.cerrarSesion} />
         <br />
       </div>
     );

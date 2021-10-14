@@ -5,7 +5,7 @@ import Administrador from "./Administrador";
 import Home from "./Home";
 export default class Navegador extends React.Component {
   render() {
-    let {Nombre, Apellidos, RU, Cargo} = this.props;
+    let {Nombre, Apellidos, RU, Cargo, cerrar} = this.props;
     return (
       <Router>
         <div>
@@ -34,9 +34,9 @@ export default class Navegador extends React.Component {
                 <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
                 <NavLink as={Link} to={"/Horarios"}>Horarios</NavLink>
                 <NavLink as={Link} to={"/Reportes"}>Reportes</NavLink>
-                <NavLink as={Link} to={"/cerrar"}>Cerrar Sesion</NavLink>
               </Nav>
             </Navbar.Collapse>
+            <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
           </Navbar>
         </div>
         <div>
@@ -63,9 +63,6 @@ export default class Navegador extends React.Component {
               <Administrador />
             </Route>
             <Route path="/Reportes">
-              <Administrador />
-            </Route>
-            <Route path="/cerrar">
               <Administrador />
             </Route>
           </Switch>
