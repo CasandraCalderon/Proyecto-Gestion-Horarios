@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import Navegador from "./Navegador";
-import { PresentCard } from "../PresentCard";
+
 
 
 const cookies = new Cookies();
@@ -27,8 +27,9 @@ class Menu extends Component {
   render() {
     return (
       <div>
-          <Navegador cerrarSesion={this.cerrarSesion}/>
-        < PresentCard Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
+        < Navegador Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
+
+        <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
         <br />
       </div>
     );
