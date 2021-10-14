@@ -3,6 +3,9 @@ import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Administrador from "./Administrador";
 import Home from "./Home";
+import IAdminstrador from "./Usuarios/IAdministrador/IAdminstrador";
+import IDocentes from "./Usuarios/IDocente/IDocentes";
+import IEstudiantes from "./Usuarios/IEstudiante/IEstudiantes";
 export default class Navegador extends React.Component {
   render() {
     let {Nombre, Apellidos, RU, Cargo, cerrar} = this.props;
@@ -24,11 +27,11 @@ export default class Navegador extends React.Component {
                   Inicio
                 </NavLink>
                 <NavDropdown title="Usuarios">
-                  <NavDropdown.Item as={Link} to={"/administrador"}>
+                  <NavDropdown.Item as={Link} to={"/Usuarios/Administrador"}>
                     Administradores
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/Docentes"}>Docentes</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/Estudiantes"}>Estudiantes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/Usuarios/Docentes"}>Docentes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/Usuarios/Estudiantes"}>Estudiantes</NavDropdown.Item>
                 </NavDropdown>
                 <NavLink as={Link} to={"/Aulas"}>Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
@@ -44,14 +47,14 @@ export default class Navegador extends React.Component {
             <Route path="/menu">
               <Home Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo}/>
             </Route>
-            <Route path="/administrador">
-              <Administrador />
+            <Route path="/Usuarios/Administrador">
+              <IAdminstrador />
             </Route>
-            <Route path="/Docentes">
-              <Administrador />
+            <Route path="/Usuarios/Docentes">
+              <IDocentes />
             </Route>
-            <Route path="/Estudiantes">
-              <Administrador />
+            <Route path="/Usuarios/Estudiantes">
+              < IEstudiantes />
             </Route>
             <Route path="/Aulas">
               <Administrador />

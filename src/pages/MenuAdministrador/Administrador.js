@@ -4,7 +4,7 @@ import React from 'react'
 const Administrador = () => {
     return (
         <div>
-            <h1>Soy admin</h1>
+            <h1>Aun en proceso</h1>
         </div>
     )
 }
