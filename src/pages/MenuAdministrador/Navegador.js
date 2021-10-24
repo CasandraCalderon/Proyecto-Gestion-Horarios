@@ -3,6 +3,8 @@ import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Administrador from "./Administrador";
 import Home from "./Home";
+import IAulas from "./IAulas/IAulas";
+import IMaterias from "./IMaterias/IMaterias";
 import IAdminstrador from "./Usuarios/IAdministrador/IAdminstrador";
 import IDocentes from "./Usuarios/IDocente/IDocentes";
 import IEstudiantes from "./Usuarios/IEstudiante/IEstudiantes";
@@ -57,10 +59,10 @@ export default class Navegador extends React.Component {
               < IEstudiantes />
             </Route>
             <Route path="/Aulas">
-              <Administrador />
+              <IAulas />
             </Route>
             <Route path="/Materias">
-              <Administrador />
+              <IMaterias />
             </Route>
             <Route path="/Horarios">
               <Administrador />
