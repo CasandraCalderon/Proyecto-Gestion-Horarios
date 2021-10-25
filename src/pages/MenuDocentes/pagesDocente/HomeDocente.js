@@ -1,10 +1,10 @@
 import React from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
-import './Home.css';
-import icon from './icons-users/programador.png';
+import './HomeDocente.css';
+import icon from '../icons-docente/gerente.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser} from "@fortawesome/free-solid-svg-icons";
-const Home = (props) => {
+const HomeDocente = (props) => {
     let {Nombre, Apellidos, RU, Cargo} = props;
     return (
       <div>
@@ -29,4 +29,4 @@ const Home = (props) => {
         
     )
 }
-export default Home;
+export default HomeDocente;

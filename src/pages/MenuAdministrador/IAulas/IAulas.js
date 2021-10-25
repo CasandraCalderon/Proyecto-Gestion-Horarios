@@ -15,23 +15,28 @@ const options = [
   { value: "TERCER PISO", label: "TERCER PISO" },
   { value: "CUARTO PISO", label: "CUARTO PISO" }
 ];
+const op_salas = [
+  { value: "SALA COMUN", label: "SALA COMUN" },
+  { value: "LABORATORIO", label: "LABORATORIO" },
+  { value: "SALA DE COMPUTACION", label: "SALA DE COMPUTACION" }
+];
 class IAulas extends Component {
   //Almacenar estado
   state={
     data:[],
     modalInsertar: false,
     modalEliminar: false,
+    selectedOption: null,
     form:{
       id: '',
       Nombre: '',
-      Piso: null,
+      Piso: '',
       Capacidad: '',
       TipoSala: '',
       tipoModal: ''
     }
   }
 
-    
   peticionGet=()=>{
   axios.get(url).then(response=>{
     this.setState({data: response.data});
@@ -90,12 +95,29 @@ class IAulas extends Component {
       [e.target.name]: e.target.value
     }
   });
+  console.log(this.state.form);
   }
   
   handleChango = selectedOption => {
-    this.setState({ selectedOption });
-    // Option selected: { value: "rojo", label: "rojo" }
-    console.log(`Option selected:`, selectedOption);
+    this.setState({ ...this.state, selectedOption });
+    this.setState({
+      ...this.state, 
+      form:{
+        ...this.state.form, Piso: selectedOption.value
+      }
+    })
+    console.log(this.state.form);
+  };
+
+  optionsSalas = selectedOpSalas => {
+    this.setState({ ...this.state, selectedOpSalas });
+    this.setState({
+      ...this.state, 
+      form:{
+        ...this.state.form, TipoSala: selectedOpSalas.value
+      }
+    })
+    console.log(this.state.form);
   };
 
 
@@ -106,12 +128,13 @@ class IAulas extends Component {
   
     render(){
       const {form}=this.state;
-      const { Piso } = this.state;
+      const { selectedOption } = this.state;
+      const { selectedOpSalas } = this.state;
     return (
       <div>
-      <br /><br />
-    <div className="text-center">
-      <button className="btn btn-success" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Aula</button>
+      <br />
+      <div className="text-left container">
+      <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Materia</button>
     </div>
 
 
@@ -137,7 +160,7 @@ class IAulas extends Component {
             <td className="Seg">{aulas.Capacidad}</td>
             <td className="Seg">{aulas.TipoSala}</td>
             <td>
-                  <button className="btn btn-primary" onClick={()=>{this.seleccionarAula(aulas); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
+                  <button className="btn btn-dark" onClick={()=>{this.seleccionarAula(aulas); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                   {"   "}
                   <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(aulas); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                   </td>
@@ -161,14 +184,14 @@ class IAulas extends Component {
                       <br />
                     
                       <label htmlFor="Piso">Piso</label>
-                      <Select value={form? form.Piso: Piso} onChange={this.handleChango} options={options} />
+                      <Select value={form? form.Piso: selectedOption} onChange={this.handleChango} options={options} />
                       
                       <br />
                       <label htmlFor="Capacidad">Capacidad de alumnos</label>
                         <input className="form-control" type="number" name="Capacidad" id="Capacidad" onChange={this.handleChange} value={form? form.Capacidad: ''}/>
                         <br />
                         <label htmlFor="TipoSala">Sala</label>
-                        <input className="form-control" type="text" name="TipoSala" id="Sala" onChange={this.handleChange} value={form? form.TipoSala: ''}/>
+                        <Select value={form? form.TipoSala: selectedOpSalas} onChange={this.optionsSalas} options={op_salas} />
                         <br />
                     </div>
                   </ModalBody>

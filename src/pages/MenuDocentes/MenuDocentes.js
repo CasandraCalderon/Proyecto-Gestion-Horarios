@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import NavBarDocente from "./NavBarDocente";
-import { PresentCard } from "../PresentCard";
+import HomeDocente from "./pagesDocente/HomeDocente";
+
 
 const cookies = new Cookies();
 
@@ -26,8 +27,7 @@ class MenuDocentes extends Component {
   render() {
     return (
       <div>
-          <NavBarDocente cerrarSesion={this.cerrarSesion}/>
-        < PresentCard Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
+          <NavBarDocente Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")} cerrar={this.cerrarSesion}/>
         <br />
       </div>
     );

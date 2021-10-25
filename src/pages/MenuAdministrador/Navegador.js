@@ -5,6 +5,7 @@ import Administrador from "./Administrador";
 import Home from "./Home";
 import IAulas from "./IAulas/IAulas";
 import IMaterias from "./IMaterias/IMaterias";
+import Inicio from "./Inicio";
 import IAdminstrador from "./Usuarios/IAdministrador/IAdminstrador";
 import IDocentes from "./Usuarios/IDocente/IDocentes";
 import IEstudiantes from "./Usuarios/IEstudiante/IEstudiantes";
@@ -25,7 +26,7 @@ export default class Navegador extends React.Component {
             <Navbar.Toggle />
             <Navbar.Collapse>
               <Nav>
-                <NavLink as={Link} to={"/menu"}>
+                <NavLink as={Link} to={"/Inicio"}>
                   Inicio
                 </NavLink>
                 <NavDropdown title="Usuarios">
@@ -44,10 +45,11 @@ export default class Navegador extends React.Component {
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
           </Navbar>
         </div>
+        <Home Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo}/>
         <div>
           <Switch>
             <Route path="/menu">
-              <Home Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo}/>
+              <Inicio />
             </Route>
             <Route path="/Usuarios/Administrador">
               <IAdminstrador />

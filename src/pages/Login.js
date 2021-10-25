@@ -52,7 +52,7 @@ class Login extends Component {
           if (respuesta.Cargo === "ADMINISTRADOR") {
             window.location.href = "./menu";
           } else if (respuesta.Cargo === "DOCENTE") {
-            window.location.href = "./menuDocentes";
+            window.location.href = "./MenuDocentes";
           } else {
             window.location.href = "./menuEstudiantes";
           }
@@ -71,7 +71,7 @@ class Login extends Component {
       if (cookies.get("Cargo") === "ADMINISTRADOR") {
         window.location.href = "./menu";
       } else if (cookies.get("Cargo") === "DOCENTE") {
-        window.location.href = "./menuDocentes";
+        window.location.href = "./MenuDocentes";
       } else {
         window.location.href = "./menuEstudiantes";
       }

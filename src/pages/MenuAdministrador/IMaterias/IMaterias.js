@@ -8,17 +8,18 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Select from "react-select";
 
 const url = "http://localhost:3003/Materias";
-const semestre = [
+const opSemestre = [
   { value: "PRIMERO", label: "PRIMERO" },
   { value: "SEGUNDO", label: "SEGUNDO" },
   { value: "TERCERO", label: "TERCERO" },
   { value: "CUARTO", label: "CUARTO" },
   { value: "QUINTO", label: "QUINTO" }
 ];
-const tipoAula = [
-    { value: "Laboratorio", label: "Laboratorio" },
-    { value: "Comun", label: "Comun" }
-  ];
+const opAula = [
+  { value: "SALA NORMAL", label: "SALA NORMAL" },
+  { value: "LABORATORIO", label: "LABORATORIO" },
+  { value: "SALA DE COMPUTACION", label: "SALA DE COMPUTACION" }
+];
 class IMaterias extends Component {
   //Almacenar estado
   state={
@@ -90,26 +91,40 @@ class IMaterias extends Component {
     })
   }
   
-  handleChango = Semestre => {
-    return this.setState({ Semestre });
-    // Option selected: { value: "rojo", label: "rojo" }
-  };
-
-  handleChanga = TipoAula => {
-    return this.setState({ TipoAula });
-    // Option selected: { value: "rojo", label: "rojo" }
-  };
 
   handleChange=async e=>{
   e.persist();
   await 
   this.setState({
     form:{
-      ...this.state.form, Semestre: this.handleChango(), TipoAula: this.handleChanga(),
+      ...this.state.form,
       [e.target.name]: e.target.value
     }
   });
+  console.log(this.state.form);
   }
+
+  OpSemestre = selectSemestre => {
+    this.setState({ ...this.state, selectSemestre });
+    this.setState({
+      ...this.state, 
+      form:{
+        ...this.state.form, Semestre: selectSemestre.value
+      }
+    })
+    console.log(this.state.form);
+  };
+
+  OpAula = selectAula => {
+    this.setState({ ...this.state, selectAula });
+    this.setState({
+      ...this.state, 
+      form:{
+        ...this.state.form, TipoAula: selectAula.value
+      }
+    })
+    console.log(this.state.form);
+  };
   
     componentDidMount() {
       this.peticionGet();
@@ -118,16 +133,14 @@ class IMaterias extends Component {
   
     render(){
       const {form}=this.state;
-      const { TipoAula } = this.state;
-      const { Semestre } = this.state;
+      const { selectSemestre } = this.state;
+      const { selectAula } = this.state;
     return (
       <div>
-      <br /><br />
-    <div className="text-center">
-      <button className="btn btn-success" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Materia</button>
+      <br />
+    <div className="text-left container">
+      <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Materia</button>
     </div>
-
-
     <br />
       <table className="table table-fixed text-center container">
         <thead className="row">
@@ -154,7 +167,7 @@ class IMaterias extends Component {
             <td className="Segundo">{materias.CantGrupos}</td>
             <td className="Segundo">{materias.CantHSemanas}</td>
             <td>
-                  <button className="btn btn-primary" onClick={()=>{this.seleccionarMateria(materias); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
+                  <button className="btn btn-dark" onClick={()=>{this.seleccionarMateria(materias); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                   {"   "}
                   <button className="btn btn-danger" onClick={()=>{this.seleccionarMateria(materias); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                   </td>
@@ -180,10 +193,10 @@ class IMaterias extends Component {
                       <input className="form-control" type="text" name="Sigla" id="Sigla" onChange={this.handleChange} value={form?form.Sigla: ''}/>
                       <br />
                       <label htmlFor="Semestre">Semestre</label>
-                      <Select value={form? form.Semestre: Semestre} onChange={this.handleChango} options={semestre} />
+                      <Select value={form? form.Semestre: selectSemestre} onChange={this.OpSemestre} options={opSemestre} />
                       <br />
                       <label htmlFor="TipoAula">Tipo de Aula</label>
-                      <Select value={form? TipoAula: TipoAula} onChange={this.handleChanga} options={tipoAula} />
+                      <Select value={form? form.TipoAula: selectAula} onChange={this.OpAula} options={opAula} />
                       <br />
                       <label htmlFor="CantGrupos">Cantidad de grupos</label>
                         <input className="form-control" type="number" name="CantGrupos" id="CantGrupos" onChange={this.handleChange} value={form? form.CantGrupos: ''}/>
