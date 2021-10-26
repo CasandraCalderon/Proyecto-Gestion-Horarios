@@ -34,7 +34,7 @@ export default class Navegador extends React.Component {
                     Administradores
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={"/Usuarios/Docentes"}>Docentes</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/Usuarios/Estudiantes"}>Estudiantes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/Usuarios/IEstudiantes"}>Estudiantes</NavDropdown.Item>
                 </NavDropdown>
                 <NavLink as={Link} to={"/Aulas"}>Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
@@ -57,7 +57,7 @@ export default class Navegador extends React.Component {
             <Route path="/Usuarios/Docentes">
               <IDocentes />
             </Route>
-            <Route path="/Usuarios/Estudiantes">
+            <Route path="/Usuarios/IEstudiantes">
               < IEstudiantes />
             </Route>
             <Route path="/Aulas">
