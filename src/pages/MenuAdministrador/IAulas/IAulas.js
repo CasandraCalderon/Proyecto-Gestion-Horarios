@@ -39,7 +39,7 @@ class IAulas extends Component {
 
   peticionGet=()=>{
   axios.get(url).then(response=>{
-    this.setState({data: response.data});
+    this.setState({...this.state, data: response.data});
   }).catch(error=>{
     console.log(error.message);
   })
@@ -65,7 +65,7 @@ class IAulas extends Component {
   
   peticionDelete=()=>{
     axios.delete(`${url}/${this.state.form.id}`).then(response=>{
-      this.setState({modalEliminar: false});
+      this.setState({...this.state, modalEliminar: false});
       this.peticionGet();
     })
   }
@@ -76,6 +76,7 @@ class IAulas extends Component {
   
   seleccionarAula=(aulas)=>{
     this.setState({
+      ...this.state, 
       tipoModal: 'actualizar',
       form: {
         id: aulas.id,
@@ -90,6 +91,7 @@ class IAulas extends Component {
   handleChange=async e=>{
   e.persist();
   await this.setState({
+    ...this.state, 
     form:{
       ...this.state.form,
       [e.target.name]: e.target.value
@@ -99,7 +101,7 @@ class IAulas extends Component {
   }
   
   handleChango = selectedOption => {
-    this.setState({ ...this.state, selectedOption });
+    //this.setState({ ...this.state, selectedOption });
     this.setState({
       ...this.state, 
       form:{
@@ -110,7 +112,7 @@ class IAulas extends Component {
   };
 
   optionsSalas = selectedOpSalas => {
-    this.setState({ ...this.state, selectedOpSalas });
+    //this.setState({ ...this.state, selectedOpSalas });
     this.setState({
       ...this.state, 
       form:{

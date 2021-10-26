@@ -25,7 +25,7 @@ export default class Navegador extends React.Component {
             <Navbar.Brand>Logo</Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-              <Nav>
+              <Nav >
                 <NavLink as={Link} to={"/Inicio"}>
                   Inicio
                 </NavLink>
