@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-
+import './IAdministrador.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -124,18 +123,20 @@ console.log(this.state.form);
   render(){
     const {form}=this.state;
   return (
-    <div className="App">
-    <br /><br /><br />
-  <button className="btn btn-success" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Administrador</button>
-  <br /><br />
-    <table className="table ">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombres</th>
-          <th>Correo Electronico</th>
-          <th>RU</th>
-          <th>Acciones</th>
+    <div>
+    <div className="text-left container">
+        <br />
+      <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Administrador</button>
+      </div>
+      <br />
+    <table className="table table-fixed text-center container">
+      <thead className="row">
+        <tr className="P">
+          <th className="S">ID</th>
+          <th className="S">Nombres</th>
+          <th className="S">Correo Electronico</th>
+          <th className="S">RU</th>
+          <th className="S">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -143,13 +144,13 @@ console.log(this.state.form);
             
           if( usuario.Cargo==="ADMINISTRADOR"){
             return(
-                <tr key={usuario.id}>
-                    <td>{usuario.id}</td>
-                    <td>{usuario.Nombres} {usuario.Apellidos}</td>
-                    <td>{usuario.CorreoElectronico}</td>
-                    <td>{usuario.RU}</td>
-                    <td>
-                <button className="btn btn-primary" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
+                <tr key={usuario.id} className="P">
+                    <td className="S">{usuario.id}</td>
+                    <td className="S">{usuario.Nombres} {usuario.Apellidos}</td>
+                    <td className="S">{usuario.CorreoElectronico}</td>
+                    <td className="S">{usuario.RU}</td>
+                    <td className="S">
+                <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                 {"   "}
                 <button className="btn btn-danger" onClick={()=>{this.seleccionarUsuario(usuario); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                 </td>
@@ -197,10 +198,10 @@ console.log(this.state.form);
                 </ModalBody>
 
                 <ModalFooter>
-                  {this.state.tipoModal=='insertar'?
-                    <button className="btn btn-success" onClick={()=>this.peticionPost()}>
+                  {this.state.tipoModal==='insertar'?
+                    <button className="btn btn-dark" onClick={()=>this.peticionPost()}>
                     Insertar
-                  </button>: <button className="btn btn-primary" onClick={()=>this.peticionPut()}>
+                  </button>: <button className="btn btn-success" onClick={()=>this.peticionPut()}>
                     Actualizar
                   </button>
   }
@@ -219,6 +220,7 @@ console.log(this.state.form);
             </ModalFooter>
           </Modal>
   </div>
+  
 
 
 
