@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
-import { PresentCard } from "../PresentCard";
+
 
 const cookies = new Cookies();
 
@@ -25,7 +25,7 @@ class MenuEstudiantes extends Component {
   render() {
     return (
       <div>
-        < PresentCard Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
+        
         <br />
         <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
       </div>
