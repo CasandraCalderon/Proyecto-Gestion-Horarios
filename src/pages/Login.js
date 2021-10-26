@@ -53,7 +53,7 @@ class Login extends Component {
             window.location.href = "./menu";
           } else if (respuesta.Cargo === "DOCENTE") {
             window.location.href = "./MenuDocentes";
-          } else {
+          } else if(respuesta.Cargo === "ESTUDIANTE") {
             window.location.href = "./menuEstudiantes";
           }
         } else {
