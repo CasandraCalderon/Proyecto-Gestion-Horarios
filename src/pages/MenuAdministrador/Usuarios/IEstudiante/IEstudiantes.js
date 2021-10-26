@@ -219,7 +219,7 @@ console.log(this.state.form);
 
           <Modal isOpen={this.state.modalEliminar}>
             <ModalBody>
-               Estás seguro que deseas eliminar al estudiante {form && form.Nombres}
+               Estás seguro que deseas eliminar al estudiante.? {form && form.Nombres}
             </ModalBody>
             <ModalFooter>
               <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
