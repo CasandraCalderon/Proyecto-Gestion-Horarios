@@ -1,14 +1,14 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Administrador from "./Administrador";
-import Home from "./Home";
-import IAulas from "./IAulas/IAulas";
-import IMaterias from "./IMaterias/IMaterias";
-import Inicio from "./Inicio";
-import IAdminstrador from "./Usuarios/IAdministrador/IAdminstrador";
-import IDocentes from "./Usuarios/IDocente/IDocentes";
-import IEstudiantes from "./Usuarios/IEstudiante/IEstudiantes";
+import Administrador from "../Administrador";
+import PresentCard from "../PresentCard/PresentCard";
+import IAulas from "../pagesAdministrador/IAulas/IAulas";
+import IMaterias from "../pagesAdministrador/IMaterias/IMaterias";
+import Inicio from "../pagesAdministrador/Inicio/Inicio";
+import IAdminstrador from "../pagesAdministrador/Usuarios/IAdministrador/IAdminstrador";
+import IDocentes from "../pagesAdministrador/Usuarios/IDocente/IDocentes";
+import IEstudiantes from "../pagesAdministrador/Usuarios/IEstudiante/IEstudiantes";
 export default class Navegador extends React.Component {
   render() {
     let {Nombre, Apellidos, RU, Cargo, cerrar} = this.props;
@@ -45,7 +45,7 @@ export default class Navegador extends React.Component {
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
           </Navbar>
         </div>
-        <Home Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo}/>
+        <PresentCard Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo}/>
         <div>
           <Switch>
             <Route path="/menu">

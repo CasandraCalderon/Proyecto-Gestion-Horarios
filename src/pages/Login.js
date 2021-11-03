@@ -72,8 +72,10 @@ class Login extends Component {
         window.location.href = "./menu";
       } else if (cookies.get("Cargo") === "DOCENTE") {
         window.location.href = "./MenuDocentes";
-      } else {
+      } else if (cookies.get("Cargo") === "ESTUDIANTE"){
         window.location.href = "./menuEstudiantes";
+      } else {
+        alert ("Usuario no encontrado");
       }
     }
   }

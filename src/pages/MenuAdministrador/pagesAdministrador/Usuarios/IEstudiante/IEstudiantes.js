@@ -123,40 +123,39 @@ console.log(this.state.form);
   render(){
     const {form}=this.state;
   return (
-    <div className="App">
-    <br /><br /><br />
-  <button className="btn btn-success" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Estudiante</button>
-  <br /><br />
-    <table className="table ">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombres</th>
-          <th>Apellidos</th>
-          <th>CI</th>
-          <th>CorreoElectronico</th>
-          <th>RU</th>
-          <th>Cargo</th>
-          <th>Usuario</th>
-          <th>Contraseña</th>
+    <div>
+    <div className="text-left container">
+    <br />
+  <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Estudiante</button>
+  </div>
+  <br />
+    <table className="table table-fixed text-center container">
+      <thead className="row">
+        <tr className="Primera">
+          <th className="Segunda">ID</th>
+          <th className="Segunda">Nombres</th>
+          <th className="Segunda">Apellidos</th>
+          <th className="Segunda">CI</th>
+          <th className="Segunda">CorreoElectronico</th>
+          <th className="Segunda">RU</th>
+          <th className="Segunda">Usuario</th>
+          <th className="Segunda">Acciones</th>
         </tr>
       </thead>
       <tbody>
         {this.state.data.filter(Estudiante => Estudiante.Cargo ==="ESTUDIANTE").map(Estudiante=> {
           return(
-            <tr>
-          <td>{Estudiante.id}</td>
-          <td>{Estudiante.Nombres}</td>
-          <td>{Estudiante.Apellidos}</td>
-          <td>{Estudiante.CI}</td>
-          <td>{Estudiante.CorreoElectronico}</td>
-          <td>{Estudiante.RU}</td>
-          <td>{Estudiante.Cargo}</td>
-          <td>{Estudiante.Usuario}</td>
-          <td>{Estudiante.Contraseña}</td>
+            <tr key={Estudiante.id} className="Primera">
+          <td className="Segunda">{Estudiante.id}</td>
+          <td className="Segunda">{Estudiante.Nombres}</td>
+          <td className="Segunda">{Estudiante.Apellidos}</td>
+          <td className="Segunda">{Estudiante.CI}</td>
+          <td className="Segunda">{Estudiante.CorreoElectronico}</td>
+          <td className="Segunda">{Estudiante.RU}</td>
+          <td className="Segunda">{Estudiante.Usuario}</td>
           
-          <td>
-                <button className="btn btn-primary" onClick={()=>{this.seleccionarEstudiante(Estudiante); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
+          <td className="Segunda">
+                <button className="btn btn-dark" onClick={()=>{this.seleccionarEstudiante(Estudiante); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                 {"   "}
                 <button className="btn btn-danger" onClick={()=>{this.seleccionarEstudiante(Estudiante); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                 </td>
@@ -205,10 +204,10 @@ console.log(this.state.form);
                 </ModalBody>
 
                 <ModalFooter>
-                  {this.state.tipoModal=='insertar'?
-                    <button className="btn btn-success" onClick={()=>this.peticionPost()}>
+                  {this.state.tipoModal==='insertar'?
+                    <button className="btn btn-dark" onClick={()=>this.peticionPost()}>
                     Insertar
-                  </button>: <button className="btn btn-primary" onClick={()=>this.peticionPut()}>
+                  </button>: <button className="btn btn-success" onClick={()=>this.peticionPut()}>
                     Actualizar
                   </button>
   }
