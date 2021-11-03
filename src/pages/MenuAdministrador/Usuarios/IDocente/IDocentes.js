@@ -38,7 +38,8 @@ axios.get(url).then(response=>{
   console.log(error.message);
 })
 }
-//funcion de insertar o crear nuevo docente
+//funcion
+// de insertar o crear nuevo docente
 peticionPost=async()=>{
   delete this.state.form.id;
  await axios.post(url,
@@ -94,7 +95,7 @@ modalInsertar=()=>{
   this.setState({modalInsertar: !this.state.modalInsertar});
 }
 
-//seleccionar al user que se esta actualizando
+//select al user que se esta actualizando
 seleccionarUsuario=(usuario)=>{
   this.setState({
     tipoModal: 'actualizar',
