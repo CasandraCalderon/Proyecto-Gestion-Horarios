@@ -9,7 +9,7 @@ const HomeDocente = (props) => {
     return (
       <div>
         <br /><br />
-          <div className="card col-md-6 offset-md-3 text-white bg-dark mb-3" id= 'card'>
+          <div className="card col-md-6 offset-md-3 text-white bg-dark mb-4" id= 'card'>
             <div className="row no-gutters">
               <div className="col-md-4">
                 <img src={icon} className="card-img" alt="..."/>
