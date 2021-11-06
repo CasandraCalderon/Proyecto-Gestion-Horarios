@@ -11,17 +11,21 @@ const Disponibilidad = () => {
     const [Tercero, setTercero] = useState([{name: "3Lunes", value: false}, {name: "3Martes", value: false}, {name: "3Miercoles", value: false}, {name: "3Jueves", value: false}, {name: "3Viernes", value: false}, {name: "3Sabado", value: false}]);
     const [Cuarto, setCuarto] = useState([{name: "4Lunes", value: false}, {name: "4Martes", value: false}, {name: "4Miercoles", value: false}, {name: "4Jueves", value: false}, {name: "4Viernes", value: false}, {name: "4Sabado", value: false}]);
     const [Quinto, setQuinto] = useState([{name: "5Lunes", value: false}, {name: "5Martes", value: false}, {name: "5Miercoles", value: false}, {name: "5Jueves", value: false}, {name: "5Viernes", value: false}, {name: "5Sabado", value: false}]);
-    const [data, setData] = useState({Docente: 'Ramos', Disponibilidad: ['1Lunes', '3Lunes']});
+    const [data, setData] = useState({Docente: '', Disponibilidad: []});
 
     const [insertar, setInsertar] = useState(false);
 
     const peticionGet=async()=>{
         await axios.get(url).then(response=>{
             setData(response.data)
+            Filtro();
         })
     }
-
     
+    const Filtro = () => {
+        const {Disponibilidad} = data;
+        console.log(Disponibilidad);
+    }
 
 
 	const modalAbrir = () => {
@@ -36,6 +40,7 @@ const Disponibilidad = () => {
 
     const {Disponibilidad} = data;
     console.log(Disponibilidad);
+    
 
 	return (
         <>

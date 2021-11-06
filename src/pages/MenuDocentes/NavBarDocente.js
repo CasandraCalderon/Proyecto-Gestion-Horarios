@@ -1,8 +1,8 @@
 import React from "react";
 import { Nav, Navbar, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PresentCard from "../PresentCard/PresentCard";
 import Disponibilidad from "./pagesDocente/Disponibilidad/Disponibilidad";
-import HomeDocente from "./pagesDocente/HomeDocente";
 import InicioDocente from "./pagesDocente/InicioDocente";
 import verHorarios from "./pagesDocente/VerHorarios/verHorarios";
 
@@ -10,7 +10,7 @@ import verHorarios from "./pagesDocente/VerHorarios/verHorarios";
 
 export default class NavBarDocente extends React.Component {
   render() {
-    let {Nombre, Apellidos, RU, Cargo, cerrar} = this.props;
+    let {cerrar} = this.props;
     return (
       <>
       <Router>
@@ -36,7 +36,7 @@ export default class NavBarDocente extends React.Component {
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
           </Navbar>
         </div>
-        <HomeDocente Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo} />
+        <PresentCard />
         <div>
           <Switch>
             <Route path="/InicioDocente">

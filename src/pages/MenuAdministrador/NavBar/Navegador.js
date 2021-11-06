@@ -1,8 +1,8 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PresentCard from "../../PresentCard/PresentCard";
 import Administrador from "../Administrador";
-import PresentCard from "../PresentCard/PresentCard";
 import IAulas from "../pagesAdministrador/IAulas/IAulas";
 import IMaterias from "../pagesAdministrador/IMaterias/IMaterias";
 import Inicio from "../pagesAdministrador/Inicio/Inicio";
@@ -11,7 +11,7 @@ import IDocentes from "../pagesAdministrador/Usuarios/IDocente/IDocentes";
 import IEstudiantes from "../pagesAdministrador/Usuarios/IEstudiante/IEstudiantes";
 export default class Navegador extends React.Component {
   render() {
-    let {Nombre, Apellidos, RU, Cargo, cerrar} = this.props;
+    let {cerrar} = this.props;
     return (
       <Router>
         <div>
@@ -45,7 +45,7 @@ export default class Navegador extends React.Component {
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
           </Navbar>
         </div>
-        <PresentCard Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo}/>
+        <PresentCard />
         <div>
           <Switch>
             <Route path="/menu">

@@ -9,15 +9,11 @@ class MenuEstudiantes extends Component {
     cookies.remove("id", { path: "/" });
     cookies.remove("Nombres", { path: "/" });
     cookies.remove("Apellidos", { path: "/" });
-    cookies.remove("Correo Electronico", { path: "/" });
-    cookies.remove("RU", { path: "/" });
-    cookies.remove("Usuario", { path: "/" });
-    cookies.remove("Cargo", { path: "/" });
     window.location.href = "./";
   };
 
   componentDidMount() {
-    if (!cookies.get("Usuario")) {
+    if (!cookies.get("id")) {
       window.location.href = "./";
     }
   }
