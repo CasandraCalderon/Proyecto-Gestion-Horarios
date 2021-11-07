@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import "../css/Login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import md5 from "md5";
+//import md5 from "md5";
 import Cookies from "universal-cookie";
 
-const baseUrl = "http://localhost:3001/usuarios";
-const baseDocentes = "http://localhost:3002/docentes"
-const baseEstudiantes = "http://localhost:3006/estudiantes"
+const baseAdministradores = "http://localhost:8000/api/admin";
+const baseDocentes = "http://localhost:8000/api/docente"
+const baseEstudiantes = "http://localhost:8000/api/estudiante"
 const cookies = new Cookies();
 
 class Login extends Component {
@@ -29,10 +29,10 @@ class Login extends Component {
 
   iniciarSesion = async () => {
     await Promise.all([axios
-      .get(baseUrl, {
+      .get(baseAdministradores, {
         params: {
           Usuario: this.state.form.username,
-          Contraseña: md5(this.state.form.password),
+          Contraseña: this.state.form.password,
         },
       })
       .then((response) => {
@@ -41,13 +41,16 @@ class Login extends Component {
       .then((response) => {
         if (response.length > 0) {
           var respuesta = response[0];
-          cookies.set("id", respuesta.id, { path: "/" });
-          cookies.set("Nombres", respuesta.Nombres, { path: "/" });
-          cookies.set("Apellidos", respuesta.Apellidos, { path: "/" });
+          cookies.set("_id", respuesta._id, { path: "/" });
+          cookies.set("Nombre", respuesta.Nombre, { path: "/" });
+          cookies.set("Ap_Paterno", respuesta.Ap_Paterno, { path: "/" });
+          cookies.set("Ap_Materno", respuesta.Ap_Materno, { path: "/" });
           cookies.set("RU", respuesta.RU, { path: "/" });
           cookies.set("Cargo", respuesta.Cargo, { path: "/" });
-          alert(`Bienvenido ${cookies.get("Nombres")} ${cookies.get("Apellidos")}`);
-          window.location.href = "./menu";
+          if(respuesta.Cargo === "ADMINISTRADOR") {
+            alert(`Bienvenido ${respuesta.Nombre} ${respuesta.Ap_Paterno} ${respuesta.Cargo}`);
+            window.location.href = "./menu";
+          }
         }
       })
       .catch((error) => {
@@ -56,7 +59,7 @@ class Login extends Component {
       .get(baseDocentes, {
         params: {
           Usuario: this.state.form.username,
-          Contraseña: md5(this.state.form.password),
+          Contraseña: this.state.form.password,
         },
       })
       .then((response) => {
@@ -65,13 +68,15 @@ class Login extends Component {
       .then((response) => {
         if (response.length > 0) {
           var respuesta = response[0];
-          cookies.set("id", respuesta.id, { path: "/" });
+          cookies.set("_id", respuesta._id, { path: "/" });
           cookies.set("Nombres", respuesta.Nombres, { path: "/" });
           cookies.set("Apellidos", respuesta.Apellidos, { path: "/" });
           cookies.set("RU", respuesta.RU, { path: "/" });
           cookies.set("Cargo", respuesta.Cargo, { path: "/" });
-          alert(`Bienvenido ${cookies.get("Nombres")} ${cookies.get("Apellidos")}`);
-          window.location.href = "./MenuDocentes";
+          if(respuesta.Cargo === "DOCENTE") {
+            alert(`Bienvenido ${respuesta.Nombre} ${respuesta.Ap_Paterno} ${respuesta.Cargo}`);
+            window.location.href = "./menu";
+          }
         }
       })
       .catch((error) => {
@@ -80,7 +85,7 @@ class Login extends Component {
       .get(baseEstudiantes, {
         params: {
           Usuario: this.state.form.username,
-          Contraseña: md5(this.state.form.password),
+          Contraseña: this.state.form.password,
         },
       })
       .then((response) => {
@@ -89,19 +94,22 @@ class Login extends Component {
       .then((response) => {
         if (response.length > 0) {
           var respuesta = response[0];
-          cookies.set("id", respuesta.id, { path: "/" });
+          cookies.set("_id", respuesta._id, { path: "/" });
           cookies.set("Nombres", respuesta.Nombres, { path: "/" });
           cookies.set("Apellidos", respuesta.Apellidos, { path: "/" });
           cookies.set("RU", respuesta.RU, { path: "/" });
           cookies.set("Cargo", respuesta.Cargo, { path: "/" });
-          alert(`Bienvenido ${cookies.get("Nombres")} ${cookies.get("Apellidos")}`);
-          window.location.href = "./MenuEstudiantes";
+          if(respuesta.Cargo === "ESTUDIANTE") {
+            alert(`Bienvenido ${respuesta.Nombre} ${respuesta.Ap_Paterno} ${respuesta.Cargo}`);
+            window.location.href = "./MenuEstudiantes";
+          }
         }
       })
       .catch((error) => {
         console.log(error);
       })]);
   };
+
 
 
   render() {

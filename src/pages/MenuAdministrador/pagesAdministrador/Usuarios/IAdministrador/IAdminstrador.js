@@ -7,7 +7,7 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import md5 from 'md5';
 
-const url="http://localhost:3001/usuarios";
+const url="http://localhost:8000/api/admin";
 
 class IAdminstrador extends Component {
 state={
@@ -15,11 +15,12 @@ state={
   modalInsertar: false,
   modalEliminar: false,
   form:{
-    id: "",
-    Nombress: "",
-    Apellidos: "",
+    _id: "",
+    Nombre: "",
+    Ap_Paterno: "",
+    Ap_Materno: "",
     CI: "",
-    CorreoElectronico: "",
+    Email: "",
     RU: "",
     Cargo: "",
     Usuario: "",
@@ -36,18 +37,19 @@ axios.get(url).then(response=>{
 }
 
 peticionPost=async()=>{
-    delete this.state.form.id;
-   await axios.post(url,
+    delete this.state.form._id;
+   await axios.post(`${url}/create`,
     {
-      id: this.state.form.id,
-      Nombres: this.state.form.Nombres,
-      Apellidos: this.state.form.Apellidos,
+      _id: this.state.form._id,
+      Nombre: this.state.form.Nombre,
+      Ap_Paterno: this.state.form.Ap_Paterno,
+      Ap_Materno: this.state.form.Ap_Materno,
       CI: this.state.form.CI,
-      CorreoElectronico: this.state.form.CorreoElectronico,
+      Email: this.state.form.Email,
       RU: this.state.form.RU,
       Cargo: this.state.form.Cargo,
       Usuario: this.state.form.Usuario,
-      Contraseña: md5(this.state.form.Contraseña)
+      Contraseña: this.state.form.Contraseña
     }
     ).then(response=>{
       this.modalInsertar();
@@ -58,17 +60,18 @@ peticionPost=async()=>{
   }
 
 peticionPut=()=>{
-    axios.put(`${url}/${this.state.form.id}`, 
+    axios.put(`${url}/edit/${this.state.form._id}`, 
     {
-        id: this.state.form.id,
-        Nombres: this.state.form.Nombres,
-        Apellidos: this.state.form.Apellidos,
+        id: this.state.form._id,
+        Nombre: this.state.form.Nombre,
+        Ap_Paterno: this.state.form.Ap_Paterno,
+        Ap_Materno: this.state.form.Ap_Materno,
         CI: this.state.form.CI,
-        CorreoElectronico: this.state.form.CorreoElectronico,
+        Email: this.state.form.Email,
         RU: this.state.form.RU,
         Cargo: this.state.form.Cargo,
         Usuario: this.state.form.Usuario,
-        Contraseña: md5(this.state.form.Contraseña)
+        Contraseña: this.state.form.Contraseña
     }
     ).then(response=>{
         this.modalInsertar();
@@ -77,7 +80,7 @@ peticionPut=()=>{
   }
   
   peticionDelete=()=>{
-    axios.delete(`${url}/${this.state.form.id}`).then(response=>{
+    axios.delete(`${url}/delete/${this.state.form._id}`).then(response=>{
       this.setState({modalEliminar: false});
       this.peticionGet();
     })
@@ -91,11 +94,12 @@ seleccionarUsuario=(usuario)=>{
   this.setState({
     tipoModal: 'actualizar',
     form: {
-      id: usuario.id,
-      Nombres: usuario.Nombres,
-      Apellidos: usuario.Apellidos,
+      _id: usuario._id,
+      Nombre: usuario.Nombre,
+      Ap_Paterno: usuario.Ap_Paterno,
+      Ap_Materno: usuario.Ap_Materno,
       CI: usuario.CI,
-      CorreoElectronico: usuario.CorreoElectronico,
+      Email: usuario.Email,
       RU: usuario.RU,
       Cargo:usuario.Cargo,
       Usuario: usuario.Usuario,
@@ -131,9 +135,10 @@ console.log(this.state.form);
       <br />
     <table className="table table-fixed text-center container">
       <thead className="row">
-        <tr className="P">
-          <th className="S">ID</th>
+        <tr>
           <th className="S">Nombres</th>
+          <th className="S">Apellido Paterno</th>
+          <th className="S">Apellido Materno</th>
           <th className="S">Correo Electronico</th>
           <th className="S">RU</th>
           <th className="S">Acciones</th>
@@ -142,12 +147,12 @@ console.log(this.state.form);
       <tbody>
         {this.state.data.map(usuario=>{
             
-          if( usuario.Cargo==="ADMINISTRADOR"){
             return(
-                <tr key={usuario.id} className="P">
-                    <td className="S">{usuario.id}</td>
-                    <td className="S">{usuario.Nombres} {usuario.Apellidos}</td>
-                    <td className="S">{usuario.CorreoElectronico}</td>
+                <tr key={usuario._id}>
+                    <td className="S">{usuario.Nombre}</td>
+                    <td className="S">{usuario.Ap_Paterno}</td>
+                    <td className="S">{usuario.Ap_Materno}</td>
+                    <td className="S">{usuario.Email}</td>
                     <td className="S">{usuario.RU}</td>
                     <td className="S">
                 <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
@@ -156,7 +161,7 @@ console.log(this.state.form);
                 </td>
           </tr>
           )
-        }})}
+        })}
       </tbody>
     </table>
 
@@ -168,31 +173,31 @@ console.log(this.state.form);
                 </ModalHeader>
                 <ModalBody>
                   <div className="form-group">
-                    <label htmlFor="id">ID</label>
-                    <input className="form-control" type="text" name="id" id="id" readOnly onChange={this.handleChange} value={form?form.id: this.state.data.length+1}/>
+                    <label htmlFor="Nombre">Nombres</label>
+                    <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
                     <br />
-                    <label htmlFor="Nombres">Nombres</label>
-                    <input className="form-control" type="text" name="Nombres" id="Nombres" onChange={this.handleChange} value={form?form.Nombres: ''}/>
+                    <label htmlFor="Ap_Paterno">Apellido Paterno</label>
+                    <input className="form-control" type="text" name="Ap_Paterno" id="Ap_Paterno" onChange={this.handleChange} value={form?form.Ap_Paterno: ''}/>
                     <br />
-                    <label htmlFor="Nombres">Apellidos</label>
-                    <input className="form-control" type="text" name="Apellidos" id="Apellidos" onChange={this.handleChange} value={form?form.Apellidos: ''}/>
+                    <label htmlFor="Ap_Materno">Apellido Materno</label>
+                    <input className="form-control" type="text" name="Ap_Materno" id="Ap_Materno" onChange={this.handleChange} value={form?form.Ap_Materno: ''}/>
                     <br />
                     <label htmlFor="RU">CI</label>
                     <input className="form-control" type="text" name="CI" id="CI" onChange={this.handleChange} value={form?form.CI:''}/>
                     <br />
-                    <label htmlFor="Nombres">Correo Electronico</label>
-                    <input className="form-control" type="text" name="CorreoElectronico" id="CorreoElectronico" onChange={this.handleChange} value={form?form.CorreoElectronico: ''}/>
+                    <label htmlFor="Email">Correo Electronico</label>
+                    <input className="form-control" type="text" name="Email" id="Email" onChange={this.handleChange} value={form?form.Email: ''}/>
                     <br />
                     <label htmlFor="RU">RU</label>
                     <input className="form-control" type="text" name="RU" id="RU" onChange={this.handleChange} value={form?form.RU:''}/>
                     <br />
-                    <label htmlFor="Nombres">Cargo</label>
-                    <input className="form-control" type="text" name="Cargo" id="Cargo"  onChange={this.handleChange} value={form?form.Cargo: ''}/>
+                    <label htmlFor="Cargo">Cargo</label>
+                    <input className="form-control" type="text" name="Cargo" id="Cargo" onChange={this.handleChange} value= {form?form.Cargo: ''}/>
                     <br />
-                    <label htmlFor="Nombres">Usuario</label>
+                    <label htmlFor="Usuario">Usuario</label>
                     <input className="form-control" type="text" name="Usuario" id="Usuario" onChange={this.handleChange} value={form?form.Usuario: ''}/>
                     <br />
-                    <label htmlFor="Nombres">Contraseña</label>
+                    <label htmlFor="Contraseña">Contraseña</label>
                     <input className="form-control" type="password" name="Contraseña" id="Contraseña" onChange={this.handleChange} value={form?form.Contraseña: ''}/>
                   </div>
                 </ModalBody>
@@ -212,7 +217,7 @@ console.log(this.state.form);
 
           <Modal isOpen={this.state.modalEliminar}>
             <ModalBody>
-               Estás seguro que deseas eliminar a la usuario {form && form.Nombres}
+               ¿Estás seguro que deseas eliminar este Administrador? {form && form.Nombres}
             </ModalBody>
             <ModalFooter>
               <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>

@@ -7,7 +7,7 @@ import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Select from "react-select";
 
-const url = "http://localhost:3002/aulas";
+const url = "http://localhost:8000/api/aula";
 const options = [
   { value: "PLANTA BAJA", label: "PLANTA BAJA" },
   { value: "PRIMER PISO", label: "PRIMER PISO" },
@@ -27,13 +27,13 @@ class IAulas extends Component {
     modalInsertar: false,
     modalEliminar: false,
     selectedOption: null,
+    tipoModal: "",
     form: {
-      id: "",
+      _id: "",
       Nombre: "",
       Piso: "",
       Capacidad: "",
       TipoSala: "",
-      tipoModal: "",
     },
   };
 
@@ -49,9 +49,9 @@ class IAulas extends Component {
   };
 
   peticionPost = async () => {
-    delete this.state.form.id;
+    delete this.state.form._id;
     await axios
-      .post(url, this.state.form)
+      .post(`${url}/create`, this.state.form)
       .then((response) => {
         this.modalInsertar();
         this.peticionGet();
@@ -63,7 +63,7 @@ class IAulas extends Component {
 
   peticionPut = () => {
     axios
-      .put(`${url}/${this.state.form.id}`, this.state.form)
+      .put(`${url}/edit/${this.state.form._id}`, this.state.form)
       .then((response) => {
         this.modalInsertar();
         this.peticionGet();
@@ -71,7 +71,7 @@ class IAulas extends Component {
   };
 
   peticionDelete = () => {
-    axios.delete(`${url}/${this.state.form.id}`).then((response) => {
+    axios.delete(`${url}/delete/${this.state.form._id}`).then((response) => {
       this.setState({ ...this.state, modalEliminar: false });
       this.peticionGet();
     });
@@ -86,7 +86,7 @@ class IAulas extends Component {
       ...this.state,
       tipoModal: "actualizar",
       form: {
-        id: aulas.id,
+        _id: aulas.id,
         Nombre: aulas.Nombre,
         Piso: aulas.Piso,
         Capacidad: aulas.Capacidad,
@@ -158,7 +158,6 @@ class IAulas extends Component {
         <table className="table table-fixed text-center container">
           <thead className="row">
             <tr className="Pri">
-              <th className="Seg">ID</th>
               <th className="Seg">Nombre</th>
               <th className="Seg">Piso</th>
               <th className="Seg">Capacidad de Alumnos</th>
@@ -170,7 +169,6 @@ class IAulas extends Component {
             {this.state.data.map((aulas) => {
               return (
                 <tr key={aulas.id} className="Pri">
-                  <td className="Seg">{aulas.id}</td>
                   <td className="Seg">{aulas.Nombre}</td>
                   <td className="Seg">{aulas.Piso}</td>
                   <td className="Seg">{aulas.Capacidad}</td>
@@ -213,17 +211,6 @@ class IAulas extends Component {
           </ModalHeader>
           <ModalBody>
             <div className="form-group">
-              <label htmlFor="id">ID</label>
-              <input
-                className="form-control"
-                type="text"
-                name="id"
-                id="id"
-                readOnly
-                onChange={this.handleChange}
-                value={form ? form.id : this.state.data.length + 1}
-              />
-              <br />
               <label htmlFor="Nombre">Nombre</label>
               <input
                 className="form-control"
