@@ -101,7 +101,7 @@ class Login extends Component {
           cookies.set("Cargo", respuesta.Cargo, { path: "/" });
           if(respuesta.Cargo === "ESTUDIANTE") {
             alert(`Bienvenido ${respuesta.Nombre} ${respuesta.Ap_Paterno} ${respuesta.Cargo}`);
-            window.location.href = "./MenuEstudiantes";
+            window.location.href = "./menu";
           }
         }
       })
