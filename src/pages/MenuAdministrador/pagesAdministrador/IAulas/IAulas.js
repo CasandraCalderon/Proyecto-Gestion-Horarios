@@ -5,21 +5,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import Select from "react-select";
+
 
 const url = "http://localhost:8000/api/aula";
-const options = [
-  { value: "PLANTA BAJA", label: "PLANTA BAJA" },
-  { value: "PRIMER PISO", label: "PRIMER PISO" },
-  { value: "SEGUNDO PISO", label: "SEGUNDO PISO" },
-  { value: "TERCER PISO", label: "TERCER PISO" },
-  { value: "CUARTO PISO", label: "CUARTO PISO" },
-];
-const op_salas = [
-  { value: "SALA NORMAL", label: "SALA NORMAL" },
-  { value: "LABORATORIO", label: "LABORATORIO" },
-  { value: "SALA DE COMPUTACION", label: "SALA DE COMPUTACION" },
-];
+
 class IAulas extends Component {
   //Almacenar estado
   state = {

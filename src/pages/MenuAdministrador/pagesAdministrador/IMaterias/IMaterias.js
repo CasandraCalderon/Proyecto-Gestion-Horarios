@@ -5,21 +5,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import Select from "react-select";
+
 
 const url = "http://localhost:8000/api/materia";
-const opSemestre = [
-  { value: "PRIMERO", label: "PRIMERO" },
-  { value: "SEGUNDO", label: "SEGUNDO" },
-  { value: "TERCERO", label: "TERCERO" },
-  { value: "CUARTO", label: "CUARTO" },
-  { value: "QUINTO", label: "QUINTO" }
-];
-const opAula = [
-  { value: "SALA NORMAL", label: "SALA NORMAL" },
-  { value: "LABORATORIO", label: "LABORATORIO" },
-  { value: "SALA DE COMPUTACION", label: "SALA DE COMPUTACION" }
-];
+
 class IMaterias extends Component {
   //Almacenar estado
   state = {

@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import md5 from 'md5';
+//import md5 from 'md5';
 
 const url="http://localhost:8000/api/docente";
 
@@ -25,8 +25,9 @@ class IDocentes extends Component {
       Email: "",
       RU: "",
       Cargo: "",
-      Usuario: "",
-      Contraseña: ""
+      username: "",
+      password: "",
+      Disponibilidad: "",
     }
   }
   
@@ -50,8 +51,9 @@ class IDocentes extends Component {
         Email: this.state.form.Email,
         RU: this.state.form.RU,
         Cargo: this.state.form.Cargo,
-        Usuario: this.state.form.Usuario,
-        Contraseña: this.state.form.Contraseña,
+        username: this.state.form.username,
+        password: this.state.form.password,
+        Disponibilidad: this.state.form.Disponibilidad,
       }
       ).then(response=>{
         this.modalInsertar();
@@ -72,8 +74,9 @@ class IDocentes extends Component {
           Email: this.state.form.Email,
           RU: this.state.form.RU,
           Cargo: this.state.form.Cargo,
-          Usuario: this.state.form.Usuario,
-          Contraseña: this.state.form.Contraseña,
+          username: this.state.form.username,
+          password: this.state.form.password,
+          Disponibilidad: this.state.form.Disponibilidad,
       }
       ).then(response=>{
           this.modalInsertar();
@@ -108,8 +111,8 @@ class IDocentes extends Component {
         Email: usuario.Email,
         RU: usuario.RU,
         Cargo:usuario.Cargo,
-        Usuario: usuario.Usuario,
-        Contraseña: usuario.Contraseña,
+        username: usuario.username,
+        password: usuario.password,
         Disponibilidad: usuario.Disponibilidad,
       }
     })
@@ -133,7 +136,7 @@ class IDocentes extends Component {
   
     render(){
       const {form}=this.state;
-      const {Disponibilidad} = this.state.form;
+      //const {Disponibilidad} = this.state.form;
     return (
       <div>
       <div className="text-left container">
@@ -205,10 +208,10 @@ class IDocentes extends Component {
                       <input className="form-control" type="text" name="Cargo" id="Cargo" onChange={this.handleChange} value= {form?form.Cargo: ''}/>
                       <br />
                       <label htmlFor="Usuario">Usuario</label>
-                      <input className="form-control" type="text" name="Usuario" id="Usuario" onChange={this.handleChange} value={form?form.Usuario: ''}/>
+                      <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username: ''}/>
                       <br />
                       <label htmlFor="Contraseña">Contraseña</label>
-                      <input className="form-control" type="password" name="Contraseña" id="Contraseña" onChange={this.handleChange} value={form?form.Contraseña: ''}/>
+                      <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} value={form?form.password: ''}/>
                     </div>
                   </ModalBody>
   
@@ -237,7 +240,7 @@ class IDocentes extends Component {
 
           <Modal isOpen={this.state.modalVer} centered fullscreen="" size="xl">
             <ModalHeader>
-                Disponibilidad de {form && form.Usuario}
+                Disponibilidad de {form && form.username}
               </ModalHeader>
               <ModalBody>
               <div>
@@ -256,21 +259,21 @@ class IDocentes extends Component {
             <tbody className= "text-center">
                 <tr>
                     <th scope="row" className="text-center">7:45-10:00</th>
-                    <td id={(Disponibilidad || []).includes('1Lunes')? "Disponible" : "NoDisponible"}>Primer Turno</td>
-                    <td id={(Disponibilidad || []).includes('1Martes')? "Disponible" : "NoDisponible"}>Primer Turno</td>
-                    <td id={(Disponibilidad || []).includes('1Miercoles')? "Disponible" : "NoDisponible"}>Primer Turno</td> 
-                    <td id={(Disponibilidad || []).includes('1Jueves')? "Disponible" : "NoDisponible"}>Primer Turno</td> 
-                    <td id={(Disponibilidad || []).includes('1Viernes')? "Disponible" : "NoDisponible"}>Primer Turno</td> 
-                    <td id={(Disponibilidad || []).includes('1Sabado')? "Disponible" : "NoDisponible"}>Primer Turno</td>     
+                    <td id={(form?.Disponibilidad || []).includes('1Lunes')? "Disponible" : "NoDisponible"}>Primer Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('1Martes')? "Disponible" : "NoDisponible"}>Primer Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('1Miercoles')? "Disponible" : "NoDisponible"}>Primer Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('1Jueves')? "Disponible" : "NoDisponible"}>Primer Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('1Viernes')? "Disponible" : "NoDisponible"}>Primer Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('1Sabado')? "Disponible" : "NoDisponible"}>Primer Turno</td>     
                 </tr>
                 <tr>
                     <th scope="row" className="text-center">10:00-12:15</th>
-                    <td id={(Disponibilidad || []).includes('2Lunes')? "Disponible" : "NoDisponible"}>Segundo Turno</td>
-                    <td id={(Disponibilidad || []).includes('2Martes')? "Disponible" : "NoDisponible"}>Segundo Turno</td>
-                    <td id={(Disponibilidad || []).includes('2Miercoles')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
-                    <td id={(Disponibilidad || []).includes('2Jueves')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
-                    <td id={(Disponibilidad || []).includes('2Viernes')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
-                    <td id={(Disponibilidad || []).includes('2Sabado')? "Disponible" : "NoDisponible"}>Segundo Turno</td>     
+                    <td id={(form?.Disponibilidad || []).includes('2Lunes')? "Disponible" : "NoDisponible"}>Segundo Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('2Martes')? "Disponible" : "NoDisponible"}>Segundo Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('2Miercoles')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('2Jueves')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('2Viernes')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('2Sabado')? "Disponible" : "NoDisponible"}>Segundo Turno</td>     
                 </tr>
                 <tr className= "text-center">
                 <th scope="row">12:15-14:00</th>
@@ -283,30 +286,30 @@ class IDocentes extends Component {
                 </tr>
                 <tr>
                     <th scope="row" className="text-center">14:00-16:15</th>
-                    <td id={(Disponibilidad || []).includes('3Lunes')? "Disponible" : "NoDisponible"}>Tercer Turno</td>
-                    <td id={(Disponibilidad || []).includes('3Martes')? "Disponible" : "NoDisponible"}>Tercer Turno</td>
-                    <td id={(Disponibilidad || []).includes('3Miercoles')? "Disponible" : "NoDisponible"}>Tercer Turno</td> 
-                    <td id={(Disponibilidad || []).includes('3Jueves')? "Disponible" : "NoDisponible"}>Tercer Turno</td> 
-                    <td id={(Disponibilidad || []).includes('3Viernes')? "Disponible" : "NoDisponible"}>Tercer Turno</td> 
-                    <td id={(Disponibilidad || []).includes('3Sabado')? "Disponible" : "NoDisponible"}>Tercer Turno</td>     
+                    <td id={(form?.Disponibilidad || []).includes('3Lunes')? "Disponible" : "NoDisponible"}>Tercer Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('3Martes')? "Disponible" : "NoDisponible"}>Tercer Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('3Miercoles')? "Disponible" : "NoDisponible"}>Tercer Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('3Jueves')? "Disponible" : "NoDisponible"}>Tercer Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('3Viernes')? "Disponible" : "NoDisponible"}>Tercer Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('3Sabado')? "Disponible" : "NoDisponible"}>Tercer Turno</td>     
                 </tr>
                 <tr>
                     <th scope="row" className="text-center">16:15-18:30</th>
-                    <td id={(Disponibilidad || []).includes('4Lunes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>
-                    <td id={(Disponibilidad || []).includes('4Martes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>
-                    <td id={(Disponibilidad || []).includes('4Miercoles')? "Disponible" : "NoDisponible"}>Cuarto Turno</td> 
-                    <td id={(Disponibilidad || []).includes('4Jueves')? "Disponible" : "NoDisponible"}>Cuarto Turno</td> 
-                    <td id={(Disponibilidad || []).includes('4Viernes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td> 
-                    <td id={(Disponibilidad || []).includes('4Sabado')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>     
+                    <td id={(form?.Disponibilidad || []).includes('4Lunes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('4Martes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('4Miercoles')? "Disponible" : "NoDisponible"}>Cuarto Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('4Jueves')? "Disponible" : "NoDisponible"}>Cuarto Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('4Viernes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('4Sabado')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>     
                 </tr>
                 <tr>
                     <th scope="row" className="text-center">18:30-20:00</th>
-                    <td id={(Disponibilidad || []).includes('5Lunes')? "Disponible" : "NoDisponible"}>Quinto Turno</td>
-                    <td id={(Disponibilidad || []).includes('5Martes')? "Disponible" : "NoDisponible"}>Quinto Turno</td>
-                    <td id={(Disponibilidad || []).includes('5Miercoles')? "Disponible" : "NoDisponible"}>Quinto Turno</td> 
-                    <td id={(Disponibilidad || []).includes('5Jueves')? "Disponible" : "NoDisponible"}>Quinto Turno</td> 
-                    <td id={(Disponibilidad || []).includes('5Viernes')? "Disponible" : "NoDisponible"}>Quinto Turno</td> 
-                    <td id={(Disponibilidad || []).includes('5Sabado')? "Disponible" : "NoDisponible"}>Quinto Turno</td>     
+                    <td id={(form?.Disponibilidad || []).includes('5Lunes')? "Disponible" : "NoDisponible"}>Quinto Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('5Martes')? "Disponible" : "NoDisponible"}>Quinto Turno</td>
+                    <td id={(form?.Disponibilidad || []).includes('5Miercoles')? "Disponible" : "NoDisponible"}>Quinto Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('5Jueves')? "Disponible" : "NoDisponible"}>Quinto Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('5Viernes')? "Disponible" : "NoDisponible"}>Quinto Turno</td> 
+                    <td id={(form?.Disponibilidad || []).includes('5Sabado')? "Disponible" : "NoDisponible"}>Quinto Turno</td>     
                 </tr>
 
             </tbody>

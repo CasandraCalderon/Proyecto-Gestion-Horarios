@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import md5 from 'md5';
+//import md5 from 'md5';
 
 const url="http://localhost:8000/api/admin";
 
@@ -23,8 +23,8 @@ state={
     Email: "",
     RU: "",
     Cargo: "",
-    Usuario: "",
-    Contraseña: ""
+    username: "",
+    password: "",
   }
 }
 
@@ -48,8 +48,8 @@ peticionPost=async()=>{
       Email: this.state.form.Email,
       RU: this.state.form.RU,
       Cargo: this.state.form.Cargo,
-      Usuario: this.state.form.Usuario,
-      Contraseña: this.state.form.Contraseña
+      username: this.state.form.username,
+      password: this.state.form.password,
     }
     ).then(response=>{
       this.modalInsertar();
@@ -70,8 +70,8 @@ peticionPut=()=>{
         Email: this.state.form.Email,
         RU: this.state.form.RU,
         Cargo: this.state.form.Cargo,
-        Usuario: this.state.form.Usuario,
-        Contraseña: this.state.form.Contraseña
+        username: this.state.form.username,
+        password: this.state.form.password,
     }
     ).then(response=>{
         this.modalInsertar();
@@ -102,8 +102,8 @@ seleccionarUsuario=(usuario)=>{
       Email: usuario.Email,
       RU: usuario.RU,
       Cargo:usuario.Cargo,
-      Usuario: usuario.Usuario,
-      Contraseña: usuario.Contraseña,
+      username: usuario.username,
+      password: usuario.password,
     }
   })
 }
@@ -194,11 +194,11 @@ console.log(this.state.form);
                     <label htmlFor="Cargo">Cargo</label>
                     <input className="form-control" type="text" name="Cargo" id="Cargo" onChange={this.handleChange} value= {form?form.Cargo: ''}/>
                     <br />
-                    <label htmlFor="Usuario">Usuario</label>
-                    <input className="form-control" type="text" name="Usuario" id="Usuario" onChange={this.handleChange} value={form?form.Usuario: ''}/>
+                    <label htmlFor="username">Usuario</label>
+                    <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username: ''}/>
                     <br />
-                    <label htmlFor="Contraseña">Contraseña</label>
-                    <input className="form-control" type="password" name="Contraseña" id="Contraseña" onChange={this.handleChange} value={form?form.Contraseña: ''}/>
+                    <label htmlFor="password">Contraseña</label>
+                    <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} value={form?form.password: ''}/>
                   </div>
                 </ModalBody>
 

@@ -3,9 +3,9 @@ import './IEstudiantes.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTextHeight, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import md5 from 'md5';
+//import md5 from 'md5';
 
 const url="http://localhost:8000/api/estudiante";
 

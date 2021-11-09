@@ -14,6 +14,7 @@ class MenuDocentes extends Component {
     cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
+    cookies.remove("username", { path: "/" });
     window.location.href = "./";
   };
 
@@ -24,6 +25,12 @@ class MenuDocentes extends Component {
   }
 
   render() {
+    console.log('id: '+ cookies.get('_id'));
+    console.log('apellido_paterno: '+cookies.get('Ap_Paterno'));
+    console.log('apellido_materno: '+cookies.get('Ap_Materno'));
+    console.log('nombre: '+cookies.get('Nombre'));
+    console.log('Cargo: '+cookies.get('Cargo'));
+    console.log('username: '+cookies.get('username'));
     return (
       <div>
           <NavBarDocente cerrar={this.cerrarSesion}/>

@@ -15,6 +15,7 @@ class Menu extends Component {
     cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
+    cookies.remove("username", { path: "/" });
     window.location.href = "./";
   };
 
