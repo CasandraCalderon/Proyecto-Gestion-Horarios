@@ -16,12 +16,12 @@ class Menu extends Component {
     cookies.remove("RU", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
     cookies.remove("username", { path: "/" });
-    window.location.href = "./";
+    window.location.href = "../Login";
   };
 
   componentDidMount() {
     if (!cookies.get("_id")) {
-      window.location.href = "./";
+      window.location.href = "../Login";
     }
   }
   render() {
