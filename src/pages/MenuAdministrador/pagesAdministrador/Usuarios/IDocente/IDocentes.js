@@ -275,7 +275,7 @@ class IDocentes extends Component {
                     <td id={(form?.Disponibilidad || []).includes('2Viernes')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
                     <td id={(form?.Disponibilidad || []).includes('2Sabado')? "Disponible" : "NoDisponible"}>Segundo Turno</td>     
                 </tr>
-                <tr className= "text-center">
+                <tr className= "text-center" id="Receso">
                 <th scope="row">12:15-14:00</th>
                 <td>RECESO</td>
                 <td>RECESO</td>

@@ -7,8 +7,8 @@ import Cookies from "universal-cookie";
 
 
 
-//const baseAdministradores = "http://localhost:8000/api/admin";
-const baseDocentes = "http://localhost:8000/api/docente"
+const baseAdministradores = "http://localhost:8000/api/admin";
+//const baseDocentes = "http://localhost:8000/api/docente"
 //const baseEstudiantes = "http://localhost:8000/api/estudiante"
 const cookies = new Cookies();
 
@@ -31,7 +31,7 @@ class Login extends Component {
   };
 
   iniciarSesion = async () => {
-    await axios.get(baseDocentes, {
+    await axios.get(baseAdministradores, {
         params: {
           username: this.state.form.username,
           password: this.state.form.password,

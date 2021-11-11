@@ -351,7 +351,7 @@ class Disponibilidad extends Component {
                     </div>    
                 </td>
                 </tr>
-                <tr className= "text-center">
+                <tr className= "text-center" id="Receso">
                 <th scope="row">12:15-14:00</th>
                 <td>RECESO</td>
                 <td>RECESO</td>

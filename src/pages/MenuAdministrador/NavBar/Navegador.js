@@ -3,6 +3,9 @@ import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PresentCard from "../../PresentCard/PresentCard";
 import Administrador from "../Administrador";
+import Primero from "../pagesAdministrador/Horarios/Primero/Primero";
+import Segundo from "../pagesAdministrador/Horarios/Segundo/Segundo";
+import Tercero from "../pagesAdministrador/Horarios/Tercero/Tercero";
 import IAulas from "../pagesAdministrador/IAulas/IAulas";
 import IMaterias from "../pagesAdministrador/IMaterias/IMaterias";
 import Inicio from "../pagesAdministrador/Inicio/Inicio";
@@ -38,7 +41,13 @@ export default class Navegador extends React.Component {
                 </NavDropdown>
                 <NavLink as={Link} to={"/Aulas"}>Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
-                <NavLink as={Link} to={"/Horarios"}>Horarios</NavLink>
+                <NavDropdown title="Horarios">
+                  <NavDropdown.Item as={Link} to={"/primero"}>
+                    Primer Semestre
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/segundo"}>Segundo Semestre</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/tercero"}>Tercer Semestre</NavDropdown.Item>
+                </NavDropdown>
                 <NavLink as={Link} to={"/Reportes"}>Reportes</NavLink>
               </Nav>
             </Navbar.Collapse>
@@ -59,6 +68,15 @@ export default class Navegador extends React.Component {
             </Route>
             <Route path="/Usuarios/Estudiantes">
               < IEstudiantes />
+            </Route>
+            <Route path="/primero">
+              <Primero />
+            </Route>
+            <Route path="/segundo">
+              <Segundo />
+            </Route>
+            <Route path="/tercero">
+              <Tercero />
             </Route>
             <Route path="/Aulas">
               <IAulas />
