@@ -170,7 +170,8 @@ class Disponibilidad extends Component {
         {this.state.data.filter(docente => docente.RU === cookies.get("RU")).map(usuario=>{
               return(
                   <div key={usuario._id}>
-                  <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}>Modificar Disponibilidad</button> 
+                {usuario.Disponibilidad.length === 0? <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}>Modificar Disponibilidad</button> :
+                <button className="btn btn-dark" disabled>Modificar Disponibilidad</button>}
                   <br /> <br />       
                     <table className="table table-bordered container">
                         <thead className="thead-dark text-center">
@@ -203,14 +204,14 @@ class Disponibilidad extends Component {
                     <td id={(usuario.Disponibilidad || []).includes('2Viernes')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
                     <td id={(usuario.Disponibilidad || []).includes('2Sabado')? "Disponible" : "NoDisponible"}>Segundo Turno</td>     
                 </tr>
-                <tr className= "text-center">
-                <th scope="row">12:15-14:00</th>
-                <td>RECESO</td>
-                <td>RECESO</td>
-                <td>RECESO</td>
-                <td>RECESO</td>
-                <td>RECESO</td>
-                <td>RECESO</td>
+                <tr className= "text-center" id="Receso">
+                    <th scope="row">12:15-14:00</th>
+                    <td>RECESO</td>
+                    <td>RECESO</td>
+                    <td>RECESO</td>
+                    <td>RECESO</td>
+                    <td>RECESO</td>
+                    <td>RECESO</td>
                 </tr>
                 <tr>
                     <th scope="row" className="text-center">14:00-16:15</th>

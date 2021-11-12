@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Navbar } from "react-bootstrap";
 import Cookies from "universal-cookie";
+import NavBarEstudiantes from "./navBar/NavBarEstudiantes";
 
 
 const cookies = new Cookies();
@@ -12,21 +14,20 @@ class MenuEstudiantes extends Component {
     cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
-    window.location.href = "./";
+    cookies.remove("username", { path: "/" });
+    window.location.href = "./login";
   };
 
   componentDidMount() {
     if (!cookies.get("_id")) {
-      window.location.href = "./";
+      window.location.href = "./login";
     }
   }
 
   render() {
     return (
       <div>
-        
-        <br />
-        <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
+        <NavBarEstudiantes cerrar={this.cerrarSesion}/>
       </div>
     );
   }

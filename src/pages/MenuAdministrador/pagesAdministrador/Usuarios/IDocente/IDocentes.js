@@ -16,6 +16,7 @@ class IDocentes extends Component {
     modalInsertar: false,
     modalVer: false,
     modalEliminar: false,
+    modalDisponibilidad: false,
     form:{
       _id: "",
       Nombre: "",
@@ -79,10 +80,10 @@ class IDocentes extends Component {
           Disponibilidad: this.state.form.Disponibilidad,
       }
       ).then(response=>{
-          this.modalInsertar();
+        this.modalInsertar();
         this.peticionGet();
       })
-    }
+  }
     
     peticionDelete=()=>{
       axios.delete(`${url}/delete/${this.state.form._id}`).then(response=>{
@@ -90,7 +91,43 @@ class IDocentes extends Component {
         this.peticionGet();
       })
     }
+
+    peticionDisponibilidad=()=>{
+      axios.put(`${url}/edit/${this.state.form._id}`, 
+      {
+          _id: this.state.form._id,
+          Nombre: this.state.form.Nombre,
+          Ap_Paterno: this.state.form.Ap_Paterno,
+          Ap_Materno: this.state.form.Ap_Materno,
+          CI: this.state.form.CI,
+          Email: this.state.form.Email,
+          RU: this.state.form.RU,
+          Cargo: this.state.form.Cargo,
+          username: this.state.form.username,
+          password: this.state.form.password,
+          Disponibilidad: this.state.form.Disponibilidad,
+      }
+      ).then(response=>{
+        this.setState({modalDisponibilidad: false});
+        this.peticionGet();
+      })
+    }
+
+    peticionReset=()=> {
+      this.setState({
+        ...this.state,
+        form:{
+          ...this.state.form, Disponibilidad: []
+        }
+      })
+      this.modalVer();
+      this.modalDisponibilidad();
+    };
   
+  modalDisponibilidad=()=>{
+    this.setState({modalDisponibilidad: !this.state.modalDisponibilidad});
+  }
+
   modalInsertar=()=>{
     this.setState({modalInsertar: !this.state.modalInsertar});
   }
@@ -319,8 +356,19 @@ class IDocentes extends Component {
               
               <ModalFooter>
                 <button className="btn btn-dark" onClick={()=>this.setState({modalVer: false})}>Cerrar</button>
+                <button className="btn btn-danger" onClick={()=>this.peticionReset()}>Resetear disponibilidad</button>
               </ModalFooter>
-          </Modal>  
+          </Modal>
+
+          <Modal isOpen={this.state.modalDisponibilidad}>
+                <ModalBody>
+                   ¿Desea resetear la disponibilidad de {form && form.username}?
+                </ModalBody>
+                <ModalFooter>
+                  <button className="btn btn-danger" onClick={()=>this.peticionDisponibilidad()}>Sí</button>
+                  <button className="btn btn-secundary" onClick={()=>this.setState({modalDisponibilidad: false})}>No</button>
+                </ModalFooter>
+              </Modal>
     </div>
     
   
