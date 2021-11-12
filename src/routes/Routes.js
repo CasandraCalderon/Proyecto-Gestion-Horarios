@@ -5,6 +5,8 @@ import Menu from "../pages/MenuAdministrador/Menu";
 import MenuDocentes from "../pages/MenuDocentes/MenuDocentes";
 import MenuEstudiantes from "../pages/MenuEstudiantes/MenuEstudiantes";
 
+
+
 function Routes() {
   return (
     <BrowserRouter>
