@@ -90,12 +90,18 @@ class IAulas extends Component {
       [e.target.name]: e.target.value
     }
   });
+  console.log(this.state.form);
   }
   
-  handleChango = selectedOption => {
-    this.setState({ selectedOption });
-    // Option selected: { value: "rojo", label: "rojo" }
-    console.log(`Option selected:`, selectedOption);
+  handlePiso = Piso => {
+    this.setState ({Piso});
+    this.setState({
+      form:{
+        ...this.state.form, Piso: (options.filter(P => P.value === Piso).map(Piso => {return Piso.value}))
+      }
+    })
+    //console.log(`Option selected:`, Piso);
+    console.log(this.state.form);
   };
 
 
@@ -161,7 +167,7 @@ class IAulas extends Component {
                       <br />
                     
                       <label htmlFor="Piso">Piso</label>
-                      <Select value={form? form.Piso: Piso} onChange={this.handleChango} options={options} />
+                      <Select value={form? form.Piso: Piso} onChange={this.handlePiso} options={options} />
                       
                       <br />
                       <label htmlFor="Capacidad">Capacidad de alumnos</label>

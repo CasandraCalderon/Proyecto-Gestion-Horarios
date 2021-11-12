@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import { PresentCard } from "../PresentCard";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 const cookies = new Cookies();
 
 class MenuEstudiantes extends Component {
+  state={
+    data:[],
+   
+  };
   cerrarSesion = () => {
     cookies.remove("id", { path: "/" });
     cookies.remove("Nombres", { path: "/" });
@@ -21,14 +29,77 @@ class MenuEstudiantes extends Component {
       window.location.href = "./";
     }
   }
+  abrirModal=()=>{
+    this.setState({abierto: !this.state.abierto})
+  }
 
   render() {
     return (
-      <div>
-        < PresentCard Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")}/>
-        <br />
-        <button onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
+      <>
+      <div className="tex-center" >
+      
+        <br/>
+              
+				<button className="btn btn-success" onClick={()=> this.abrirModal()}>Programar Materia</button>
+			         
+				<button className="btn btn-success">Ver Horario</button>
+
+        <button className="btn btn-success" onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
+			  
+        
       </div>
+      <Modal isOpen={this.state.abierto}>
+        <ModalHeader>
+          Programar Materias
+
+        </ModalHeader>
+        <ModalBody>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Sigla</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.data.map(materias=>{
+                return(
+                  <tr key={materias.id}>
+                    <td>{materias.Nombre}</td>
+                    <td>{materias.Sigla}</td>
+                  </tr>
+                ) 
+              })}
+            </tbody>
+            <button className="btn btn-secondary">programar</button> 
+
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th>sigla</th>
+                <th>Materia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SIS-838</td>
+                <td>GESTION DE CALIDAD</td>
+              </tr>
+            </tbody>
+            <button className="btn btn-secondary">programar</button>
+            
+          </table>
+                  
+          
+
+        </ModalBody>
+        <ModalFooter>
+           
+           <button className="btn btn-light" onClick={()=> this.abrirModal()}>cancelar</button>
+        </ModalFooter>
+      </Modal>
+      </>
     );
   }
 }
