@@ -1,33 +1,39 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import NavBarDocente from "./NavBarDocente";
-import HomeDocente from "./pagesDocente/HomeDocente";
+
 
 
 const cookies = new Cookies();
 
 class MenuDocentes extends Component {
   cerrarSesion = () => {
-    cookies.remove("id", { path: "/" });
-    cookies.remove("Nombres", { path: "/" });
-    cookies.remove("Apellidos", { path: "/" });
-    cookies.remove("Correo Electronico", { path: "/" });
+    cookies.remove("_id", { path: "/" });
+    cookies.remove("Nombre", { path: "/" });
+    cookies.remove("Ap_Paterno", { path: "/" });
+    cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
-    cookies.remove("Usuario", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
-    window.location.href = "./";
+    cookies.remove("username", { path: "/" });
+    window.location.href = "./login";
   };
 
   componentDidMount() {
-    if (!cookies.get("Usuario")) {
-      window.location.href = "./";
+    if (!cookies.get("_id")) {
+      window.location.href = "./login";
     }
   }
 
   render() {
+    console.log('id: '+ cookies.get('_id'));
+    console.log('apellido_paterno: '+cookies.get('Ap_Paterno'));
+    console.log('apellido_materno: '+cookies.get('Ap_Materno'));
+    console.log('nombre: '+cookies.get('Nombre'));
+    console.log('Cargo: '+cookies.get('Cargo'));
+    console.log('username: '+cookies.get('username'));
     return (
       <div>
-          <NavBarDocente Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")} cerrar={this.cerrarSesion}/>
+          <NavBarDocente cerrar={this.cerrarSesion}/>
         <br />
       </div>
     );

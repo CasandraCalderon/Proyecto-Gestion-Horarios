@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Navbar } from "react-bootstrap";
 import Cookies from "universal-cookie";
+<<<<<<< HEAD
 import './MenuEstudiantes.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +9,9 @@ import { faEdit, faTextHeight, faTrashAlt } from '@fortawesome/free-solid-svg-ic
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import styled from 'styled-components';
 import Axios from "axios";
+=======
+import NavBarEstudiantes from "./navBar/NavBarEstudiantes";
+>>>>>>> eef5143993b4892f7e63c3c3e5ae351ab6b4f41f
 
 
 
@@ -24,20 +29,24 @@ class MenuEstudiantes extends Component {
     }
   };
   cerrarSesion = () => {
-    cookies.remove("id", { path: "/" });
-    cookies.remove("Nombres", { path: "/" });
-    cookies.remove("Apellidos", { path: "/" });
-    cookies.remove("Correo Electronico", { path: "/" });
+    cookies.remove("_id", { path: "/" });
+    cookies.remove("Nombre", { path: "/" });
+    cookies.remove("Ap_Paterno", { path: "/" });
+    cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
-    cookies.remove("Usuario", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
+<<<<<<< HEAD
     window.location.href = "./";
    
+=======
+    cookies.remove("username", { path: "/" });
+    window.location.href = "./login";
+>>>>>>> eef5143993b4892f7e63c3c3e5ae351ab6b4f41f
   };
 
   componentDidMount() {
-    if (!cookies.get("Usuario")) {
-      window.location.href = "./";
+    if (!cookies.get("_id")) {
+      window.location.href = "./login";
     }
   }
   peticionGet=()=>{
@@ -58,6 +67,7 @@ class MenuEstudiantes extends Component {
 
   render() {
     return (
+<<<<<<< HEAD
       <>
       <div className="tex-center" >
       
@@ -70,6 +80,10 @@ class MenuEstudiantes extends Component {
         <button className="btn btn-success" onClick={() => this.cerrarSesion()}>Cerrar Sesión</button>
 			  
         
+=======
+      <div>
+        <NavBarEstudiantes cerrar={this.cerrarSesion}/>
+>>>>>>> eef5143993b4892f7e63c3c3e5ae351ab6b4f41f
       </div>
       <Modal isOpen={this.state.abierto}>
         <ModalHeader>

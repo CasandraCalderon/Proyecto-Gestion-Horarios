@@ -1,17 +1,20 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Administrador from "./Administrador";
-import Home from "./Home";
-import IAulas from "./IAulas/IAulas";
-import IMaterias from "./IMaterias/IMaterias";
-import Inicio from "./Inicio";
-import IAdminstrador from "./Usuarios/IAdministrador/IAdminstrador";
-import IDocentes from "./Usuarios/IDocente/IDocentes";
-import IEstudiantes from "./Usuarios/IEstudiante/IEstudiantes";
+import PresentCard from "../../PresentCard/PresentCard";
+import Administrador from "../Administrador";
+import Primero from "../pagesAdministrador/Horarios/Primero/Primero";
+import Segundo from "../pagesAdministrador/Horarios/Segundo/Segundo";
+import Tercero from "../pagesAdministrador/Horarios/Tercero/Tercero";
+import IAulas from "../pagesAdministrador/IAulas/IAulas";
+import IMaterias from "../pagesAdministrador/IMaterias/IMaterias";
+import Inicio from "../pagesAdministrador/Inicio/Inicio";
+import IAdminstrador from "../pagesAdministrador/Usuarios/IAdministrador/IAdminstrador";
+import IDocentes from "../pagesAdministrador/Usuarios/IDocente/IDocentes";
+import IEstudiantes from "../pagesAdministrador/Usuarios/IEstudiante/IEstudiantes";
 export default class Navegador extends React.Component {
   render() {
-    let {Nombre, Apellidos, RU, Cargo, cerrar} = this.props;
+    let {cerrar} = this.props;
     return (
       <Router>
         <div>
@@ -38,14 +41,20 @@ export default class Navegador extends React.Component {
                 </NavDropdown>
                 <NavLink as={Link} to={"/Aulas"}>Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
-                <NavLink as={Link} to={"/Horarios"}>Horarios</NavLink>
+                <NavDropdown title="Horarios">
+                  <NavDropdown.Item as={Link} to={"/primero"}>
+                    Primer Semestre
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/segundo"}>Segundo Semestre</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/tercero"}>Tercer Semestre</NavDropdown.Item>
+                </NavDropdown>
                 <NavLink as={Link} to={"/Reportes"}>Reportes</NavLink>
               </Nav>
             </Navbar.Collapse>
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
           </Navbar>
         </div>
-        <Home Nombre = {Nombre} Apellidos = {Apellidos} RU={RU} Cargo={Cargo}/>
+        <PresentCard />
         <div>
           <Switch>
             <Route path="/menu">
@@ -59,6 +68,15 @@ export default class Navegador extends React.Component {
             </Route>
             <Route path="/Usuarios/Estudiantes">
               < IEstudiantes />
+            </Route>
+            <Route path="/primero">
+              <Primero />
+            </Route>
+            <Route path="/segundo">
+              <Segundo />
+            </Route>
+            <Route path="/tercero">
+              <Tercero />
             </Route>
             <Route path="/Aulas">
               <IAulas />

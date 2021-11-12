@@ -1,14 +1,14 @@
 import React from "react";
 import { Nav, Navbar, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import PresentCard from "../PresentCard/PresentCard";
-import Disponibilidad from "./pagesDocente/Disponibilidad/Disponibilidad";
-import InicioDocente from "./pagesDocente/InicioDocente";
-import verHorarios from "./pagesDocente/VerHorarios/verHorarios";
+import PresentCard from "../../PresentCard/PresentCard";
+import Horarios from "../pagesEstudiantes/horarios/Horarios";
+import InicioEstudiantes from "../pagesEstudiantes/inicioEstudiantes/InicioEstudiantes";
+import Programacion from "../pagesEstudiantes/programacion/Programacion";
 
 
 
-export default class NavBarDocente extends React.Component {
+export default class NavBarEstudiantes extends React.Component {
   render() {
     let {cerrar} = this.props;
     return (
@@ -26,11 +26,11 @@ export default class NavBarDocente extends React.Component {
             <Navbar.Toggle />
             <Navbar.Collapse>
               <Nav>
-                <NavLink as={Link} to={"/InicioDocente"}>
+                <NavLink as={Link} to={"/InicioEstudiantes"}>
                   Inicio
                 </NavLink>
-                <NavLink as={Link} to={"/verHorarios"}>Ver Horarios</NavLink>
-                <NavLink as={Link} to={"/Disponibilidad"}>Disponibilidad</NavLink>
+                <NavLink as={Link} to={"/programacion"}>Programacion</NavLink>
+                <NavLink as={Link} to={"/verHorarios"}>Ver horarios</NavLink>
               </Nav>
             </Navbar.Collapse>
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
@@ -39,14 +39,14 @@ export default class NavBarDocente extends React.Component {
         <PresentCard />
         <div>
           <Switch>
-            <Route path="/InicioDocente">
-              <InicioDocente />
+            <Route path="/InicioEstudiantes">
+              <InicioEstudiantes />
+            </Route>
+            <Route path="/programacion">
+              <Programacion />
             </Route>
             <Route path="/verHorarios">
-              <verHorarios />
-            </Route>
-            <Route path="/Disponibilidad">
-              <Disponibilidad />
+              <Horarios />
             </Route>
           </Switch>
         </div>

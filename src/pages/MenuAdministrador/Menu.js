@@ -1,7 +1,7 @@
 //Menu principal de administrador
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
-import Navegador from "./Navegador";
+import Navegador from "./NavBar/Navegador";
 
 
 
@@ -9,25 +9,25 @@ const cookies = new Cookies();
 
 class Menu extends Component {
   cerrarSesion = () => {
-    cookies.remove("id", { path: "/" });
-    cookies.remove("Nombres", { path: "/" });
-    cookies.remove("Apellidos", { path: "/" });
-    cookies.remove("Correo Electronico", { path: "/" });
+    cookies.remove("_id", { path: "/" });
+    cookies.remove("Nombre", { path: "/" });
+    cookies.remove("Ap_Paterno", { path: "/" });
+    cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
-    cookies.remove("Usuario", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
-    window.location.href = "./";
+    cookies.remove("username", { path: "/" });
+    window.location.href = "../Login";
   };
 
   componentDidMount() {
-    if (!cookies.get("Usuario")) {
-      window.location.href = "./";
+    if (!cookies.get("_id")) {
+      window.location.href = "../Login";
     }
   }
   render() {
     return (
       <div>
-        < Navegador Nombre={cookies.get("Nombres")} Apellidos={cookies.get("Apellidos")} RU={cookies.get("RU")} Cargo= {cookies.get("Cargo")} cerrar={this.cerrarSesion} />
+        < Navegador cerrar={this.cerrarSesion} />
         <br />
       </div>
     );
