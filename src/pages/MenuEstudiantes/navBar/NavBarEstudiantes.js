@@ -30,7 +30,7 @@ export default class NavBarEstudiantes extends React.Component {
                   Inicio
                 </NavLink>
                 <NavLink as={Link} to={"/programacion"}>Programacion</NavLink>
-                <NavLink as={Link} to={"/verHorarios"}>Ver horarios</NavLink>
+                <NavLink as={Link} to={"/verHorarios"}>Ver Horarios</NavLink>
               </Nav>
             </Navbar.Collapse>
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
