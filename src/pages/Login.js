@@ -7,9 +7,9 @@ import Cookies from "universal-cookie";
 
 
 
-//const baseAdministradores = "http://localhost:8000/api/admin";
+const baseAdministradores = "http://localhost:8000/api/admin";
 //const baseDocentes = "http://localhost:8000/api/docente"
-const baseEstudiantes = "http://localhost:8000/api/estudiante"
+//const baseEstudiantes = "http://localhost:8000/api/estudiante"
 const cookies = new Cookies();
 
 class Login extends Component {
@@ -31,7 +31,7 @@ class Login extends Component {
   };
 
   iniciarSesion = async () => {
-    await axios.get(baseEstudiantes, {
+    await axios.get(baseAdministradores, {
         params: {
           username: this.state.form.username,
           password: this.state.form.password,
@@ -52,8 +52,8 @@ class Login extends Component {
           cookies.set("username", respuesta.username, { path: "/" });
           alert(`Bienvenido ${respuesta.Nombre} ${respuesta.Ap_Paterno} ${respuesta.Cargo}`);
           //window.location.href = "./menuDocentes";
-          //window.location.href = "./menu";
-          window.location.href = "./menuEstudiantes";   
+          window.location.href = "./menu";
+          //window.location.href = "./menuEstudiantes";   
         }else {
           alert('El usuario o la contraseña no son correctos');
           document.location.reload();
@@ -66,9 +66,9 @@ class Login extends Component {
 
   componentDidMount() {
     if (cookies.get("username")) {
-        //window.location.href = "./menuDocentes";
+        window.location.href = "./menuDocentes";
         //window.location.href = "./menu";
-        window.location.href = "./menuEstudiantes";
+        //window.location.href = "./menuEstudiantes";
     }
   }
 
