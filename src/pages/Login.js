@@ -66,8 +66,8 @@ class Login extends Component {
 
   componentDidMount() {
     if (cookies.get("username")) {
-        window.location.href = "./menuDocentes";
-        //window.location.href = "./menu";
+        //window.location.href = "./menuDocentes";
+        window.location.href = "./menu";
         //window.location.href = "./menuEstudiantes";
     }
   }
