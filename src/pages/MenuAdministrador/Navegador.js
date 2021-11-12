@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Administrador from "./Administrador";
+import Administrador from "./Reportes/Administrador";
 import Home from "./Home";
 import IAulas from "./IAulas/IAulas";
 import IMaterias from "./IMaterias/IMaterias";
@@ -39,7 +39,7 @@ export default class Navegador extends React.Component {
                 <NavLink as={Link} to={"/Aulas"}>Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
                 <NavLink as={Link} to={"/Horarios"}>Horarios</NavLink>
-                <NavLink as={Link} to={"/Reportes"}>Reportes</NavLink>
+                <NavLink as={Link} to={"./Reportes"}>Reportes</NavLink>
               </Nav>
             </Navbar.Collapse>
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
