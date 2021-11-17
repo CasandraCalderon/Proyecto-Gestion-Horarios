@@ -24,8 +24,8 @@ class IEstudiantes extends Component {
       RU: "",
       Cargo: "",
       Semestre: "",
-      Usuario: "",
-      Contraseña: ""
+      username: "",
+      password: "",
     }
   }
   
@@ -50,8 +50,8 @@ class IEstudiantes extends Component {
         RU: this.state.form.RU,
         Cargo: this.state.form.Cargo,
         Semestre: this.state.form.Semestre,
-        Usuario: this.state.form.Usuario,
-        Contraseña: this.state.form.Contraseña
+        username: this.state.form.username,
+        password: this.state.form.password
       }
       ).then(response=>{
         this.modalInsertar();
@@ -73,8 +73,8 @@ class IEstudiantes extends Component {
           RU: this.state.form.RU,
           Cargo: this.state.form.Cargo,
           Semestre: this.state.form.Semestre,
-          Usuario: this.state.form.Usuario,
-          Contraseña: this.state.form.Contraseña
+          username: this.state.form.username,
+          password: this.state.form.password
       }
       ).then(response=>{
           this.modalInsertar();
@@ -106,8 +106,8 @@ class IEstudiantes extends Component {
         RU: usuario.RU,
         Cargo:usuario.Cargo,
         Semestre:usuario.Semestre,
-        Usuario: usuario.Usuario,
-        Contraseña: usuario.Contraseña,
+        username: usuario.username,
+        password: usuario.password,
       }
     })
   }
@@ -201,11 +201,11 @@ class IEstudiantes extends Component {
                       <label htmlFor="Cargo">Semestre</label>
                       <input className="form-control" type="text" name="Semestre" id="Semestre" onChange={this.handleChange} value= {form?form.Semestre: ''}/>
                       <br />
-                      <label htmlFor="Usuario">Usuario</label>
-                      <input className="form-control" type="text" name="Usuario" id="Usuario" onChange={this.handleChange} value={form?form.Usuario: ''}/>
+                      <label htmlFor="username">Usuario</label>
+                      <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username: ''}/>
                       <br />
-                      <label htmlFor="Contraseña">Contraseña</label>
-                      <input className="form-control" type="password" name="Contraseña" id="Contraseña" onChange={this.handleChange} value={form?form.Contraseña: ''}/>
+                      <label htmlFor="password">Contraseña</label>
+                      <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} value={form?form.password: ''}/>
                     </div>
                   </ModalBody>
   

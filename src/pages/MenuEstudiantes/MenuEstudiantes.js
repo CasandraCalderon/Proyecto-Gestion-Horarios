@@ -13,6 +13,7 @@ class MenuEstudiantes extends Component {
     cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
+    cookies.remove("Semestre", { path: "/" });
     window.location.href = "./";
     cookies.remove("username", { path: "/" });
     window.location.href = "./login";

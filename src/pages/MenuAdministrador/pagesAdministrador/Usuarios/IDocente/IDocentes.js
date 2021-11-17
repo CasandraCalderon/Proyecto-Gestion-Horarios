@@ -29,6 +29,7 @@ class IDocentes extends Component {
       username: "",
       password: "",
       Disponibilidad: "",
+      image: "",
     }
   }
   
@@ -55,6 +56,7 @@ class IDocentes extends Component {
         username: this.state.form.username,
         password: this.state.form.password,
         Disponibilidad: this.state.form.Disponibilidad,
+        image: this.state.form.image
       }
       ).then(response=>{
         this.modalInsertar();
@@ -78,6 +80,7 @@ class IDocentes extends Component {
           username: this.state.form.username,
           password: this.state.form.password,
           Disponibilidad: this.state.form.Disponibilidad,
+          image: this.state.form.image
       }
       ).then(response=>{
         this.modalInsertar();
@@ -106,6 +109,7 @@ class IDocentes extends Component {
           username: this.state.form.username,
           password: this.state.form.password,
           Disponibilidad: this.state.form.Disponibilidad,
+          image: this.state.form.image
       }
       ).then(response=>{
         this.setState({modalDisponibilidad: false});
@@ -151,6 +155,7 @@ class IDocentes extends Component {
         username: usuario.username,
         password: usuario.password,
         Disponibilidad: usuario.Disponibilidad,
+        image: usuario.image
       }
     })
   }
@@ -173,7 +178,6 @@ class IDocentes extends Component {
   
     render(){
       const {form}=this.state;
-      //const {Disponibilidad} = this.state.form;
     return (
       <div>
       <div className="text-left container">
@@ -249,6 +253,9 @@ class IDocentes extends Component {
                       <br />
                       <label htmlFor="Contraseña">Contraseña</label>
                       <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} value={form?form.password: ''}/>
+                      <br />
+                      <label htmlFor="image">Subir foto de perfil</label>
+                      <input className="form-control" type="file" name="image" id="image" onChange={this.handleChange} value={form?form.image: ''}/>
                     </div>
                   </ModalBody>
   

@@ -15,7 +15,7 @@ const PresentCard = () => {
           <div className="card col-md-6 offset-md-3 text-white bg-dark mb-3" id= 'card'>
             <div className="row no-gutters">
               <div className="col-md-4">
-                <img src={cookies.get("Cargo") === "ADMINISTRADOR"? avatar : avatar1} className="card-img" alt="..."/>
+                <img src={cookies.get("image") === "ADMINISTRADOR"? avatar : avatar1} className="card-img" alt="..."/>
               </div>
               <div className="col-md-8">
                 <div className="card-body text-center">

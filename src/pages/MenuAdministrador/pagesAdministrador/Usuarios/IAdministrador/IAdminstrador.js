@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './IAdministrador.css';
+import Swal from 'sweetalert2'
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+
 //import md5 from 'md5';
 
 const url="http://localhost:8000/api/admin";
@@ -76,6 +78,12 @@ peticionPut=()=>{
     ).then(response=>{
         this.modalInsertar();
       this.peticionGet();
+      Swal.fire({
+        title: 'Administrador actualizado correctamente',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
     })
   }
   
@@ -124,6 +132,7 @@ console.log(this.state.form);
   }
   
 
+
   render(){
     const {form}=this.state;
   return (
@@ -164,6 +173,28 @@ console.log(this.state.form);
         })}
       </tbody>
     </table>
+    {this.state.modalEliminar? 
+                Swal.fire({
+                  title: `Esta seguro de eliminar a ${form && form.username}?`,
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.peticionDelete()
+                    Swal.fire(
+                      'Deleted!',
+                      'Your file has been deleted.',
+                      'success'
+                    )
+                  } else {
+                    this.setState({modalEliminar: false})
+                  }
+                }) : console.log('nada')
+          }
 
 
 
@@ -197,8 +228,17 @@ console.log(this.state.form);
                     <label htmlFor="username">Usuario</label>
                     <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username: ''}/>
                     <br />
+                    {form?.password?
+                    <div>
+                    <label htmlFor="password">Contraseña</label>
+                    <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} readOnly value={form?form.password: ''}/>
+                    </div>:
+                    <div>
                     <label htmlFor="password">Contraseña</label>
                     <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} value={form?form.password: ''}/>
+                    </div>
+                    }
+                    
                   </div>
                 </ModalBody>
 
@@ -209,21 +249,12 @@ console.log(this.state.form);
                   </button>: <button className="btn btn-success" onClick={()=>this.peticionPut()}>
                     Actualizar
                   </button>
-  }
+                  }
                     <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
                 </ModalFooter>
           </Modal>
-
-
-          <Modal isOpen={this.state.modalEliminar}>
-            <ModalBody>
-               ¿Estás seguro que deseas eliminar este Administrador? {form && form.Nombres}
-            </ModalBody>
-            <ModalFooter>
-              <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
-              <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
-            </ModalFooter>
-          </Modal>
+                
+        
   </div>
   
 
