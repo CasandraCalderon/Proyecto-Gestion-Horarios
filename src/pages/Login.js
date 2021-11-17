@@ -10,12 +10,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-//const baseAdministradores = "http://localhost:8000/api/admin/login";
-const baseDocentes = "http://localhost:8000/api/docente"
+const baseAdministradores = "http://localhost:8000/api/admin/login";
+//const baseDocentes = "http://localhost:8000/api/docente"
 //const baseEstudiantes = "http://localhost:8000/api/estudiante"
 const cookies = new Cookies();
 class Login extends Component {
   state = {
+    errorUser : '',
+    errorPassword : '',
     form: {
       username: "",
       password: "",
@@ -30,64 +32,51 @@ class Login extends Component {
     });
     console.log(this.state.form);
   };
-  iniciarSesion = async () => {
-    await axios
-      .get(baseDocentes, {
-        params: {
+  iniciarSesion = async (e) => {
+    e.preventDefault();
+    let response ="";
+    try{
+      response = await axios
+      .post(baseAdministradores, {
           username: this.state.form.username,
           password: this.state.form.password,
-        },
       })
-      .then((response) => {
-        return response.data;
+    } catch (e) {
+      console.log(e)
+    }
+    console.log(response);
+    if(response.data.message === 'LOGUEADO') {
+      var respuesta = response.data.user;
+      cookies.set("_id", respuesta._id, { path: "/" });
+      cookies.set("Nombre", respuesta.Nombre, { path: "/" });
+      cookies.set("Ap_Paterno", respuesta.Ap_Paterno, { path: "/" });
+      cookies.set("Ap_Materno", respuesta.Ap_Materno, { path: "/" });
+      cookies.set("RU", respuesta.RU, { path: "/" });
+      cookies.set("Cargo", respuesta.Cargo, { path: "/" });
+      cookies.set("username", respuesta.username, { path: "/" });
+      cookies.set("Semestre", respuesta.Semestre, { path: "/" });
+      cookies.set("image", respuesta.image, { path: "/" });
+      Swal.fire(
+        {icon: 'success',
+        title: `Bienvenido ${respuesta.Cargo}`,
+        text: `${respuesta.Nombre} ${respuesta.Ap_Paterno} ${respuesta.Ap_Materno}`,
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
       })
-      .then((response) => {
-        if (response.length > 0) {
-          var respuesta = response[0];
-          cookies.set("_id", respuesta._id, { path: "/" });
-          cookies.set("Nombre", respuesta.Nombre, { path: "/" });
-          cookies.set("Ap_Paterno", respuesta.Ap_Paterno, { path: "/" });
-          cookies.set("Ap_Materno", respuesta.Ap_Materno, { path: "/" });
-          cookies.set("RU", respuesta.RU, { path: "/" });
-          cookies.set("Cargo", respuesta.Cargo, { path: "/" });
-          cookies.set("username", respuesta.username, { path: "/" });
-          cookies.set("Semestre", respuesta.Semestre, { path: "/" });
-          cookies.set("image", respuesta.image, { path: "/" });
-          Swal.fire(
-            {icon: 'success',
-            title: `Bienvenido ${respuesta.Cargo}`,
-            text: `${respuesta.Nombre} ${respuesta.Ap_Paterno} ${respuesta.Ap_Materno}`,
-            confirmButtonText: 'OK',
-            allowOutsideClick: false
-          })
-          .then(resultado => {
-            if (resultado.value) {
-                window.location.href = "./menu";
-            }
-        });
-          //window.location.href = "./menuDocentes";
-          //window.location.href = "./menu";
-          //window.location.href = "./menuEstudiantes";
-        } else {
-          Swal.fire("El usuario o la contraseña no son correctos");
-          document.location.reload();
+      .then(resultado => {
+        if (resultado.value) {
+            window.location.href = "./menu";
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  componentDidMount() {
-    if (cookies.get("username")) {
-      //window.location.href = "./menuDocentes";
-      //window.location.href = "./menu";
-      //window.location.href = "./menuEstudiantes";
+    });
+    } else if (response.data.message === 'Usuario no encontrado') {
+      this.setState({errorUser: response.data.message});
+      this.setState({errorPassword: ''});
+    } else if (response.data.message === 'Contraseña incorrecta') {
+      this.setState({errorPassword: response.data.message});
+      this.setState({errorUser: ''});
     }
   }
-  click = () => {
-    console.log('holaa')
-    Swal.fire('holaa')
-  }
+  
   render() {
     return (
       <div id="Principal">
@@ -106,7 +95,7 @@ class Login extends Component {
               sm={12}
               className="mx-auto my-5 p-5 m-auto rounded-lg" id= "form"
             >
-              <Form>
+              <Form >
                 <Form.Group controlId="formBasicEmail">
                   <InputGroup>
                     <InputGroupText>
@@ -118,6 +107,7 @@ class Login extends Component {
                       onChange={this.handleChange}
                     />
                   </InputGroup>
+                  <p>{this.state.errorUser}</p>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
@@ -126,20 +116,21 @@ class Login extends Component {
                     <RiLockPasswordLine size={20} />
                     </InputGroupText>
                     <Input
+                      type= "password"
                       placeholder="Password"
                       name="password"
                       onChange={this.handleChange}
                     />
                   </InputGroup>
+                  <p>{this.state.errorPassword}</p>
                 </Form.Group>
 
-                <Button id= 'botonPersonalizado'
-                  variant="success btn-block"
-                  type="button"
-                  onClick={() => this.iniciarSesion()}
+                <button
+                id= 'botonPersonalizado'
+                onClick={this.iniciarSesion}    
                 >
                   Login
-                </Button>
+                </button>
               </Form>
             </Col>
             <h6 className="Copyright">
