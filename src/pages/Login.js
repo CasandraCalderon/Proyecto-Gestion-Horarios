@@ -14,13 +14,13 @@ import Cookies from "universal-cookie";
 
 const baseAdministradores = "http://localhost:8000/api/admin/login";
 const baseDocentes = "http://localhost:8000/api/docente/login"
-//const baseEstudiantes = "http://localhost:8000/api/estudiante/login"
+const baseEstudiantes = "http://localhost:8000/api/estudiante/login"
 const cookies = new Cookies();
 class Login extends Component {
   state = {
     admin: false,
     docente: false,
-    estudent: false,
+    estudiante: false,
     errorUser : '',
     errorPassword : '',
     form: {
@@ -42,7 +42,7 @@ class Login extends Component {
     let response ="";
     try{
       response = await axios
-        .post(this.state.admin===true? baseAdministradores: baseDocentes , {
+        .post(this.state.admin===true? baseAdministradores: this.state.docente===true? baseDocentes : baseEstudiantes, {
             username: this.state.form.username,
             password: this.state.form.password,
         })
@@ -72,8 +72,11 @@ class Login extends Component {
         if (resultado.value) {
           if (respuesta.Cargo === 'ADMINISTRADOR') {
             window.location.href = "./menu";
-          } else if(respuesta.Cargo === 'DOCENTE')
+          } else if(respuesta.Cargo === 'DOCENTE'){
             window.location.href = "./menuDocentes";
+          } else if (respuesta.Cargo === 'ESTUDIANTE'){
+            window.location.href = "./menuEstudiantes";
+          }
         }
     });
     } else if (response.data.message === 'Usuario no encontrado') {
@@ -88,17 +91,17 @@ class Login extends Component {
   clickAdmin = () =>{
     this.setState({admin : true})
     this.setState({docente : false})
-    this.setState({estudent : false})
+    this.setState({estudiante : false})
   }
 
   clickDocente = () => {
     this.setState({admin : false})
     this.setState({docente : true})
-    this.setState({estudent : false})
+    this.setState({estudiante : false})
   }
 
   clickEstudiante = () => {
-    this.setState({estudent : true})
+    this.setState({estudiante : true})
     this.setState({admin : false})
     this.setState({docente : false})
   }

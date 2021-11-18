@@ -3,6 +3,10 @@ import './Navegador.css'
 import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { BiExit } from "react-icons/bi";
+import { AiTwotoneHome } from "react-icons/ai";
+import { GiBookshelf } from "react-icons/gi";
+import { HiDocumentReport } from "react-icons/hi";
+import { BsFillDoorClosedFill } from "react-icons/bs";
 import escudo from "../../../img/escudo.png";
 import PresentCard from "../../PresentCard/PresentCard";
 import Administrador from "../Administrador";
@@ -25,39 +29,44 @@ export default class Navegador extends React.Component {
       <Router>
         <div>
           <Navbar
-            bg="dark"
+            
             variant="dark"
             sticky="top"
             expend="sm"
             collapseOnSelect
+            id = "navBar"
           >
             <Navbar.Brand><img src={escudo} width="80" height="80" alt="..." /></Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-              <Nav >
+              <Nav id="textNav">
                 <NavLink as={Link} to={"/Inicio"}>
-                  Inicio
+                  <AiTwotoneHome/> Inicio
                 </NavLink>
-                <NavDropdown title="Usuarios">
-                  <NavDropdown.Item as={Link} to={"/Usuarios/Administrador"}>
+                <NavDropdown title='Usuarios'>
+                  <div id= "navDrop">
+                  <NavDropdown.Item  as={Link} to={"/Usuarios/Administrador"}>
                     Administradores
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={"/Usuarios/Docentes"}>Docentes</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={"/Usuarios/Estudiantes"}>Estudiantes</NavDropdown.Item>
+                  </div>
                 </NavDropdown>
-                <NavLink as={Link} to={"/Aulas"}>Aulas</NavLink>
-                <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
+                <NavLink as={Link} to={"/Aulas"}> <BsFillDoorClosedFill/> Aulas</NavLink>
+                <NavLink as={Link} to={"/Materias"}><GiBookshelf/> Materias</NavLink>
                 <NavDropdown title="Horarios">
+                <div id= "navDrop">
                   <NavDropdown.Item as={Link} to={"/primero"}>
                     Primer Semestre
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={"/segundo"}>Segundo Semestre</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={"/tercero"}>Tercer Semestre</NavDropdown.Item>
+                  </div>
                 </NavDropdown>
-                <NavLink as={Link} to={"/Reportes"}>Reportes</NavLink>
+                <NavLink as={Link} to={"/Reportes"}><HiDocumentReport/> Reportes</NavLink>
               </Nav>
             </Navbar.Collapse>
-            <button onClick={() => cerrar()} type="button" className="btn btn-secondary"><BiExit size={20}/></button>
+            <button id= "Exit" onClick={() => cerrar()} type="button" className="btn btn-secondary"><BiExit size={30}/></button>
           </Navbar>
         </div>
         <PresentCard />
