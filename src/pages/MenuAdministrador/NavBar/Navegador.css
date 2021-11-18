@@ -1,7 +1,16 @@
+
 body{
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-
+#PAdmin{
+	background-image: url("../../../img/fondo.jpg");
+  width: 100%;
+  height: 1150px;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 .hide {
     max-height: 0 !important;
 }
@@ -18,6 +27,7 @@ body{
 
 #navBar {
 	background-image: url(https://p4.wallpaperbetter.com/wallpaper/27/995/633/simple-background-violet-gradient-wallpaper-preview.jpg);
+	background-size: cover;
 }
 #textNav{
 	color : white;

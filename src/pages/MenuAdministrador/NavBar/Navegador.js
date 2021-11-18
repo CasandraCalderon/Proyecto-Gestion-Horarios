@@ -8,7 +8,6 @@ import { GiBookshelf } from "react-icons/gi";
 import { HiDocumentReport } from "react-icons/hi";
 import { BsFillDoorClosedFill } from "react-icons/bs";
 import escudo from "../../../img/escudo.png";
-import PresentCard from "../../PresentCard/PresentCard";
 import Administrador from "../Administrador";
 import Primero from "../pagesAdministrador/Horarios/Primero/Primero";
 import Segundo from "../pagesAdministrador/Horarios/Segundo/Segundo";
@@ -26,10 +25,10 @@ export default class Navegador extends React.Component {
   render() {
     let {cerrar} = this.props;
     return (
+      <div id= "PAdmin">
       <Router>
         <div>
           <Navbar
-            
             variant="dark"
             sticky="top"
             expend="sm"
@@ -69,10 +68,9 @@ export default class Navegador extends React.Component {
             <button id= "Exit" onClick={() => cerrar()} type="button" className="btn btn-secondary"><BiExit size={30}/></button>
           </Navbar>
         </div>
-        <PresentCard />
         <div>
           <Switch>
-            <Route path="/menu">
+            <Route path="/Inicio">
               <Inicio />
             </Route>
             <Route path="/Usuarios/Administrador">
@@ -108,6 +106,7 @@ export default class Navegador extends React.Component {
           </Switch>
         </div>
       </Router>
+      </div>
     );
   }
 }

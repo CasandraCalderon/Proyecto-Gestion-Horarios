@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import PresentCard from '../../../../PresentCard/PresentCard';
 //import md5 from 'md5';
 
 const url="http://localhost:8000/api/estudiante";
@@ -132,6 +133,7 @@ class IEstudiantes extends Component {
       const {form}=this.state;
     return (
       <div>
+        <PresentCard />
       <div className="text-left container">
           <br />
         <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Estudiante</button>
