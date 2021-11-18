@@ -3,19 +3,24 @@ import "../css/Login.css";
 import userLogin from "../img/userLogin.png";
 import Swal from 'sweetalert2'
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { InputGroup, InputGroupText, Input } from "reactstrap";
-import { FaUser } from "react-icons/fa";
+import { InputGroup, InputGroupText, Input, Alert, FormFeedback, ButtonGroup } from "reactstrap";
+import { FaUser, FaChalkboardTeacher } from "react-icons/fa";
+import { RiAdminLine } from "react-icons/ri";
+import { IoIosBook } from "react-icons/io"
 import { RiLockPasswordLine } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
 const baseAdministradores = "http://localhost:8000/api/admin/login";
-//const baseDocentes = "http://localhost:8000/api/docente"
-//const baseEstudiantes = "http://localhost:8000/api/estudiante"
+const baseDocentes = "http://localhost:8000/api/docente/login"
+//const baseEstudiantes = "http://localhost:8000/api/estudiante/login"
 const cookies = new Cookies();
 class Login extends Component {
   state = {
+    admin: false,
+    docente: false,
+    estudent: false,
     errorUser : '',
     errorPassword : '',
     form: {
@@ -37,10 +42,10 @@ class Login extends Component {
     let response ="";
     try{
       response = await axios
-      .post(baseAdministradores, {
-          username: this.state.form.username,
-          password: this.state.form.password,
-      })
+        .post(this.state.admin===true? baseAdministradores: baseDocentes , {
+            username: this.state.form.username,
+            password: this.state.form.password,
+        })
     } catch (e) {
       console.log(e)
     }
@@ -65,7 +70,10 @@ class Login extends Component {
       })
       .then(resultado => {
         if (resultado.value) {
+          if (respuesta.Cargo === 'ADMINISTRADOR') {
             window.location.href = "./menu";
+          } else if(respuesta.Cargo === 'DOCENTE')
+            window.location.href = "./menuDocentes";
         }
     });
     } else if (response.data.message === 'Usuario no encontrado') {
@@ -75,6 +83,24 @@ class Login extends Component {
       this.setState({errorPassword: response.data.message});
       this.setState({errorUser: ''});
     }
+  }
+
+  clickAdmin = () =>{
+    this.setState({admin : true})
+    this.setState({docente : false})
+    this.setState({estudent : false})
+  }
+
+  clickDocente = () => {
+    this.setState({admin : false})
+    this.setState({docente : true})
+    this.setState({estudent : false})
+  }
+
+  clickEstudiante = () => {
+    this.setState({estudent : true})
+    this.setState({admin : false})
+    this.setState({docente : false})
   }
   
   render() {
@@ -88,12 +114,35 @@ class Login extends Component {
               Iniciar Sesion
             </h1>
           </div>
+          <br/>
+          <div id='Group'>
+          <ButtonGroup>
+          <Button id="buttons"
+            color="primary"
+            onClick={this.clickAdmin}
+          >
+            <RiAdminLine size={30} />
+          </Button>
+          <Button id="buttons"
+            color="primary"
+            onClick={this.clickDocente}
+          >
+            <FaChalkboardTeacher size={30} />
+          </Button>
+          <Button id="buttons"
+            color="primary"
+            onClick={function noRefCheck(){}}
+          >
+            <IoIosBook size={30} />
+          </Button>
+        </ButtonGroup>
+          </div>
           <Row>
             <Col
               lg={5}
               md={10}
               sm={12}
-              className="mx-auto my-5 p-5 m-auto rounded-lg" id= "form"
+              className="mx-auto" id= "form"
             >
               <Form >
                 <Form.Group controlId="formBasicEmail">
@@ -107,7 +156,7 @@ class Login extends Component {
                       onChange={this.handleChange}
                     />
                   </InputGroup>
-                  <p>{this.state.errorUser}</p>
+                  <div className="alert">{this.state.errorUser}</div>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
@@ -122,7 +171,9 @@ class Login extends Component {
                       onChange={this.handleChange}
                     />
                   </InputGroup>
-                  <p>{this.state.errorPassword}</p>
+                  
+                  <div className="alert">{this.state.errorPassword}</div>
+                 
                 </Form.Group>
 
                 <button
