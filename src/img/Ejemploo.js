@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Ejem = () => {
+const Ejemploo = () => {
     return (
         <div>
             hola
         </div>
     )
 }
-export default Ejem;
+export default Ejemploo;

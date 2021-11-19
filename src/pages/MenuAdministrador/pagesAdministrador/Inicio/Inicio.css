@@ -1,0 +1,33 @@
+#PInicio{
+  /*IMPORTANTE*/
+    justify-content: center;
+    align-items: center;
+}
+#imagenInicio {
+    width: 40%; 
+    float:left;
+    color: red;
+    align-items: left;
+    vertical-align: middle;
+}
+
+#Contenido {
+    background-color: yellow;
+    width: 50%; 
+    float:right;
+    height: 500px;
+    border: rgb(0, 0, 0) 2px solid;
+    margin-right: 70px;
+    margin-right: 70px;
+    margin-top: 40px;
+}
+#imgInicio{
+    height: 650px;
+    width: 650px;
+    filter: brightness(1.1);
+    mix-blend-mode: multiply;
+    margin: 0 0 0 130px;
+}
+#ContenidoInicio{
+    background-color: red;
+}
