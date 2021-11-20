@@ -9,12 +9,17 @@ import PresentCard from "../../../PresentCard/PresentCard";
 
 
 const url = "http://localhost:8000/api/materia";
+const urlDocentes ="http://localhost:8000/api/docente"
+const urlSemestres= "http://localhost:8000/api/semestres";
+const urlAulas = "http://localhost:8000/api/tipoAula";
 
 class IMaterias extends Component {
   //Almacenar estado
   state = {
     data: [],
     Docentes: [],
+    Semestres: [],
+    Aulas: [],
     modalInsertar: false,
     modalEliminar: false,
     selectedOption: null,
@@ -31,10 +36,28 @@ class IMaterias extends Component {
   };
 
   componentDidMount() {
-    axios.get("http://localhost:8000/api/docente")
+    axios.get(urlDocentes)
     .then((response) => {
       console.log(response);
       this.setState({Docentes: response.data});
+      this.peticionGet();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    axios.get(urlSemestres)
+    .then((response) => {
+      console.log(response);
+      this.setState({Semestres: response.data});
+      this.peticionGet();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    axios.get(urlAulas)
+    .then((response) => {
+      console.log(response);
+      this.setState({Aulas: response.data});
       this.peticionGet();
     })
     .catch((error) => {
@@ -182,7 +205,13 @@ class IMaterias extends Component {
                         <input className="form-control" type="text" name="Sigla" id="Sigla" onChange={this.handleChange} value={form?form.Sigla: ''}/>
                         <br />
                         <label htmlFor="Semestre">Semestre</label>
-                        <input className="form-control" type="text" name="Semestre" id="Semestre" onChange={this.handleChange} value={form?form.Semestre: ''}/>
+                        <select name="Semestre" className="form-select" id="Semestre" onChange={this.handleChange}>
+                          <option>Selecionar Semestre...</option>
+                          {this.state.Semestres.map(elemento => (
+                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
+                            )
+                          )}
+                        </select>
                         <br />
                         <label htmlFor="Docente">Docente</label>
                         <select name="Docente" className="form-select" id="Docente" onChange={this.handleChange}>
@@ -194,7 +223,13 @@ class IMaterias extends Component {
                         </select>
                         <br />
                         <label htmlFor="TipoAula">Tipo de Aula</label>
-                        <input className="form-control" type="text" name="TipoAula" id="TipoAula" onChange={this.handleChange} value={form?form.TipoAula: ''}/>
+                        <select name="TipoAula" className="form-select" id="TipoAula" onChange={this.handleChange}>
+                          <option>Selecionar tipo de aula...</option>
+                          {this.state.Aulas.map(elemento => (
+                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
+                            )
+                          )}
+                        </select>
                         <br />
                         <label htmlFor="CantHSemanas">CantHSemanas</label>
                         <input className="form-control" type="number" name="CantHSemanas" id="CantHSemanas" onChange={this.handleChange} value={form?form.CantHSemanas:''}/>

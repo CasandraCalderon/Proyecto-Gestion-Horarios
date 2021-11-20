@@ -9,11 +9,14 @@ import PresentCard from "../../../PresentCard/PresentCard";
 
 
 const url = "http://localhost:8000/api/aula";
-
+const urlPlantas =  axios.get("http://localhost:8000/api/planta");
+const urlSalas = axios.get("http://localhost:8000/api/tipoAula");
 class IAulas extends Component {
   //Almacenar estado
   state = {
     data: [],
+    Plantas: [],
+    Salas: [],
     modalInsertar: false,
     modalEliminar: false,
     selectedOption: null,
@@ -26,6 +29,26 @@ class IAulas extends Component {
       Capacidad: "",
     },
   };
+
+  componentDidMount() {
+    axios.get("http://localhost:8000/api/planta")
+    .then((response) => {
+      console.log(response);
+      this.setState({Plantas: response.data});
+      this.peticionGet();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    axios.get("http://localhost:8000/api/tipoAula")
+    .then((response) => {
+      console.log(response);
+      this.setState({Salas: response.data});
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
   peticionGet=()=>{
     axios.get(url).then(response=>{
@@ -103,9 +126,7 @@ class IAulas extends Component {
     console.log(this.state.form);
     }
     
-      componentDidMount() {
-        this.peticionGet();
-      }
+     
       
     
       render(){
@@ -122,7 +143,7 @@ class IAulas extends Component {
           <thead className="row">
             <tr>
               <th id="Pri">Nombre</th>
-              <th id="Pri">Piso</th>
+              <th id="Pri">Planta</th>
               <th id="Pri">Tipo sala</th>
               <th id="Pri">Capacidad</th>
               <th id="Pri">Acciones</th>
@@ -159,11 +180,23 @@ class IAulas extends Component {
                         <label htmlFor="Nombre">Nombre</label>
                         <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
                         <br />
-                        <label htmlFor="Piso">Piso</label>
-                        <input className="form-control" type="text" name="Piso" id="Piso" onChange={this.handleChange} value={form?form.Piso: ''}/>
+                        <label htmlFor="Piso">Planta</label>
+                        <select name="Piso" className="form-select" id="Piso" onChange={this.handleChange}>
+                          <option>Selecionar planta...</option>
+                          {this.state.Plantas.map(elemento => (
+                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
+                            )
+                          )}
+                        </select>
                         <br />
-                        <label htmlFor="Tipo Sala">Tipo Sala</label>
-                        <input className="form-control" type="text" name="TipoSala" id="TipoSala" onChange={this.handleChange} value={form?form.TipoSala: ''}/>
+                        <label htmlFor="TipoSala">Sala</label>
+                        <select name="TipoSala" className="form-select" id="TipoSala" onChange={this.handleChange}>
+                          <option>Selecionar tipo de sala...</option>
+                          {this.state.Salas.map(elemento => (
+                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
+                            )
+                          )}
+                        </select>
                         <br />
                         <label htmlFor="Capacidad">Capacidad</label>
                         <input className="form-control" type="number" name="Capacidad" id="Capacidad" onChange={this.handleChange} value={form?form.Capacidad:''}/>

@@ -3,7 +3,7 @@ import "../css/Login.css";
 import userLogin from "../img/userLogin.png";
 import Swal from 'sweetalert2'
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { InputGroup, InputGroupText, Input, Alert, FormFeedback, ButtonGroup } from "reactstrap";
+import { InputGroup, InputGroupText, Input, ButtonGroup } from "reactstrap";
 import { FaUser, FaChalkboardTeacher } from "react-icons/fa";
 import { RiAdminLine } from "react-icons/ri";
 import { IoIosBook } from "react-icons/io"
@@ -187,7 +187,7 @@ class Login extends Component {
                 </button>
               </Form>
             </Col>
-            <h6 className="Copyright">
+            <h6 id="Copyright">
             Copyright © 2021 - Universidad Autónoma Tomás Frías (UATF Virtual - Data Center)
             </h6>
           </Row>
