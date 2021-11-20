@@ -121,11 +121,11 @@ class IAulas extends Component {
         <table className="table table-fixed text-center container">
           <thead className="row">
             <tr>
-              <th className="Pri">Nombre</th>
-              <th className="Pri">Piso</th>
-              <th className="Pri">Tipo sala</th>
-              <th className="Pri">Capacidad</th>
-              <th className="Pri">Acciones</th>
+              <th id="Pri">Nombre</th>
+              <th id="Pri">Piso</th>
+              <th id="Pri">Tipo sala</th>
+              <th id="Pri">Capacidad</th>
+              <th id="Pri">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -133,11 +133,11 @@ class IAulas extends Component {
                 
                 return(
                     <tr key={aula._id}>
-                        <td className="Pri">{aula.Nombre}</td>
-                        <td className="Pri">{aula.Piso}</td>
-                        <td className="Pri">{aula.TipoSala}</td>
-                        <td className="Pri">{aula.Capacidad}</td>
-                        <td className="Pri">
+                        <td id="Pri">{aula.Nombre}</td>
+                        <td id="Pri">{aula.Piso}</td>
+                        <td id="Pri">{aula.TipoSala}</td>
+                        <td id="Pri">{aula.Capacidad}</td>
+                        <td id="Pri">
                     <button className="btn btn-dark" onClick={()=>{this.seleccionarAula(aula); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                     {"   "}
                     <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(aula); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>

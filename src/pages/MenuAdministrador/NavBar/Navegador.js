@@ -9,15 +9,13 @@ import { HiDocumentReport } from "react-icons/hi";
 import { BsFillDoorClosedFill } from "react-icons/bs";
 import escudo from "../../../img/escudo.png";
 import Administrador from "../Administrador";
-import Primero from "../pagesAdministrador/Horarios/Primero/Primero";
-import Segundo from "../pagesAdministrador/Horarios/Segundo/Segundo";
-import Tercero from "../pagesAdministrador/Horarios/Tercero/Tercero";
 import IAulas from "../pagesAdministrador/IAulas/IAulas";
 import IMaterias from "../pagesAdministrador/IMaterias/IMaterias";
 import Inicio from "../pagesAdministrador/Inicio/Inicio";
 import IAdminstrador from "../pagesAdministrador/Usuarios/IAdministrador/IAdminstrador";
 import IDocentes from "../pagesAdministrador/Usuarios/IDocente/IDocentes";
 import IEstudiantes from "../pagesAdministrador/Usuarios/IEstudiante/IEstudiantes";
+import InicioHorarios from "../pagesAdministrador/Horarios/InicioHorarios";
 //import Cookies from "universal-cookie";
 
 //const cookies = new Cookies();
@@ -53,15 +51,7 @@ export default class Navegador extends React.Component {
                 </NavDropdown>
                 <NavLink as={Link} to={"/Aulas"}> <BsFillDoorClosedFill/> Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}><GiBookshelf/> Materias</NavLink>
-                <NavDropdown title="Horarios">
-                <div id= "navDrop">
-                  <NavDropdown.Item as={Link} to={"/primero"}>
-                    Primer Semestre
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/segundo"}>Segundo Semestre</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/tercero"}>Tercer Semestre</NavDropdown.Item>
-                  </div>
-                </NavDropdown>
+                <NavLink as={Link} to={"/Horarios"}><GiBookshelf/> Horarios</NavLink>
                 <NavLink as={Link} to={"/Reportes"}><HiDocumentReport/> Reportes</NavLink>
               </Nav>
             </Navbar.Collapse>
@@ -82,14 +72,8 @@ export default class Navegador extends React.Component {
             <Route path="/Usuarios/Estudiantes">
               < IEstudiantes />
             </Route>
-            <Route path="/primero">
-              <Primero />
-            </Route>
-            <Route path="/segundo">
-              <Segundo />
-            </Route>
-            <Route path="/tercero">
-              <Tercero />
+            <Route path="/Horarios">
+              <InicioHorarios />
             </Route>
             <Route path="/Aulas">
               <IAulas />

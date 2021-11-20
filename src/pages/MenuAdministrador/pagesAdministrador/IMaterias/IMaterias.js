@@ -14,6 +14,7 @@ class IMaterias extends Component {
   //Almacenar estado
   state = {
     data: [],
+    Docentes: [],
     modalInsertar: false,
     modalEliminar: false,
     selectedOption: null,
@@ -23,10 +24,23 @@ class IMaterias extends Component {
       Nombre: "",
       Sigla: "",
       Semestre: "",
+      Docente: "",
       TipoAula: "",
       CantHSemanas: "",
     },
   };
+
+  componentDidMount() {
+    axios.get("http://localhost:8000/api/docente")
+    .then((response) => {
+      console.log(response);
+      this.setState({Docentes: response.data});
+      this.peticionGet();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
   peticionGet=()=>{
     axios.get(url).then(response=>{
@@ -44,6 +58,7 @@ class IMaterias extends Component {
           Nombre: this.state.form.Nombre,
           Sigla: this.state.form.Sigla,
           Semestre: this.state.form.Semestre,
+          Docente: this.state.form.Docente,
           TipoAula: this.state.form.TipoAula,
           CantHSemanas: this.state.form.CantHSemanas,
         }
@@ -62,6 +77,7 @@ class IMaterias extends Component {
           Nombre: this.state.form.Nombre,
           Sigla: this.state.form.Sigla,
           Semestre: this.state.form.Semestre,
+          Docente: this.state.form.Docente,
           TipoAula: this.state.form.TipoAula,
           CantHSemanas: this.state.form.CantHSemanas,
         }
@@ -90,6 +106,7 @@ class IMaterias extends Component {
           Nombre: materia.Nombre,
           Sigla: materia.Sigla,
           Semestre: materia.Semestre,
+          Docente: materia.Docente,
           TipoAula: materia.TipoAula,
           CantHSemanas: materia.CantHSemanas,
         }
@@ -106,12 +123,6 @@ class IMaterias extends Component {
     });
     console.log(this.state.form);
     }
-    
-      componentDidMount() {
-        this.peticionGet();
-      }
-      
-    
       render(){
         const {form}=this.state;
       return (
@@ -125,12 +136,13 @@ class IMaterias extends Component {
         <table className="table table-fixed text-center container">
           <thead className="row">
             <tr>
-              <th className="Primero">Nombre</th>
-              <th className="Primero">Sigla</th>
-              <th className="Primero">Semestre</th>
-              <th className="Primero">Tipo de Aula</th>
-              <th className="Primero">CantHSemanas</th>
-              <th className="Primero">Acciones</th>
+              <th id="Primero">Nombre</th>
+              <th id="Primero">Sigla</th>
+              <th id="Primero">Semestre</th>
+              <th id="Primero">Docente</th>
+              <th id="Primero">Tipo de Aula</th>
+              <th id="Primero">CantHSemanas</th>
+              <th id="Primero">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -138,12 +150,13 @@ class IMaterias extends Component {
                 
                 return(
                     <tr key={materia._id}>
-                        <td className="Primero">{materia.Nombre}</td>
-                        <td className="Primero">{materia.Sigla}</td>
-                        <td className="Primero">{materia.Semestre}</td>
-                        <td className="Primero">{materia.TipoAula}</td>
-                        <td className="Primero">{materia.CantHSemanas}</td>
-                        <td className="Primero">
+                        <td id="Primero">{materia.Nombre}</td>
+                        <td id="Primero">{materia.Sigla}</td>
+                        <td id="Primero">{materia.Semestre}</td>
+                        <td id="Primero">{materia.Docente}</td>
+                        <td id="Primero">{materia.TipoAula}</td>
+                        <td id="Primero">{materia.CantHSemanas}</td>
+                        <td id="Primero">
                     <button className="btn btn-dark" onClick={()=>{this.seleccionarMateria(materia); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                     {"   "}
                     <button className="btn btn-danger" onClick={()=>{this.seleccionarMateria(materia); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
@@ -162,7 +175,7 @@ class IMaterias extends Component {
                     </ModalHeader>
                     <ModalBody>
                       <div className="form-group">
-                        <label htmlFor="Nombre">Nombre</label>
+                      <label htmlFor="Nombre">Nombre</label>
                         <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
                         <br />
                         <label htmlFor="Sigla">Sigla</label>
@@ -170,6 +183,15 @@ class IMaterias extends Component {
                         <br />
                         <label htmlFor="Semestre">Semestre</label>
                         <input className="form-control" type="text" name="Semestre" id="Semestre" onChange={this.handleChange} value={form?form.Semestre: ''}/>
+                        <br />
+                        <label htmlFor="Docente">Docente</label>
+                        <select name="Docente" className="form-select" id="Docente" onChange={this.handleChange}>
+                          <option>Selecionar Docente</option>
+                          {this.state.Docentes.map(elemento => (
+                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre} {elemento.Ap_Paterno} {elemento.Ap_Materno}</option>
+                            )
+                          )}
+                        </select>
                         <br />
                         <label htmlFor="TipoAula">Tipo de Aula</label>
                         <input className="form-control" type="text" name="TipoAula" id="TipoAula" onChange={this.handleChange} value={form?form.TipoAula: ''}/>
