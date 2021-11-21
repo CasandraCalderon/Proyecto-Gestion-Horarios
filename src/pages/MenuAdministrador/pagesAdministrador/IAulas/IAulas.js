@@ -31,16 +31,15 @@ class IAulas extends Component {
   };
 
   componentDidMount() {
-    axios.get("http://localhost:8000/api/planta")
+    axios.get(urlPlantas)
     .then((response) => {
       console.log(response);
       this.setState({Plantas: response.data});
-      this.peticionGet();
     })
     .catch((error) => {
       console.log(error);
     });
-    axios.get("http://localhost:8000/api/tipoAula")
+    axios.get(urlSalas)
     .then((response) => {
       console.log(response);
       this.setState({Salas: response.data});
@@ -48,6 +47,7 @@ class IAulas extends Component {
     .catch((error) => {
       console.log(error);
     });
+    this.peticionGet();
   }
 
   peticionGet=()=>{

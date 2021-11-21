@@ -106,6 +106,16 @@ class Login extends Component {
     this.setState({docente : false})
   }
   
+  componentDidMount() {
+    if (cookies.get("Cargo")==="ADMINISTRADOR") {
+        window.location.href = "./menu";
+    } else if (cookies.get("Cargo")==="DOCENTE") {
+        window.location.href = "./menuDocentes";
+    } else if (cookies.get("Cargo")==="ESTUDIANTE") {
+      window.location.href = "./menuEstudiantes";
+    }
+  }
+
   render() {
     return (
       <div id="Principal">
