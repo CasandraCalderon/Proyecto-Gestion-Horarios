@@ -9,9 +9,8 @@ import PresentCard from "../../../PresentCard/PresentCard";
 
 
 const url = "http://localhost:8000/api/materia";
-const urlDocentes ="http://localhost:8000/api/docente"
 const urlSemestres= "http://localhost:8000/api/semestres";
-const urlAulas = "http://localhost:8000/api/tipoAula";
+
 
 class IMaterias extends Component {
   //Almacenar estado
@@ -29,40 +28,20 @@ class IMaterias extends Component {
       Nombre: "",
       Sigla: "",
       Semestre: "",
-      Docente: "",
-      TipoAula: "",
       CantHSemanas: "",
     },
   };
 
   componentDidMount() {
-    axios.get(urlDocentes)
-    .then((response) => {
-      console.log(response);
-      this.setState({Docentes: response.data});
-      this.peticionGet();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
     axios.get(urlSemestres)
     .then((response) => {
       console.log(response);
       this.setState({Semestres: response.data});
-      this.peticionGet();
     })
     .catch((error) => {
       console.log(error);
     });
-    axios.get(urlAulas)
-    .then((response) => {
-      console.log(response);
-      this.setState({Aulas: response.data});
-      this.peticionGet();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    this.peticionGet();
   }
 
   peticionGet=()=>{
@@ -81,8 +60,6 @@ class IMaterias extends Component {
           Nombre: this.state.form.Nombre,
           Sigla: this.state.form.Sigla,
           Semestre: this.state.form.Semestre,
-          Docente: this.state.form.Docente,
-          TipoAula: this.state.form.TipoAula,
           CantHSemanas: this.state.form.CantHSemanas,
         }
         ).then(response=>{
@@ -100,8 +77,6 @@ class IMaterias extends Component {
           Nombre: this.state.form.Nombre,
           Sigla: this.state.form.Sigla,
           Semestre: this.state.form.Semestre,
-          Docente: this.state.form.Docente,
-          TipoAula: this.state.form.TipoAula,
           CantHSemanas: this.state.form.CantHSemanas,
         }
         ).then(response=>{
@@ -129,8 +104,6 @@ class IMaterias extends Component {
           Nombre: materia.Nombre,
           Sigla: materia.Sigla,
           Semestre: materia.Semestre,
-          Docente: materia.Docente,
-          TipoAula: materia.TipoAula,
           CantHSemanas: materia.CantHSemanas,
         }
       })
@@ -162,8 +135,6 @@ class IMaterias extends Component {
               <th id="Primero">Nombre</th>
               <th id="Primero">Sigla</th>
               <th id="Primero">Semestre</th>
-              <th id="Primero">Docente</th>
-              <th id="Primero">Tipo de Aula</th>
               <th id="Primero">CantHSemanas</th>
               <th id="Primero">Acciones</th>
             </tr>
@@ -176,8 +147,6 @@ class IMaterias extends Component {
                         <td id="Primero">{materia.Nombre}</td>
                         <td id="Primero">{materia.Sigla}</td>
                         <td id="Primero">{materia.Semestre}</td>
-                        <td id="Primero">{materia.Docente}</td>
-                        <td id="Primero">{materia.TipoAula}</td>
                         <td id="Primero">{materia.CantHSemanas}</td>
                         <td id="Primero">
                     <button className="btn btn-dark" onClick={()=>{this.seleccionarMateria(materia); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
@@ -208,24 +177,6 @@ class IMaterias extends Component {
                         <select name="Semestre" className="form-select" id="Semestre" onChange={this.handleChange}>
                           <option>Selecionar Semestre...</option>
                           {this.state.Semestres.map(elemento => (
-                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
-                            )
-                          )}
-                        </select>
-                        <br />
-                        <label htmlFor="Docente">Docente</label>
-                        <select name="Docente" className="form-select" id="Docente" onChange={this.handleChange}>
-                          <option>Selecionar Docente</option>
-                          {this.state.Docentes.map(elemento => (
-                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre} {elemento.Ap_Paterno} {elemento.Ap_Materno}</option>
-                            )
-                          )}
-                        </select>
-                        <br />
-                        <label htmlFor="TipoAula">Tipo de Aula</label>
-                        <select name="TipoAula" className="form-select" id="TipoAula" onChange={this.handleChange}>
-                          <option>Selecionar tipo de aula...</option>
-                          {this.state.Aulas.map(elemento => (
                             <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
                             )
                           )}

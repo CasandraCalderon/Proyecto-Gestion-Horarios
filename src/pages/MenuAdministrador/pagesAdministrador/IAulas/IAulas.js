@@ -9,14 +9,10 @@ import PresentCard from "../../../PresentCard/PresentCard";
 
 
 const url = "http://localhost:8000/api/aula";
-const urlPlantas =  axios.get("http://localhost:8000/api/planta");
-const urlSalas = axios.get("http://localhost:8000/api/tipoAula");
 class IAulas extends Component {
   //Almacenar estado
   state = {
     data: [],
-    Plantas: [],
-    Salas: [],
     modalInsertar: false,
     modalEliminar: false,
     selectedOption: null,
@@ -31,22 +27,6 @@ class IAulas extends Component {
   };
 
   componentDidMount() {
-    axios.get(urlPlantas)
-    .then((response) => {
-      console.log(response);
-      this.setState({Plantas: response.data});
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    axios.get(urlSalas)
-    .then((response) => {
-      console.log(response);
-      this.setState({Salas: response.data});
-    })
-    .catch((error) => {
-      console.log(error);
-    });
     this.peticionGet();
   }
 
@@ -183,19 +163,20 @@ class IAulas extends Component {
                         <label htmlFor="Piso">Planta</label>
                         <select name="Piso" className="form-select" id="Piso" onChange={this.handleChange}>
                           <option>Selecionar planta...</option>
-                          {this.state.Plantas.map(elemento => (
-                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
-                            )
-                          )}
+                          <option>PLANTA BAJA</option>
+                          <option>PRIMER PISO</option>
+                          <option>SEGUNDO PISO</option>
+                          <option>TERCER PISO</option>
+                          <option>CUARTO PISO</option>
+                          
                         </select>
                         <br />
                         <label htmlFor="TipoSala">Sala</label>
                         <select name="TipoSala" className="form-select" id="TipoSala" onChange={this.handleChange}>
                           <option>Selecionar tipo de sala...</option>
-                          {this.state.Salas.map(elemento => (
-                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
-                            )
-                          )}
+                          <option>SALA NORMAL</option>
+                          <option>LABORATORIO</option>
+                          <option>SALA DE COMPUTACION</option>
                         </select>
                         <br />
                         <label htmlFor="Capacidad">Capacidad</label>

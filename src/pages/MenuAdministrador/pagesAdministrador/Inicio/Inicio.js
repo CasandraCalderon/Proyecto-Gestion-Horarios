@@ -16,7 +16,8 @@ const Inicio = () => {
             <div id = "Contenido">
                 <h1>Bienvenid@ {cookies.get("Nombre")}</h1>
                 <p id="ContenidoInicio">Aqui podras administrar toda la gestion de horarios de la Universidad Autonoma Tomas Frias de la carrera de Ingenieria de sistemas</p>
-                <p>Estas son las funciones que se le permite realizar: <br/> Administracion de usuarios</p>
+                <p>Estas son las funciones que se le permite realizar: </p>
+                <p>Control y administracion de usuarios <br/> Control y administracion de Aulas de la institucion <br/> Control y administracion de las diferentes materias que presenta la carrera <br/> Creacion y control de horarios de los distintos semestres <br/> Descarga de reportes sobre Usuarios, Materias y aulas registradas que presenta la plataforma</p>
             </div>
         </div>
     )
