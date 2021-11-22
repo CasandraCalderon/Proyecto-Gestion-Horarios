@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {CSVLink} from 'react-csv';
 
 
@@ -38,11 +39,17 @@ componentDidMount() {
     const {data}=this.state;
   return (
     <div className="text-center" >
-        
-        <CSVLink data={data} filename={"Lista de Docentes"}><button className="btn btn-success ">Exportar a Excel</button></CSVLink>
-    
+        <ReactHTMLTableToExcel 
+        id="exportaraExcel"
+        className="btn btn-success"
+        table="tabladocentes"
+        filename="Reporte de Docentes"
+        sheet="pagina 1"
+        buttonText="Exportar a Excel"
+        />
+       
      <br /><br />
-    <table className="table">
+    <table className="table" id="tabladocentes">
       <thead>
         <tr>
           <th>Nombres</th>
@@ -53,15 +60,13 @@ componentDidMount() {
       </thead>
       <tbody>
         {this.state.data.map(usuario=>{
-          return(
-    
+          return(    
          <tr key={usuario.id}>
           <td>{usuario.Nombres}</td>
           <td>{usuario.Apellidos}</td>
           <td>{usuario.CorreoElectronico}</td>
           <td>{usuario.Cargo}</td>
           </tr>
-          
           )
         })}
       </tbody>
