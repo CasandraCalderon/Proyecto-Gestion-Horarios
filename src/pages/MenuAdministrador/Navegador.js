@@ -38,8 +38,12 @@ export default class Navegador extends React.Component {
                 </NavDropdown>
                 <NavLink as={Link} to={"/Aulas"}>Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}>Materias</NavLink>
-                <NavLink as={Link} to={"/Horarios"}>Horarios</NavLink>
-                <NavLink as={Link} to={"./Reportes"}>Reportes</NavLink>
+                <NavLink as={Link} to={""}>Horarios</NavLink>
+                <NavDropdown title="Reportes">
+                  <NavDropdown.Item as={Link} to={"/Reportes/Administrador"}>Docentes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={""}>Horarios</NavDropdown.Item>
+                </NavDropdown>
+                
               </Nav>
             </Navbar.Collapse>
             <button onClick={() => cerrar()} type="button" className="btn btn-secondary">Cerrar Sesion</button>
