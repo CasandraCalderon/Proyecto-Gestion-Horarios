@@ -125,7 +125,6 @@ class Disponibilidad extends Component {
         if(document.getElementById('5Jueves').checked){datos.push('5Jueves')}
         if(document.getElementById('5Viernes').checked){datos.push('5Viernes')}
         if(document.getElementById('5Sabado').checked){datos.push('5Sabado')}
-        console.log(datos);
         this.days(datos);
         this.modalInsertar();
     }

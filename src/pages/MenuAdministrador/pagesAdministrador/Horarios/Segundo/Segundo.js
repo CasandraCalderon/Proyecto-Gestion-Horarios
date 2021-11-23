@@ -41,7 +41,6 @@ class Primero extends Component {
   componentDidMount() {
     axios.get(urlMaterias)
     .then((response) => {
-      console.log(response);
       this.setState({Materias: response.data});
     })
     .catch((error) => {
@@ -49,7 +48,6 @@ class Primero extends Component {
     });
     axios.get(urlDocentes)
     .then((response) => {
-      console.log(response);
       this.setState({Docentes: response.data});
     })
     .catch((error) => {
@@ -57,7 +55,6 @@ class Primero extends Component {
     });
     axios.get(urlAulas)
     .then((response) => {
-      console.log(response);
       this.setState({Aulas: response.data});
     })
     .catch((error) => {
@@ -65,7 +62,6 @@ class Primero extends Component {
     });
     axios.get(urlSemestres)
     .then((response) => {
-      console.log(response);
       this.setState({Semestres: response.data});
     })
     .catch((error) => {
@@ -210,7 +206,27 @@ class Primero extends Component {
           console.log(elemento.DisOcupada);
           this.getDocentes(elemento.DisOcupada, elemento._id);
             
-          }) : console.log('chale no se pudo');
+          }) : this.state.form.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).map(elemento =>{
+            elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+            console.log(elemento.DisOcupada);
+            this.getDocentes(elemento.DisOcupada, elemento._id);
+              
+            }) : this.state.form.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).map(elemento =>{
+              elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+              console.log(elemento.DisOcupada);
+              this.getDocentes(elemento.DisOcupada, elemento._id);
+                
+              }) : this.state.form.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).map(elemento =>{
+                elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+                console.log(elemento.DisOcupada);
+                this.getDocentes(elemento.DisOcupada, elemento._id);
+                  
+                }) : this.state.form.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).map(elemento =>{
+                  elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+                  console.log(elemento.DisOcupada);
+                  this.getDocentes(elemento.DisOcupada, elemento._id);
+                    
+                  }) :console.log('chale no se pudo');
       }
 
       
