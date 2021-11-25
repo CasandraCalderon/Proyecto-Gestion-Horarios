@@ -16,12 +16,25 @@ import IAdminstrador from "../pagesAdministrador/Usuarios/IAdministrador/IAdmins
 import IDocentes from "../pagesAdministrador/Usuarios/IDocente/IDocentes";
 import IEstudiantes from "../pagesAdministrador/Usuarios/IEstudiante/IEstudiantes";
 import InicioHorarios from "../pagesAdministrador/Horarios/InicioHorarios";
+import Swal from "sweetalert2";
 //import Cookies from "universal-cookie";
 
 //const cookies = new Cookies();
 export default class Navegador extends React.Component {
-  render() {
+  salir=()=> {
     let {cerrar} = this.props;
+    Swal.fire({
+      title: '¿Esta seguro que quiere salir de su sesion?',
+      icon : 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        cerrar();
+      }
+    })
+  }
+  render() {
     return (
       <div id= "PAdmin">
       <Router>
@@ -55,7 +68,7 @@ export default class Navegador extends React.Component {
                 <NavLink as={Link} to={"/Reportes"}><HiDocumentReport/> Reportes</NavLink>
               </Nav>
             </Navbar.Collapse>
-            <button id= "Exit" onClick={() => cerrar()} type="button" className="btn btn-secondary"><BiExit size={30}/></button>
+            <button id= "Exit" onClick={this.salir} type="button" className="btn btn-secondary"><BiExit size={30}/></button>
           </Navbar>
         </div>
         <div>

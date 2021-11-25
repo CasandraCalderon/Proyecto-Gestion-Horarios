@@ -1,14 +1,14 @@
 //Menu principal de administrador
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import Cookies from "universal-cookie";
 import Navegador from "./NavBar/Navegador";
-
-
+import { useHistory } from "react-router-dom";
 
 const cookies = new Cookies();
 
-class Menu extends Component {
-  cerrarSesion = () => {
+const Menu = () => {
+  const history = useHistory();
+  const cerrarSesion = () => {
     cookies.remove("_id", { path: "/" });
     cookies.remove("Nombre", { path: "/" });
     cookies.remove("Ap_Paterno", { path: "/" });
@@ -16,22 +16,20 @@ class Menu extends Component {
     cookies.remove("RU", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
     cookies.remove("username", { path: "/" });
-    window.location.href = "../Login";
+    history.push("./");
   };
 
-  componentDidMount() {
+  useEffect(() => {
     if (!cookies.get("_id")) {
-      window.location.href = "../Login";
+      history.push("./");
     }
-  }
-  render() {
-    return (
-      <div>
-        < Navegador cerrar={this.cerrarSesion} />
-        <br />
-      </div>
-    );
-  }
-}
+  });
+  return (
+    <div>
+      <Navegador cerrar={cerrarSesion} />
+      <br />
+    </div>
+  );
+};
 
 export default Menu;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './IEstudiantes.css';
+import Swal from 'sweetalert2'
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +15,6 @@ class IEstudiantes extends Component {
   state={
     data:[],
     modalInsertar: false,
-    modalEliminar: false,
     form:{
       _id: "",
       Nombre: "",
@@ -80,6 +80,12 @@ class IEstudiantes extends Component {
       ).then(response=>{
           this.modalInsertar();
         this.peticionGet();
+        Swal.fire({
+          title: 'Estudiante actualizado correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
     }
     
@@ -127,6 +133,29 @@ class IEstudiantes extends Component {
     componentDidMount() {
       this.peticionGet();
     }
+  
+    modalEliminar = () => {
+      Swal.fire({
+        title: `¡Espera!`,
+        text: `¿Esta seguro de eliminar a ${this.state.form.Nombre} ${this.state.form.Ap_Paterno} ${this.state.form.Ap_Materno}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.peticionDelete()
+          Swal.fire(
+            '¡Eliminado!',
+            'Su solicitud se ejecuto de manera exitosa',
+            'success'
+          )
+        } else {
+          this.setState({modalEliminar: false})
+        }
+      })
+    }
     
   
     render(){
@@ -163,7 +192,7 @@ class IEstudiantes extends Component {
                       <td className="Segunda">
                   <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                   {"   "}
-                  <button className="btn btn-danger" onClick={()=>{this.seleccionarUsuario(usuario); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+                  <button className="btn btn-danger" onClick={()=>{this.seleccionarUsuario(usuario); this.modalEliminar()}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                   </td>
             </tr>
             )
@@ -223,16 +252,6 @@ class IEstudiantes extends Component {
                   </ModalFooter>
             </Modal>
   
-  
-            <Modal isOpen={this.state.modalEliminar}>
-              <ModalBody>
-                 ¿Estás seguro que deseas eliminar este Estudiante?? {form && form.Nombres}
-              </ModalBody>
-              <ModalFooter>
-                <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
-                <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
-              </ModalFooter>
-            </Modal>
     </div>
     
   

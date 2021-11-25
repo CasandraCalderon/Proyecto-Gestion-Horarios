@@ -149,8 +149,6 @@ class IAulas extends Component {
           </tbody>
         </table>
     
-    
-    
         <Modal isOpen={this.state.modalInsertar}>
                     <ModalHeader style={{display: 'block'}}>
                       <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>

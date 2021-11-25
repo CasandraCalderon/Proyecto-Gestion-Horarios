@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import PresentCard from '../../../../PresentCard/PresentCard';
+import Swal from 'sweetalert2'
 //import md5 from 'md5';
 
 const url="http://localhost:8000/api/docente";
@@ -16,7 +17,6 @@ class IDocentes extends Component {
     data:[],
     modalInsertar: false,
     modalVer: false,
-    modalEliminar: false,
     modalDisponibilidad: false,
     form:{
       _id: "",
@@ -86,12 +86,17 @@ class IDocentes extends Component {
       ).then(response=>{
         this.modalInsertar();
         this.peticionGet();
+        Swal.fire({
+          title: 'Docente actualizado correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
   }
     
     peticionDelete=()=>{
       axios.delete(`${url}/delete/${this.state.form._id}`).then(response=>{
-        this.setState({modalEliminar: false});
         this.peticionGet();
       })
     }
@@ -176,6 +181,28 @@ class IDocentes extends Component {
       this.peticionGet();
     }
     
+    modalEliminar = () => {
+      Swal.fire({
+        title: `¡Espera!`,
+        text: `¿Esta seguro de eliminar a ${this.state.form.Nombre} ${this.state.form.Ap_Paterno} ${this.state.form.Ap_Materno}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.peticionDelete()
+          Swal.fire(
+            '¡Eliminado!',
+            'Su solicitud se ejecuto de manera exitosa',
+            'success'
+          )
+        } else {
+          this.setState({modalEliminar: false})
+        }
+      })
+    }
   
     render(){
       const {form}=this.state;
@@ -213,7 +240,7 @@ class IDocentes extends Component {
                   {"   "}
                   <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                   {"   "}
-                  <button className="btn btn-danger" onClick={()=>{this.seleccionarUsuario(usuario); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+                  <button className="btn btn-danger" onClick={()=>{this.seleccionarUsuario(usuario); this.modalEliminar()}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                   </td>
             </tr>
             )
@@ -274,15 +301,7 @@ class IDocentes extends Component {
             </Modal>
   
   
-            <Modal isOpen={this.state.modalEliminar}>
-              <ModalHeader>
-                 ¿Estás seguro que deseas eliminar este Docente? {form && form.Usuario}
-              </ModalHeader>
-              <ModalFooter>
-                <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
-                <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
-              </ModalFooter>
-            </Modal>
+            
 
           <Modal isOpen={this.state.modalVer} centered fullscreen="" size="xl">
             <ModalHeader>

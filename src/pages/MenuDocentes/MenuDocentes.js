@@ -16,12 +16,12 @@ class MenuDocentes extends Component {
     cookies.remove("Cargo", { path: "/" });
     cookies.remove("username", { path: "/" });
     cookies.remove("image", { path: "/" });
-    window.location.href = "./login";
+    window.location.href = "./";
   };
 
   componentDidMount() {
     if (!cookies.get("_id")) {
-      window.location.href = "./login";
+      window.location.href = "./";
     }
   }
 

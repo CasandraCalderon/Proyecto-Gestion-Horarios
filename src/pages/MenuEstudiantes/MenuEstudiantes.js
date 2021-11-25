@@ -14,15 +14,13 @@ class MenuEstudiantes extends Component {
     cookies.remove("RU", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
     cookies.remove("Semestre", { path: "/" });
-    window.location.href = "./";
     cookies.remove("username", { path: "/" });
-    window.location.href = "./login";
+    window.location.href = "./";
   };
 
   componentDidMount() {
     if (!cookies.get("_id")) {
       window.location.href = "./";
-      window.location.href = "./login";
     }
   }
 

@@ -16,7 +16,6 @@ class IAdminstrador extends Component {
 state={
   data:[],
   modalInsertar: false,
-  modalEliminar: false,
   form:{
     _id: "",
     Nombre: "",
@@ -132,7 +131,28 @@ console.log(this.state.form);
     this.peticionGet();
   }
   
-
+modalEliminar = () => {
+  Swal.fire({
+    title: `¡Espera!`,
+    text: `¿Esta seguro de eliminar a ${this.state.form.Nombre} ${this.state.form.Ap_Paterno} ${this.state.form.Ap_Materno}?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.peticionDelete()
+      Swal.fire(
+        '¡Eliminado!',
+        'Su solicitud se ejecuto de manera exitosa',
+        'success'
+      )
+    } else {
+      this.setState({modalEliminar: false})
+    }
+  })
+}
 
   render(){
     const {form}=this.state;
@@ -147,12 +167,12 @@ console.log(this.state.form);
     <table className="table table-fixed text-center container">
       <thead className="row">
         <tr>
-          <th className="S">Nombres</th>
-          <th className="S">Apellido Paterno</th>
-          <th className="S">Apellido Materno</th>
-          <th className="S">Correo Electronico</th>
-          <th className="S">RU</th>
-          <th className="S">Acciones</th>
+          <th id="S">Nombres</th>
+          <th id="S">Apellido Paterno</th>
+          <th id="S">Apellido Materno</th>
+          <th id="S">Correo Electronico</th>
+          <th id="S">RU</th>
+          <th id="S">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -160,44 +180,22 @@ console.log(this.state.form);
             
             return(
                 <tr key={usuario._id}>
-                    <td className="S">{usuario.Nombre}</td>
-                    <td className="S">{usuario.Ap_Paterno}</td>
-                    <td className="S">{usuario.Ap_Materno}</td>
-                    <td className="S">{usuario.Email}</td>
-                    <td className="S">{usuario.RU}</td>
-                    <td className="S">
+                    <td id="S">{usuario.Nombre}</td>
+                    <td id="S">{usuario.Ap_Paterno}</td>
+                    <td id="S">{usuario.Ap_Materno}</td>
+                    <td id="S">{usuario.Email}</td>
+                    <td id="S">{usuario.RU}</td>
+                    <td id="S">
                 <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                 {"   "}
-                <button className="btn btn-danger" onClick={()=>{this.seleccionarUsuario(usuario); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+                <button className="btn btn-danger" onClick={()=>{this.seleccionarUsuario(usuario); this.modalEliminar()}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                 </td>
           </tr>
           )
         })}
       </tbody>
     </table>
-    {this.state.modalEliminar? 
-                Swal.fire({
-                  title: `Esta seguro de eliminar a ${form && form.username}?`,
-                  text: "You won't be able to revert this!",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    this.peticionDelete()
-                    Swal.fire(
-                      'Deleted!',
-                      'Your file has been deleted.',
-                      'success'
-                    )
-                  } else {
-                    this.setState({modalEliminar: false})
-                  }
-                }) : console.log('nada')
-          }
-
+    
 
 
     <Modal isOpen={this.state.modalInsertar}>
