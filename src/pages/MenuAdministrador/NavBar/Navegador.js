@@ -7,6 +7,8 @@ import { AiTwotoneHome } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";
 import { HiDocumentReport } from "react-icons/hi";
 import { BsFillDoorClosedFill } from "react-icons/bs";
+import { RiNewspaperFill } from "react-icons/ri";
+import { FaCalendarAlt } from "react-icons/fa";
 import escudo from "../../../img/escudo.png";
 import Administrador from "../Administrador";
 import IAulas from "../pagesAdministrador/IAulas/IAulas";
@@ -17,6 +19,8 @@ import IDocentes from "../pagesAdministrador/Usuarios/IDocente/IDocentes";
 import IEstudiantes from "../pagesAdministrador/Usuarios/IEstudiante/IEstudiantes";
 import InicioHorarios from "../pagesAdministrador/Horarios/InicioHorarios";
 import Swal from "sweetalert2";
+import { MiPerfil } from "../../miPerfil/MiPerfil";
+import { Reportes } from "../Reportes/Reportes";
 //import Cookies from "universal-cookie";
 
 //const cookies = new Cookies();
@@ -64,8 +68,9 @@ export default class Navegador extends React.Component {
                 </NavDropdown>
                 <NavLink as={Link} to={"/Aulas"}> <BsFillDoorClosedFill/> Aulas</NavLink>
                 <NavLink as={Link} to={"/Materias"}><GiBookshelf/> Materias</NavLink>
-                <NavLink as={Link} to={"/Horarios"}><GiBookshelf/> Horarios</NavLink>
+                <NavLink as={Link} to={"/Horarios"}><FaCalendarAlt/> Horarios</NavLink>
                 <NavLink as={Link} to={"/Reportes"}><HiDocumentReport/> Reportes</NavLink>
+                <NavLink as={Link} to={"/miPerfil"}><RiNewspaperFill/>Mi perfil</NavLink>
               </Nav>
             </Navbar.Collapse>
             <button id= "Exit" onClick={this.salir} type="button" className="btn btn-secondary"><BiExit size={30}/></button>
@@ -98,7 +103,10 @@ export default class Navegador extends React.Component {
               <Administrador />
             </Route>
             <Route path="/Reportes">
-              <Administrador />
+              <Reportes />
+            </Route>
+            <Route path="/miPerfil">
+              <MiPerfil />
             </Route>
           </Switch>
         </div>

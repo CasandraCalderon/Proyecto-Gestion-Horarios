@@ -2,20 +2,32 @@ import React, { Component } from "react";
 import "./IAulas.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { AiFillPrinter } from "react-icons/ai";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PresentCard from "../../../PresentCard/PresentCard";
-
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 const url = "http://localhost:8000/api/aula";
+const columns = [
+  {title: "Nombre", field: "Nombre"},
+  {title: "Planta", field: "Piso"},
+  {title: "Tipo Sala", field: "TipoSala"},
+  {title: "Capacidad", field: "Capacidad"},
+]
 class IAulas extends Component {
   //Almacenar estado
   state = {
     data: [],
     modalInsertar: false,
-    modalEliminar: false,
     selectedOption: null,
+    busqueda1: "Filtrar todas las salas",
+    busqueda2: "",
+    busqueda: "",
     tipoModal: "",
     form: {
       _id: "",
@@ -66,8 +78,14 @@ class IAulas extends Component {
           Capacidad: this.state.form.Capacidad,
         }
         ).then(response=>{
-            this.modalInsertar();
+          this.modalInsertar();
           this.peticionGet();
+          Swal.fire({
+            title: 'Aula actualizada correctamente',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
       }
       
@@ -106,8 +124,59 @@ class IAulas extends Component {
     console.log(this.state.form);
     }
     
-     
-      
+    onChange = async (e) => {
+      e.persist();
+      await this.setState({
+        ...this.state.busquedaRU,
+        [e.target.name]: e.target.value,
+      });
+      console.log(this.state.busquedaRU);
+    };
+  
+    onChange1 = async (e) => {
+      e.persist();
+      await this.setState({
+        ...this.state.busqueda1,
+        [e.target.name]: e.target.value,
+      });
+    };
+  
+    seleccionarBusqueda = () => {
+      this.setState({ busqueda: this.state.busqueda2 });
+    };
+    
+    modalEliminar = () => {
+      Swal.fire({
+        title: `¡Espera!`,
+        text: `¿Esta seguro de eliminar ${this.state.form.Nombre}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.peticionDelete()
+          Swal.fire(
+            '¡Eliminado!',
+            'Su solicitud se ejecuto de manera exitosa',
+            'success'
+          )
+        } else {
+          this.setState({modalEliminar: false})
+        }
+      })
+    }
+    DownloadPdf=()=>{
+      const doc= new jsPDF()
+      doc.text("AULAS REGISTRADAS",20,10)
+      doc.autoTable({
+          theme: "striped",
+          columns:columns.map(col => ({ ...col, dataKey: col.field })),
+          body: this.state.data
+      })
+      doc.save("aulas.pdf")
+    }
     
       render(){
         const {form}=this.state;
@@ -117,6 +186,43 @@ class IAulas extends Component {
         <div className="text-left container">
             <br />
           <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Aula</button>
+          <div className="barraBusqueda">
+            <select
+              className="textField"
+              placeholder="Buscar Semestre"
+              type="text"
+              name="busqueda1"
+              id="busqueda1"
+              onChange={this.onChange1}
+              value={this.state.busqueda1}
+            >
+              <option>Filtrar todas las salas</option>
+              <option>SALA NORMAL</option>
+              <option>LABORATORIO</option>
+              <option>SALA DE COMPUTACION</option>
+              
+            </select>{"   "}
+
+            <input
+              className="textField"
+              placeholder="Buscar por Nombre"
+              type="text"
+              name="busqueda2"
+              id="busqueda2"
+              onChange={this.onChange}
+              value={this.state.busqueda2}
+            />
+            <button
+              type="button"
+              className="btn btn-dark"
+              onClick={this.seleccionarBusqueda}
+            >
+              {" "}
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+            {" "}
+            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}><AiFillPrinter size={20}/></button>
+          </div>
           </div>
           <br />
         <table className="table table-fixed text-center container">
@@ -130,7 +236,13 @@ class IAulas extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.data.map(aula=>{
+            {this.state.data
+              .filter((elemento) =>
+                this.state.busqueda !== ""?
+                   this.state.busqueda.includes(elemento.Nombre): this.state.busqueda1 === "Filtrar todas las salas"?
+                   typeof (elemento.Nombre) === "string": 
+                   elemento.TipoSala === this.state.busqueda1 
+              ).map(aula=>{
                 
                 return(
                     <tr key={aula._id}>
@@ -141,7 +253,7 @@ class IAulas extends Component {
                         <td id="Pri">
                     <button className="btn btn-dark" onClick={()=>{this.seleccionarAula(aula); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                     {"   "}
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(aula); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(aula); this.modalEliminar()}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                     </td>
               </tr>
               )
@@ -193,17 +305,6 @@ class IAulas extends Component {
       }
                         <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
                     </ModalFooter>
-              </Modal>
-    
-    
-              <Modal isOpen={this.state.modalEliminar}>
-                <ModalBody>
-                   ¿Estás seguro que deseas eliminar esta Aula? {form && form.Nombre}
-                </ModalBody>
-                <ModalFooter>
-                  <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
-                  <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
-                </ModalFooter>
               </Modal>
       </div>
       

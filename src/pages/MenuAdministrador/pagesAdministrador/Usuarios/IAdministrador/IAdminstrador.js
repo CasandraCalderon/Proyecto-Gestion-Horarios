@@ -5,17 +5,32 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { AiFillPrinter } from "react-icons/ai";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import PresentCard from '../../../../PresentCard/PresentCard';
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
-//import md5 from 'md5';
 
 const url="http://localhost:8000/api/admin";
+const columns = [
+  {title: "Nombre", field: "Nombre"},
+  {title: "Ap_Paterno", field: "Ap_Paterno"},
+  {title: "Ap_Materno", field: "Ap_Materno"},
+  {title: "CI", field: "CI"},
+  {title: "Email", field: "Email"},
+  {title: "RU", field: "RU"},
+  {title: "Telefono", field: "Telefono"},
+  {title: "Usuario", field: "username"},
+]
 
 class IAdminstrador extends Component {
 state={
   data:[],
   modalInsertar: false,
+  busquedaRU: '', 
+  busqueda: '',
   form:{
     _id: "",
     Nombre: "",
@@ -24,6 +39,7 @@ state={
     CI: "",
     Email: "",
     RU: "",
+    Telefono: "",
     Cargo: "",
     username: "",
     password: "",
@@ -48,10 +64,11 @@ peticionPost=async()=>{
       Ap_Materno: this.state.form.Ap_Materno,
       CI: this.state.form.CI,
       Email: this.state.form.Email,
+      Telefono: this.state.form.Telefono,
       RU: this.state.form.RU,
-      Cargo: this.state.form.Cargo,
-      username: this.state.form.username,
-      password: this.state.form.password,
+      Cargo: 'ADMINISTRADOR',
+      username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
+      password: `admin_${this.state.form.RU}${this.state.form.CI}`,
     }
     ).then(response=>{
       this.modalInsertar();
@@ -71,8 +88,9 @@ peticionPut=()=>{
         CI: this.state.form.CI,
         Email: this.state.form.Email,
         RU: this.state.form.RU,
+        Telefono: this.state.form.Telefono,
         Cargo: this.state.form.Cargo,
-        username: this.state.form.username,
+        username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
         password: this.state.form.password,
     }
     ).then(response=>{
@@ -108,6 +126,7 @@ seleccionarUsuario=(usuario)=>{
       Ap_Materno: usuario.Ap_Materno,
       CI: usuario.CI,
       Email: usuario.Email,
+      Telefono: usuario.Telefono,
       RU: usuario.RU,
       Cargo:usuario.Cargo,
       username: usuario.username,
@@ -153,6 +172,25 @@ modalEliminar = () => {
     }
   })
 }
+onChange=async e=>{
+  e.persist();
+  await this.setState({...this.state.busquedaRU, [e.target.name]: e.target.value});
+  console.log(this.state.busquedaRU);
+}
+
+seleccionarBusqueda= () =>{
+  this.setState({busqueda:this.state.busquedaRU})
+}
+DownloadPdf=()=>{
+  const doc= new jsPDF()
+  doc.text("LISTA DE ADMINISTRADORES",20,10)
+  doc.autoTable({
+      theme: "grid",
+      columns:columns.map(col => ({ ...col, dataKey: col.field })),
+      body: this.state.data
+  })
+  doc.save("administradores.pdf")
+}
 
   render(){
     const {form}=this.state;
@@ -162,29 +200,40 @@ modalEliminar = () => {
     <div className="text-left container">
         <br />
       <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Administrador</button>
+      <div className="barraBusqueda">
+        <input className="textField" placeholder="Buscar por RU" type="text" name="busquedaRU" id="busquedaRU" onChange={this.onChange} value={this.state.busquedaRU}/>
+        <button type="button" className="btn btn-dark" onClick={this.seleccionarBusqueda}>
+              {" "}
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+            {" "}
+            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}><AiFillPrinter size={20}/></button>
+        </div>
       </div>
       <br />
     <table className="table table-fixed text-center container">
       <thead className="row">
         <tr>
+          <th id="S">RU</th>
           <th id="S">Nombres</th>
           <th id="S">Apellido Paterno</th>
           <th id="S">Apellido Materno</th>
           <th id="S">Correo Electronico</th>
-          <th id="S">RU</th>
+          <th id="S">Telefono</th>
           <th id="S">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {this.state.data.map(usuario=>{
+        {this.state.data.filter(elemento => this.state.busqueda!==''? this.state.busqueda.includes(elemento.RU) : elemento.Cargo === "ADMINISTRADOR").map(usuario=>{
             
             return(
                 <tr key={usuario._id}>
+                    <td id="S">{usuario.RU}</td>
                     <td id="S">{usuario.Nombre}</td>
                     <td id="S">{usuario.Ap_Paterno}</td>
                     <td id="S">{usuario.Ap_Materno}</td>
                     <td id="S">{usuario.Email}</td>
-                    <td id="S">{usuario.RU}</td>
+                    <td id="S">{usuario.Telefono}</td>
                     <td id="S">
                 <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                 {"   "}
@@ -204,6 +253,9 @@ modalEliminar = () => {
                 </ModalHeader>
                 <ModalBody>
                   <div className="form-group">
+                    <label htmlFor="RU">RU</label>
+                    <input className="form-control" type="text" name="RU" id="RU" onChange={this.handleChange} value={form?form.RU:''}/>
+                    <br />
                     <label htmlFor="Nombre">Nombres</label>
                     <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
                     <br />
@@ -219,25 +271,9 @@ modalEliminar = () => {
                     <label htmlFor="Email">Correo Electronico</label>
                     <input className="form-control" type="text" name="Email" id="Email" onChange={this.handleChange} value={form?form.Email: ''}/>
                     <br />
-                    <label htmlFor="RU">RU</label>
-                    <input className="form-control" type="text" name="RU" id="RU" onChange={this.handleChange} value={form?form.RU:''}/>
+                    <label htmlFor="Telefono">Telefono</label>
+                    <input className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChange} value={form?form.Telefono:''}/>
                     <br />
-                    <label htmlFor="Cargo">Cargo</label>
-                    <input className="form-control" type="text" name="Cargo" id="Cargo" onChange={this.handleChange} value= {form?form.Cargo: ''}/>
-                    <br />
-                    <label htmlFor="username">Usuario</label>
-                    <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username: ''}/>
-                    <br />
-                    {form?.password?
-                    <div>
-                    <label htmlFor="password">Contraseña</label>
-                    <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} readOnly value={form?form.password: ''}/>
-                    </div>:
-                    <div>
-                    <label htmlFor="password">Contraseña</label>
-                    <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} value={form?form.password: ''}/>
-                    </div>
-                    }
                     
                   </div>
                 </ModalBody>

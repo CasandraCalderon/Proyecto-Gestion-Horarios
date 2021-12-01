@@ -3,14 +3,27 @@ import './IDocentes.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FaCalendarCheck } from "react-icons/fa";
+import { AiFillPrinter } from "react-icons/ai";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import PresentCard from '../../../../PresentCard/PresentCard';
 import Swal from 'sweetalert2'
-//import md5 from 'md5';
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 const url="http://localhost:8000/api/docente";
-
+const columns = [
+  {title: "Nombre", field: "Nombre"},
+  {title: "Ap_Paterno", field: "Ap_Paterno"},
+  {title: "Ap_Materno", field: "Ap_Materno"},
+  {title: "CI", field: "CI"},
+  {title: "Email", field: "Email"},
+  {title: "RU", field: "RU"},
+  {title: "Telefono", field: "Telefono"},
+  {title: "Usuario", field: "username"},
+]
 
 class IDocentes extends Component {
   state={
@@ -18,6 +31,8 @@ class IDocentes extends Component {
     modalInsertar: false,
     modalVer: false,
     modalDisponibilidad: false,
+    busquedaRU: '', 
+    busqueda: '',
     form:{
       _id: "",
       Nombre: "",
@@ -26,11 +41,11 @@ class IDocentes extends Component {
       CI: "",
       Email: "",
       RU: "",
+      Telefono : "",
       Cargo: "",
       username: "",
       password: "",
       Disponibilidad: "",
-      image: "",
     }
   }
   
@@ -53,11 +68,11 @@ class IDocentes extends Component {
         CI: this.state.form.CI,
         Email: this.state.form.Email,
         RU: this.state.form.RU,
-        Cargo: this.state.form.Cargo,
-        username: this.state.form.username,
-        password: this.state.form.password,
+        Telefono: this.state.form.Telefono,
+        Cargo: "DOCENTE",
+        username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
+        password: `doc_${this.state.form.RU}${this.state.form.CI}`,
         Disponibilidad: this.state.form.Disponibilidad,
-        image: this.state.form.image
       }
       ).then(response=>{
         this.modalInsertar();
@@ -77,11 +92,11 @@ class IDocentes extends Component {
           CI: this.state.form.CI,
           Email: this.state.form.Email,
           RU: this.state.form.RU,
+          Telefono: this.state.form.Telefono,
           Cargo: this.state.form.Cargo,
           username: this.state.form.username,
           password: this.state.form.password,
           Disponibilidad: this.state.form.Disponibilidad,
-          image: this.state.form.image
       }
       ).then(response=>{
         this.modalInsertar();
@@ -111,11 +126,11 @@ class IDocentes extends Component {
           CI: this.state.form.CI,
           Email: this.state.form.Email,
           RU: this.state.form.RU,
+          Telefono: this.state.form.Telefono,
           Cargo: this.state.form.Cargo,
           username: this.state.form.username,
           password: this.state.form.password,
           Disponibilidad: this.state.form.Disponibilidad,
-          image: this.state.form.image
       }
       ).then(response=>{
         this.setState({modalDisponibilidad: false});
@@ -157,11 +172,11 @@ class IDocentes extends Component {
         CI: usuario.CI,
         Email: usuario.Email,
         RU: usuario.RU,
+        Telefono: usuario.Telefono,
         Cargo:usuario.Cargo,
         username: usuario.username,
         password: usuario.password,
         Disponibilidad: usuario.Disponibilidad,
-        image: usuario.image
       }
     })
   }
@@ -204,6 +219,26 @@ class IDocentes extends Component {
       })
     }
   
+    onChange=async e=>{
+      e.persist();
+      await this.setState({...this.state.busquedaRU, [e.target.name]: e.target.value});
+      console.log(this.state.busquedaRU);
+    }
+    
+    seleccionarBusqueda= () =>{
+      this.setState({busqueda:this.state.busquedaRU})
+    }
+
+    DownloadPdf=()=>{
+      const doc= new jsPDF()
+      doc.text("Lista de Docentes",20,10)
+      doc.autoTable({
+          theme: "grid",
+          columns:columns.map(col => ({ ...col, dataKey: col.field })),
+          body: this.state.data
+      })
+      doc.save("docentes.pdf")
+    }
     render(){
       const {form}=this.state;
     return (
@@ -212,31 +247,41 @@ class IDocentes extends Component {
       <div className="text-left container">
           <br />
         <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Docente</button>
+        <div className="barraBusqueda">
+        <input className="textField" placeholder="Buscar por RU" type="text" name="busquedaRU" id="busquedaRU" onChange={this.onChange} value={this.state.busquedaRU}/>
+        <button type="button" className="btn btn-dark" onClick={this.seleccionarBusqueda}>
+              {" "}
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+            {" "}
+            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}><AiFillPrinter size={20}/></button>
+        </div>
         </div>
         <br />
       <table className="table table-fixed text-center container">
         <thead className="row">
           <tr>
+            <th className="Sec">RU</th>
             <th className="Sec">Nombres</th>
             <th className="Sec">Apellido Paterno</th>
             <th className="Sec">Apellido Materno</th>
             <th className="Sec">Correo Electronico</th>
-            <th className="Sec">RU</th>
+            <th className="Sec">Telefono</th>
             <th className="Sec">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {this.state.data.map(usuario=>{
-              
+          {this.state.data.filter(elemento => this.state.busqueda!==''? this.state.busqueda.includes(elemento.RU) : elemento.Cargo === "DOCENTE").map(usuario=>{    
               return(
                   <tr key={usuario._id}>
+                      <td className="Sec">{usuario.RU}</td>
                       <td className="Sec">{usuario.Nombre}</td>
                       <td className="Sec">{usuario.Ap_Paterno}</td>
                       <td className="Sec">{usuario.Ap_Materno}</td>
                       <td className="Sec">{usuario.Email}</td>
-                      <td className="Sec">{usuario.RU}</td>
+                      <td className="Sec">{usuario.Telefono}</td>
                       <td className="Sec">
-                  <button className="btn btn-success" onClick={()=>{this.seleccionarUsuario(usuario); this.modalVer()}}><FontAwesomeIcon icon={faEye}/></button>
+                  <button className="btn btn-success" onClick={()=>{this.seleccionarUsuario(usuario); this.modalVer()}}><FaCalendarCheck/></button>
                   {"   "}
                   <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                   {"   "}
@@ -256,6 +301,9 @@ class IDocentes extends Component {
                   </ModalHeader>
                   <ModalBody>
                     <div className="form-group">
+                      <label htmlFor="RU">RU</label>
+                      <input className="form-control" type="text" name="RU" id="RU" onChange={this.handleChange} value={form?form.RU:''}/>
+                      <br />
                       <label htmlFor="Nombre">Nombres</label>
                       <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
                       <br />
@@ -271,20 +319,9 @@ class IDocentes extends Component {
                       <label htmlFor="Email">Correo Electronico</label>
                       <input className="form-control" type="text" name="Email" id="Email" onChange={this.handleChange} value={form?form.Email: ''}/>
                       <br />
-                      <label htmlFor="RU">RU</label>
-                      <input className="form-control" type="text" name="RU" id="RU" onChange={this.handleChange} value={form?form.RU:''}/>
+                      <label htmlFor="Telefono">Telefono</label>
+                      <input className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChange} value={form?form.Telefono:''}/>
                       <br />
-                      <label htmlFor="Cargo">Cargo</label>
-                      <input className="form-control" type="text" name="Cargo" id="Cargo" onChange={this.handleChange} value= {form?form.Cargo: ''}/>
-                      <br />
-                      <label htmlFor="Usuario">Usuario</label>
-                      <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username: ''}/>
-                      <br />
-                      <label htmlFor="Contraseña">Contraseña</label>
-                      <input className="form-control" type="password" name="password" id="password" onChange={this.handleChange} value={form?form.password: ''}/>
-                      <br />
-                      <label htmlFor="image">Subir foto de perfil</label>
-                      <input className="form-control" type="file" name="image" id="image" onChange={this.handleChange} value={form?form.image: ''}/>
                     </div>
                   </ModalBody>
   

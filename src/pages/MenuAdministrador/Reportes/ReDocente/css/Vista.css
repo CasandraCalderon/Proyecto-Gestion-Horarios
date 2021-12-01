@@ -1,39 +1,38 @@
 .App {
     text-align: center;
   }
-.table-fixed tbody {
+  .table-fixed tbody {
     height: 600px;
     overflow-y: auto !important;
     width: 95%;
-}
-
-.table-fixed thead,
-.table-fixed tbody,
-.table-fixed td,
-.table-fixed th {
+  }
+  
+  .table-fixed thead,
+  .table-fixed tbody,
+  .table-fixed td,
+  .table-fixed th {
     display: block;
-}
-
-.table-fixed tbody td,
-.table-fixed thead > tr > th{
+  }
+  
+  .table-fixed tbody td,
+  .table-fixed thead > tr > th{
     float: left;
     border-bottom-width: 0;
-}
-
-
-#S {
-    width: 179px
-}
-
-#tablapersonalizada {
+  }
+  .Segunda {
+    width: 200px
+  }
+  
+  #tablapersonañizada {
     width: 1100px;
-}
-
-#formPersonalizado {
+  }
+  
+  #formPersonalizado {
     margin-right: 50px;
     margin-left: 50px;
-}
-.textField{
+  }
+  
+  .textField{
     height: 32px;
       width: 200px;
       border: 1px solid #e5e5e5;
