@@ -15,7 +15,6 @@ const Programacion = () => {
     axios.get(url)
     .then(res=>{
       const data = res.data;
-      console.log(cookies.get("Semestre"));
       setMaterias(data);
     });
   }, []);

@@ -9,17 +9,18 @@ import { RiAdminLine } from "react-icons/ri";
 import { IoIosBook } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import img from "../img/IniciarSesion.png";
 
-const baseAdministradores = "http://localhost:8000/api/admin/login";
+const baseAdministradores = "http://localhost:8000/api/administrador/login";
 const baseDocentes = "http://localhost:8000/api/docente/login";
 const baseEstudiantes = "http://localhost:8000/api/estudiante/login";
 const cookies = new Cookies();
 
 const Login = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const [state, setState] = useState({
     form: {
       username: "",
@@ -31,6 +32,7 @@ const Login = () => {
   const [estudiante, setEstudiante] = useState(false);
   const [errorUser, setErrorUser] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+  const [cargo, setCargo] = useState("Iniciar como...");
 
   const handleChange = async (e) => {
     await setState({
@@ -50,7 +52,8 @@ const Login = () => {
           ? baseAdministradores
           : docente === true
           ? baseDocentes
-          : baseEstudiantes,
+          : estudiante === true? 
+          baseEstudiantes : sinUsuario(),
         {
           username: state.form.username,
           password: state.form.password,
@@ -65,6 +68,9 @@ const Login = () => {
           cookies.set("Ap_Paterno", respuesta.Ap_Paterno, { path: "/" });
           cookies.set("Ap_Materno", respuesta.Ap_Materno, { path: "/" });
           cookies.set("RU", respuesta.RU, { path: "/" });
+          cookies.set("CI", respuesta.CI, { path: "/" });
+          cookies.set("Telefono", respuesta.Telefono, { path: "/" });
+          cookies.set("Email", respuesta.Email, { path: "/" });
           cookies.set("Cargo", respuesta.Cargo, { path: "/" });
           cookies.set("username", respuesta.username, { path: "/" });
           cookies.set("Semestre", respuesta.Semestre, { path: "/" });
@@ -78,11 +84,11 @@ const Login = () => {
           }).then((resultado) => {
             if (resultado.value) {
               if (respuesta.Cargo === "ADMINISTRADOR") {
-                history.push("/menu");
+                history("/menu/Inicio");
               } else if (respuesta.Cargo === "DOCENTE") {
-                history.push("./menuDocentes");
+                history("/menuDocentes/InicioDocente");
               } else if (respuesta.Cargo === "ESTUDIANTE") {
-                history.push("./menuEstudiantes");
+                history("./menuEstudiantes");
               }
             }
           });
@@ -103,27 +109,40 @@ const Login = () => {
     setAdmin(true);
     setDocente(false);
     setEstudiante(false);
+    setCargo("ADMINISTRADOR");
   };
 
   const clickDocente = () => {
     setAdmin(false);
     setDocente(true);
     setEstudiante(false);
+    setCargo("DOCENTE");
   };
 
   const clickEstudiante = () => {
     setAdmin(false);
     setDocente(false);
     setEstudiante(true);
+    setCargo("ESTUDIANTE");
   };
 
+  const sinUsuario = () => {
+    Swal.fire({
+      title: '¿Iniciar como...?',
+      text: 'Por favor, elija que tipo de usuario esta ingresando',
+      imageUrl: img,
+      imageWidth: 400,
+      imageHeight: 200,
+      imageAlt: 'Custom image',
+    })
+  }
   useEffect(() => {
     if (cookies.get("Cargo") === "ADMINISTRADOR") {
-      history.push("/menu");
+      history("/menu/Inicio");
     } else if (cookies.get("Cargo") === "DOCENTE") {
-      history.push("./menuDocentes");
+      history("/menuDocentes/InicioDocente");
     } else if (cookies.get("Cargo") === "ESTUDIANTE") {
-      history.push("./menuEstudiantes");
+      history("./menuEstudiantes");
     }
   });
 
@@ -151,11 +170,14 @@ const Login = () => {
             </Button>
           </ButtonGroup>
         </div>
+        <div id="Usuario">
+        <p id="cargo">{cargo}</p>
+        </div>
         <Row>
           <Col lg={5} md={10} sm={12} className="mx-auto" id="form">
             <Form>
               <Form.Group controlId="formBasicEmail">
-                <InputGroup>
+                <InputGroup >
                   <InputGroupText>
                     <FaUser size={20} />
                   </InputGroupText>

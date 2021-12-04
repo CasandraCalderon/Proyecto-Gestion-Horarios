@@ -46,6 +46,7 @@ class IDocentes extends Component {
       username: "",
       password: "",
       Disponibilidad: "",
+      DisOcupada:"",
     }
   }
   
@@ -73,6 +74,7 @@ class IDocentes extends Component {
         username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
         password: `doc_${this.state.form.RU}${this.state.form.CI}`,
         Disponibilidad: this.state.form.Disponibilidad,
+        DisOcupada: this.state.form.DisOcupada
       }
       ).then(response=>{
         this.modalInsertar();
@@ -97,6 +99,7 @@ class IDocentes extends Component {
           username: this.state.form.username,
           password: this.state.form.password,
           Disponibilidad: this.state.form.Disponibilidad,
+          DisOcupada: this.state.form.DisOcupada
       }
       ).then(response=>{
         this.modalInsertar();
@@ -131,6 +134,7 @@ class IDocentes extends Component {
           username: this.state.form.username,
           password: this.state.form.password,
           Disponibilidad: this.state.form.Disponibilidad,
+          DisOcupada: this.state.form.DisOcupada
       }
       ).then(response=>{
         this.setState({modalDisponibilidad: false});
@@ -142,7 +146,7 @@ class IDocentes extends Component {
       this.setState({
         ...this.state,
         form:{
-          ...this.state.form, Disponibilidad: []
+          ...this.state.form, Disponibilidad: [], DisOcupada: []
         }
       })
       this.modalVer();
@@ -177,6 +181,7 @@ class IDocentes extends Component {
         username: usuario.username,
         password: usuario.password,
         Disponibilidad: usuario.Disponibilidad,
+        DisOcupada: usuario.DisOcupada
       }
     })
   }
@@ -242,7 +247,7 @@ class IDocentes extends Component {
     render(){
       const {form}=this.state;
     return (
-      <div>
+      <div id="fondo">
         <PresentCard/>
       <div className="text-left container">
           <br />
@@ -254,7 +259,7 @@ class IDocentes extends Component {
               <FontAwesomeIcon icon={faSearch} />
             </button>
             {" "}
-            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}><AiFillPrinter size={20}/></button>
+            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}>Imprimir <AiFillPrinter size={20}/></button>
         </div>
         </div>
         <br />
@@ -360,7 +365,7 @@ class IDocentes extends Component {
             </thead>
             <tbody className= "text-center">
                 <tr>
-                    <th scope="row" className="text-center">7:45-10:00</th>
+                    <th scope="row" className="text-center" id="turno">7:45-10:00</th>
                     <td id={(form?.Disponibilidad || []).includes('1Lunes')? "Disponible" : "NoDisponible"}>Primer Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('1Martes')? "Disponible" : "NoDisponible"}>Primer Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('1Miercoles')? "Disponible" : "NoDisponible"}>Primer Turno</td> 
@@ -369,7 +374,7 @@ class IDocentes extends Component {
                     <td id={(form?.Disponibilidad || []).includes('1Sabado')? "Disponible" : "NoDisponible"}>Primer Turno</td>     
                 </tr>
                 <tr>
-                    <th scope="row" className="text-center">10:00-12:15</th>
+                    <th scope="row" className="text-center" id="turno">10:00-12:15</th>
                     <td id={(form?.Disponibilidad || []).includes('2Lunes')? "Disponible" : "NoDisponible"}>Segundo Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('2Martes')? "Disponible" : "NoDisponible"}>Segundo Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('2Miercoles')? "Disponible" : "NoDisponible"}>Segundo Turno</td> 
@@ -378,7 +383,7 @@ class IDocentes extends Component {
                     <td id={(form?.Disponibilidad || []).includes('2Sabado')? "Disponible" : "NoDisponible"}>Segundo Turno</td>     
                 </tr>
                 <tr className= "text-center" id="Receso">
-                <th scope="row">12:15-14:00</th>
+                <th scope="row" id="turno">12:15-14:00</th>
                 <td>RECESO</td>
                 <td>RECESO</td>
                 <td>RECESO</td>
@@ -387,7 +392,7 @@ class IDocentes extends Component {
                 <td>RECESO</td>
                 </tr>
                 <tr>
-                    <th scope="row" className="text-center">14:00-16:15</th>
+                    <th scope="row" className="text-center" id="turno">14:00-16:15</th>
                     <td id={(form?.Disponibilidad || []).includes('3Lunes')? "Disponible" : "NoDisponible"}>Tercer Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('3Martes')? "Disponible" : "NoDisponible"}>Tercer Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('3Miercoles')? "Disponible" : "NoDisponible"}>Tercer Turno</td> 
@@ -396,7 +401,7 @@ class IDocentes extends Component {
                     <td id={(form?.Disponibilidad || []).includes('3Sabado')? "Disponible" : "NoDisponible"}>Tercer Turno</td>     
                 </tr>
                 <tr>
-                    <th scope="row" className="text-center">16:15-18:30</th>
+                    <th scope="row" className="text-center" id="turno">16:15-18:30</th>
                     <td id={(form?.Disponibilidad || []).includes('4Lunes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('4Martes')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('4Miercoles')? "Disponible" : "NoDisponible"}>Cuarto Turno</td> 
@@ -405,7 +410,7 @@ class IDocentes extends Component {
                     <td id={(form?.Disponibilidad || []).includes('4Sabado')? "Disponible" : "NoDisponible"}>Cuarto Turno</td>     
                 </tr>
                 <tr>
-                    <th scope="row" className="text-center">18:30-20:00</th>
+                    <th scope="row" className="text-center" id="turno">18:30-20:00</th>
                     <td id={(form?.Disponibilidad || []).includes('5Lunes')? "Disponible" : "NoDisponible"}>Quinto Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('5Martes')? "Disponible" : "NoDisponible"}>Quinto Turno</td>
                     <td id={(form?.Disponibilidad || []).includes('5Miercoles')? "Disponible" : "NoDisponible"}>Quinto Turno</td> 

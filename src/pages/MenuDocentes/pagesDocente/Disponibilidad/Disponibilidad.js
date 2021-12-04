@@ -5,6 +5,7 @@ import "./Disponibilidad.css"
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "universal-cookie";
+import PresentCard from '../../../PresentCard/PresentCard';
 
 
 const url = "http://localhost:8000/api/docente";
@@ -164,6 +165,7 @@ class Disponibilidad extends Component {
     
       return (
         <div>
+            <PresentCard />
         <div className="text-left container">
         <br />
         {this.state.data.filter(docente => docente.RU === cookies.get("RU")).map(usuario=>{

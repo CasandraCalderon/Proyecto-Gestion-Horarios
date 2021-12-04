@@ -12,7 +12,7 @@ const Inicio = () => {
         <div id='PInicio'>
             <PresentCard />
             <div id = "imagenInicio">
-            <img id = 'imgInicio' src={imgInicio} alt="..."/>
+            <img id = 'imgInicio' src={imgInicio? imgInicio : <h1>Cargando...</h1>} alt="Cargando..."/>
             </div>
             <div id = "Contenido">
                 <h1>Bienvenid@ {cookies.get("Nombre")}</h1>

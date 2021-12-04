@@ -1,44 +1,55 @@
-import React, { Component } from "react";
+import React, { useEffect, Fragment } from 'react';
 import Cookies from "universal-cookie";
-import NavBarDocente from "./NavBarDocente";
-
+import NavBarDocente from "./NavBarDocente/NavBarDocente";
+import {Routes, Route} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Disponibilidad from "./pagesDocente/Disponibilidad/Disponibilidad";
+import InicioDocente from "./pagesDocente/InicioDocentes/InicioDocente";
+import VerHorarios from './pagesDocente/verHorarios/VerHorarios';
+import MiPerfil from '../miPerfil/MiPerfil';
 
 
 const cookies = new Cookies();
 
-class MenuDocentes extends Component {
-  cerrarSesion = () => {
+const MenuDocentes = () => {
+  const history = useNavigate();
+  const cerrarSesion = () => {
     cookies.remove("_id", { path: "/" });
     cookies.remove("Nombre", { path: "/" });
     cookies.remove("Ap_Paterno", { path: "/" });
     cookies.remove("Ap_Materno", { path: "/" });
     cookies.remove("RU", { path: "/" });
+    cookies.remove("CI", { path: "/" });
+    cookies.remove("Telefono", { path: "/" });
+    cookies.remove("Email", { path: "/" });
     cookies.remove("Cargo", { path: "/" });
     cookies.remove("username", { path: "/" });
-    cookies.remove("image", { path: "/" });
-    window.location.href = "./";
+    history("/");
   };
 
-  componentDidMount() {
+  useEffect(() => {
     if (!cookies.get("_id")) {
-      window.location.href = "./";
+      history("/");
     }
-  }
+  });
 
-  render() {
-    console.log('id: '+ cookies.get('_id'));
-    console.log('apellido_paterno: '+cookies.get('Ap_Paterno'));
-    console.log('apellido_materno: '+cookies.get('Ap_Materno'));
-    console.log('nombre: '+cookies.get('Nombre'));
-    console.log('Cargo: '+cookies.get('Cargo'));
-    console.log('username: '+cookies.get('username'));
     return (
-      <div>
-          <NavBarDocente cerrar={this.cerrarSesion}/>
-        <br />
-      </div>
+      <Fragment>
+          <NavBarDocente cerrar={cerrarSesion}/>
+          <br/>
+          <Routes>
+            <Route path="InicioDocente" element={<InicioDocente />}>
+            </Route>
+            <Route path="verHorarios"element={<VerHorarios />}>
+            </Route>
+            <Route path="Disponibilidad" element={< Disponibilidad />}>
+            </Route>
+            <Route path="miPerfil" element={< MiPerfil />}>
+            </Route>
+      </Routes>
+      </Fragment>
     );
-  }
+  
 }
 
 export default MenuDocentes;

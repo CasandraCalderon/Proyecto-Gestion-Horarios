@@ -1,0 +1,43 @@
+#fondoHorario {
+    width: fluid;
+    height: fluid;
+    background: linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      background: -moz-linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      background: -webkit-linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#c9def4", endColorstr="#f5ccd4", GradientType=1 );
+}
+table.table-bordered > thead > tr > th{
+    border:2px solid rgb(115, 77, 146);
+    background-color:hsla(272, 26%, 72%, 1);
+    text-align:center;
+    font-weight: 900;
+  }
+  table.table-bordered > tbody > tr > td{
+    border:2px solid rgb(115, 77, 146);
+    text-align:center;
+    font-weight: 900;
+  }
+#turno {
+    background-color: hsla(272, 26%, 72%, 1);
+    border:2px solid rgb(115, 77, 146);
+    color:rgb(0, 0, 0);
+    font-weight: 900;
+}

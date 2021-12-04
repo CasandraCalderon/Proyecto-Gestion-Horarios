@@ -193,7 +193,7 @@ class IMaterias extends Component {
       render(){
         const {form}=this.state;
       return (
-        <div>
+        <div id="fondo">
           <PresentCard />
         <div className="text-left container">
             <br />
@@ -235,7 +235,7 @@ class IMaterias extends Component {
               <FontAwesomeIcon icon={faSearch} />
             </button>
             {" "}
-            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}><AiFillPrinter size={20}/></button>
+            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}>Imprimir <AiFillPrinter size={20}/></button>
           </div>
           </div>
           <br />

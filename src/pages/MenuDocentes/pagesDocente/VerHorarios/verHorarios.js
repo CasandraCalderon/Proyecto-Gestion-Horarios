@@ -1,10 +1,12 @@
 import React from 'react'
+import PresentCard from '../../../PresentCard/PresentCard';
 
-const verHorarios = () => {
+const VerHorarios = () => {
     return (
         <div>
-            <h1>Ver Horarios</h1>
+            <PresentCard />
+            ver horarios
         </div>
     )
 }
-export default verHorarios;
+export default VerHorarios;

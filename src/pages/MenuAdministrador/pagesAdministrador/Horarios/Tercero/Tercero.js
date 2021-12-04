@@ -1,9 +1,11 @@
 import React from 'react'
+import Horario from '../Horario';
+
 
 const Tercero = () => {
     return (
-        <div>
-            tercer semestre
+        <div id="fondo">
+            <Horario url="segundoS" semestre="SEGUNDO SEMESTRE"/>
         </div>
     )
 }

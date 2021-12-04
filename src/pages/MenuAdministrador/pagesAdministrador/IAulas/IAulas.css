@@ -1,6 +1,9 @@
 .App {
     text-align: center;
   }
+.Prueba{
+    z-index: 100;
+}
 .table-fixed tbody {
     height: 600px;
     overflow-y: auto !important;

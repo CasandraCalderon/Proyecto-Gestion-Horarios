@@ -1,0 +1,116 @@
+#Perfil {
+    height: 100vh;
+    padding-top: 100px;
+    background: linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      background: -moz-linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      background: -webkit-linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#c9def4", endColorstr="#f5ccd4", GradientType=1 );
+  }
+.contenedor {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    display: flex;
+    gap: 40px;
+    padding: 50px;
+    border-radius: 10px;
+  }
+  
+.contenedor section img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: all 500ms ease-out;
+  }
+
+  .contenedor section .options {
+    position: absolute;
+    border-radius: 50%;
+    top: 175px;
+    width: 250px;
+    height: 250px;
+    background: rgba(194, 149, 224, 0.603);
+    
+    opacity: 0;
+    visibility: hidden;
+    text-align: center;
+}
+.contenedor section:hover > .options {
+    opacity: 1;
+    visibility: visible;
+}
+
+.contenedor section:hover > .options button{
+    margin-top: 50px;
+    margin-bottom: 15px;
+}
+
+.contenedor section:hover > .options button{
+    font-weight: 400px;
+    margin-bottom: 60px;
+    transition: all 500ms ease-out;
+    margin-top: 120px;
+}
+
+#data {
+    /* background-color: green; */
+    flex-grow: 1;
+  }
+  
+#user-input:nth-child(odd) {
+    background-color: #eee;
+  }
+  
+#data div {
+    display: grid;
+    grid-template-columns: 1fr 2fr 60px;
+    padding: 15px 10px;
+    border-radius: 5px;
+  }
+  
+#user-input section {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: rgb(144, 153, 144);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+#user-input section:hover {
+    background-color: rgb(138, 153, 138);
+  }
+  
+#user-input section button {
+    padding: 4px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: rgb(199, 190, 190);
+    font-weight: 500;
+  }
+  
+#icon {
+    color: rgb(199, 190, 190);
+    font-size: 14px;
+  }
+  

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './IAdministrador.css';
 import Swal from 'sweetalert2'
 import axios from "axios";
@@ -13,7 +13,7 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 
 
-const url="http://localhost:8000/api/admin";
+const url="http://localhost:8000/api/administrador";
 const columns = [
   {title: "Nombre", field: "Nombre"},
   {title: "Ap_Paterno", field: "Ap_Paterno"},
@@ -195,7 +195,8 @@ DownloadPdf=()=>{
   render(){
     const {form}=this.state;
   return (
-    <div>
+    <Fragment>
+    <div id="fondo">
       <PresentCard />
     <div className="text-left container">
         <br />
@@ -207,7 +208,7 @@ DownloadPdf=()=>{
               <FontAwesomeIcon icon={faSearch} />
             </button>
             {" "}
-            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}><AiFillPrinter size={20}/></button>
+            <button className="btn btn-dark" onClick={()=>this.DownloadPdf()}>Imprimir <AiFillPrinter size={20}/></button>
         </div>
       </div>
       <br />
@@ -289,9 +290,9 @@ DownloadPdf=()=>{
                     <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
                 </ModalFooter>
           </Modal>
-                
+        </div>
         
-  </div>
+  </Fragment>
   
 
 
