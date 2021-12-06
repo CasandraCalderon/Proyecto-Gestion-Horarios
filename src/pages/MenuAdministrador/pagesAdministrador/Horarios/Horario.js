@@ -7,6 +7,9 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2'
 import axios from "axios";
 import PresentCard from "../../../PresentCard/PresentCard";
+import VerDisponibilidad from "./VerDisponibilidad";
+
+
 
 
 const urlMaterias = "http://localhost:8000/api/materia"
@@ -246,8 +249,8 @@ class Horario extends React.Component {
 
       alert1=()=>{
         Swal.fire({
-          title: `Docente no disponible para ese dia`,
-          text: `Por favor, elija otro dia en que este disponible`,
+          title: `Este dia ya esta ocupado por otra materia`,
+          text: `Por favor, elija otro dia disponible`,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -257,6 +260,7 @@ class Horario extends React.Component {
           if (result.isConfirmed) {
             this.actDias();
             this.setState({modalVerDisponibilidad:true})
+            this.setState({modalEliminar: false})
           } else {
             this.actDias();
             this.setState({modalVerDisponibilidad:false})
@@ -265,12 +269,20 @@ class Horario extends React.Component {
       }
       
 
-      
+
       alert=()=>{
         Swal.fire({
-          icon: 'warning',
           title: 'Docente no disponible para ese dia',
-          text: 'Por favor elija otro dia donde este disponible...',
+          text: `¿Desea ver que horarios tiene disponible?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.setState({modalVerDisponibilidad:true})
+          }
         })
       }
 
@@ -620,6 +632,19 @@ class Horario extends React.Component {
                   <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
                 </ModalFooter>
               </Modal>
+
+              <Modal isOpen={this.state.modalVerDisponibilidad} centered fullscreen="" size="xl">
+                <ModalHeader>
+                  <h2>Ver Disponibilidad</h2>
+                </ModalHeader>
+                <ModalBody>
+                   <VerDisponibilidad RU={this.state.form?.Docente}/>
+                </ModalBody>
+                <ModalFooter>
+                  <button className="btn btn-secundary" onClick={()=>this.setState({modalVerDisponibilidad: false})}>Cerrar</button>
+                </ModalFooter>
+              </Modal>
+
       </div>
     );
   }
