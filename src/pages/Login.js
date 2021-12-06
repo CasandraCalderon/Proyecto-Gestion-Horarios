@@ -60,7 +60,6 @@ const Login = () => {
         }
       )
       .then((response) => {
-        console.log(response.data.message);
         if (response.data.message === "LOGUEADO") {
           var respuesta = response.data.user;
           cookies.set("_id", respuesta._id, { path: "/" });

@@ -72,7 +72,7 @@ class IDocentes extends Component {
         Telefono: this.state.form.Telefono,
         Cargo: "DOCENTE",
         username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
-        password: `doc_${this.state.form.RU}${this.state.form.CI}`,
+        password: `${this.state.form.Ap_Paterno}${this.state.form.CI}`,
         Disponibilidad: this.state.form.Disponibilidad,
         DisOcupada: this.state.form.DisOcupada
       }

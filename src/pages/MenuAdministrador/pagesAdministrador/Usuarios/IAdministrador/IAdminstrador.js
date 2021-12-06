@@ -68,7 +68,7 @@ peticionPost=async()=>{
       RU: this.state.form.RU,
       Cargo: 'ADMINISTRADOR',
       username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
-      password: `admin_${this.state.form.RU}${this.state.form.CI}`,
+      password: `${this.state.form.Ap_Paterno}${this.state.form.CI}`,
     }
     ).then(response=>{
       this.modalInsertar();

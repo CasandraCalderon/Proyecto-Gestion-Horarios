@@ -26,6 +26,8 @@ class Horario extends React.Component {
     Semestres : [],
     modalInsertar: false,
     modalEliminar: false,
+    modalVerDisponibilidad: false,
+    verificar: false,
     tipoModal: "",
     Primero : [],
     Segundo : [],
@@ -82,6 +84,7 @@ class Horario extends React.Component {
       this.setState({Tercero : this.state.data.filter(elemento => elemento.Turno === "TERCER TURNO")})
       this.setState({Cuarto : this.state.data.filter(elemento => elemento.Turno === "CUARTO TURNO")})
       this.setState({Quinto : this.state.data.filter(elemento => elemento.Turno === "QUINTO TURNO")})
+      this.setState({verificar:false})
     }).catch(error=>{
       console.log(error.message);
     })
@@ -100,8 +103,13 @@ class Horario extends React.Component {
         Turno: this.state.form.Turno,
       }
       ).then(response=>{
-        this.modalInsertar();
-        this.peticionGet();
+        if(response.data.message==="Este horario ya esta ocupado"){
+          this.alert1();
+        }
+        else{
+          this.modalInsertar();
+          this.peticionGet();
+        }
       }).catch(error=>{
         console.log(error.message);
       })
@@ -202,40 +210,62 @@ class Horario extends React.Component {
           DisOcupada : Dias
         }
         ).then(response=>{
-          this.state.modalEliminar? this.peticionDelete() :
-        this.peticionPost()
+          this.state.modalEliminar? this.peticionDelete() : this.state.verificar? this.peticionGet() :
+        this.peticionPost() 
       })
       }
 
       actDias =()=> {
         this.state.form.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
           elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
-          console.log(elemento.DisOcupada);
+          this.setState({verificar:true})
           this.getDocentes(elemento.DisOcupada, elemento._id);
             
           }) : this.state.form.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
             elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
-            console.log(elemento.DisOcupada);
+            this.setState({verificar:true})
             this.getDocentes(elemento.DisOcupada, elemento._id);
               
             }) : this.state.form.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
               elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
-              console.log(elemento.DisOcupada);
+              this.setState({verificar:true})
               this.getDocentes(elemento.DisOcupada, elemento._id);
                 
               }) : this.state.form.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
                 elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
-                console.log(elemento.DisOcupada);
+                this.setState({verificar:true})
                 this.getDocentes(elemento.DisOcupada, elemento._id);
                   
                 }) : this.state.form.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
                   elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
-                  console.log(elemento.DisOcupada);
+                  this.setState({verificar:true})
                   this.getDocentes(elemento.DisOcupada, elemento._id);
                     
                   }) :console.log('chale no se pudo');
       }
 
+      alert1=()=>{
+        Swal.fire({
+          title: `Docente no disponible para ese dia`,
+          text: `Por favor, elija otro dia en que este disponible`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ver disponibilidad'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.actDias();
+            this.setState({modalVerDisponibilidad:true})
+          } else {
+            this.actDias();
+            this.setState({modalVerDisponibilidad:false})
+          }
+        })
+      }
+      
+
+      
       alert=()=>{
         Swal.fire({
           icon: 'warning',
@@ -243,7 +273,7 @@ class Horario extends React.Component {
           text: 'Por favor elija otro dia donde este disponible...',
         })
       }
-      
+
       click=()=>{
         let {semestre} = this.props;
         return(semestre)

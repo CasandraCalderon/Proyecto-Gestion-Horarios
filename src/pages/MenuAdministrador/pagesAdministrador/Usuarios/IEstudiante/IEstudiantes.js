@@ -75,8 +75,8 @@ class IEstudiantes extends Component {
         RU: this.state.form.RU,
         Cargo: "ESTUDIANTE",
         Semestre: this.state.form.Semestre,
-        username: `${this.state.form.Ap_Paterno}_${this.state.form.RU}`,
-        password: `est_${this.state.form.RU}${this.state.form.CI}`,
+        username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
+        password: `${this.state.form.Ap_Paterno}${this.state.form.CI}`,
       })
       .then((response) => {
         this.modalInsertar();
