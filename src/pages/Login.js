@@ -10,6 +10,8 @@ import { IoIosBook } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import { authActions } from '../store/index';
+import {useDispatch} from "react-redux"
 import axios from "axios";
 import Cookies from "universal-cookie";
 import img from "../img/IniciarSesion.png";
@@ -21,6 +23,7 @@ const cookies = new Cookies();
 
 const Login = () => {
   const history = useNavigate();
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     form: {
       username: "",
@@ -61,6 +64,8 @@ const Login = () => {
       )
       .then((response) => {
         if (response.data.message === "LOGUEADO") {
+          dispatch(authActions.setLogin());
+          //localStorage.setItem('token', response.data.token);
           var respuesta = response.data.user;
           cookies.set("_id", respuesta._id, { path: "/" });
           cookies.set("Nombre", respuesta.Nombre, { path: "/" });
@@ -186,9 +191,9 @@ const Login = () => {
                     onChange={handleChange}
                   />
                 </InputGroup>
-                <div className="alert">{errorUser}</div>
+                <div className="form-text text-danger"><strong>{errorUser}</strong></div>
               </Form.Group>
-
+              <br/>
               <Form.Group controlId="formBasicPassword">
                 <InputGroup>
                   <InputGroupText>
@@ -201,9 +206,9 @@ const Login = () => {
                     onChange={handleChange}
                   />
                 </InputGroup>
-
-                <div className="alert">{errorPassword}</div>
+                <div className="form-text text-danger"><strong>{errorPassword}</strong></div>
               </Form.Group>
+              <br/>
               <button id="botonPersonalizado" onClick={iniciarSesion}>
                 Login
               </button>

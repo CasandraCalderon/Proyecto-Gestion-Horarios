@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AiFillPrinter } from "react-icons/ai";
@@ -253,30 +254,40 @@ DownloadPdf=()=>{
                   <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
                 </ModalHeader>
                 <ModalBody>
-                  <div className="form-group">
+                  <form className="form-group">
+                    <div>
                     <label htmlFor="RU">RU</label>
-                    <input className="form-control" type="text" name="RU" id="RU" onChange={this.handleChange} value={form?form.RU:''}/>
-                    <br />
+                    <input className="form-control" type="text" name="RU" id="RU" placeholder = "0000" onChange={this.handleChange} value={form?form.RU:''}/>
+                    {true===true? <div id="emailHelp" className="form-text text-danger">We'll never share your email with anyone else.</div> : console.log("hola")}
+                    </div>
+                    <br/>
+                    <div>
                     <label htmlFor="Nombre">Nombres</label>
                     <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
-                    <br />
+                    </div>
+                    <div>
                     <label htmlFor="Ap_Paterno">Apellido Paterno</label>
                     <input className="form-control" type="text" name="Ap_Paterno" id="Ap_Paterno" onChange={this.handleChange} value={form?form.Ap_Paterno: ''}/>
-                    <br />
+                    </div>
+                    <div>
                     <label htmlFor="Ap_Materno">Apellido Materno</label>
                     <input className="form-control" type="text" name="Ap_Materno" id="Ap_Materno" onChange={this.handleChange} value={form?form.Ap_Materno: ''}/>
-                    <br />
+                    </div>
+                    <div>
                     <label htmlFor="RU">CI</label>
                     <input className="form-control" type="text" name="CI" id="CI" onChange={this.handleChange} value={form?form.CI:''}/>
-                    <br />
+                    </div>
+                    <div>
                     <label htmlFor="Email">Correo Electronico</label>
-                    <input className="form-control" type="text" name="Email" id="Email" onChange={this.handleChange} value={form?form.Email: ''}/>
-                    <br />
+                    <input className="form-control" type="text" name="Email" id="Email" placeholder = "example@example.com" onChange={this.handleChange} value={form?form.Email: ''}/>
+                    </div>
+                    <div>
                     <label htmlFor="Telefono">Telefono</label>
                     <input className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChange} value={form?form.Telefono:''}/>
-                    <br />
+                    </div>
                     
-                  </div>
+                    
+                  </form>
                 </ModalBody>
 
                 <ModalFooter>
