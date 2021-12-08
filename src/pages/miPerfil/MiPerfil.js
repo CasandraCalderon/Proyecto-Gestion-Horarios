@@ -41,12 +41,11 @@ class MiPerfil extends Component {
         console.log(error);
       })
       axios.get(url).then(response=>{
-        this.setState({data: response.data});
+        this.setState({data: response.data.filter(e => e.RU === cookies.get("RU"))});
       }).catch(error=>{
         console.log(error.message);
       })
 
-      
       }
     
       peticionPost=async()=>{
@@ -58,7 +57,7 @@ class MiPerfil extends Component {
        await axios.post(`${url}/create`,
         fd
         ).then(response=>{
-          this.modalInsertar();
+          this.setState({modalInsertar: false});
           this.peticionGet();
         }).catch(error=>{
           console.log(error.message);
@@ -66,7 +65,7 @@ class MiPerfil extends Component {
       }
 
       peticionDelete=()=>{
-        axios.delete(`${url}/delete/${this.state.form._id}`).then(response=>{
+        axios.delete(`${url}/delete/${this.state.data[0]?._id}`).then(response=>{
           this.peticionGet();
         })
       }
@@ -103,9 +102,7 @@ class MiPerfil extends Component {
               'Su solicitud se ejecuto de manera exitosa',
               'success'
             )
-          } else {
-            this.setState({modalEliminar: false})
-          }
+          } 
         })
       }
 
@@ -122,8 +119,7 @@ class MiPerfil extends Component {
         });
         }
       
-    
-    
+        
     
     render (){
       const { user  } = this.state;
@@ -137,7 +133,7 @@ class MiPerfil extends Component {
               alt=""
             />
             <div className="options">
-              <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: "insertar"}); this.modalInsertar()}}><FaUserEdit/> Editar</button>{"  "}<button className="btn btn-dark" onClick={this.click}><FaTrash/>Eliminar</button>
+              <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: "insertar"}); this.modalInsertar()}}><FaUserEdit/> Editar</button>{"  "}<button className="btn btn-dark" onClick={()=>this.modalEliminar()}><FaTrash/>Eliminar</button>
             </div>
           </section>
           <section id="data">
