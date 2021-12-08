@@ -65,7 +65,6 @@ const Login = () => {
       .then((response) => {
         if (response.data.message === "LOGUEADO") {
           dispatch(authActions.setLogin());
-          //localStorage.setItem('token', response.data.token);
           var respuesta = response.data.user;
           cookies.set("_id", respuesta._id, { path: "/" });
           cookies.set("Nombre", respuesta.Nombre, { path: "/" });

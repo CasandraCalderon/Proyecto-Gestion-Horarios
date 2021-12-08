@@ -24,7 +24,7 @@ class MiPerfil extends Component {
       form: {
         _id:"",
         RU: "",
-        image: ""
+        image: null
     }
     }
 
@@ -45,17 +45,18 @@ class MiPerfil extends Component {
       }).catch(error=>{
         console.log(error.message);
       })
+
       
       }
     
       peticionPost=async()=>{
         delete this.state.form?._id;
+        const fd = new FormData();
+        fd.append("image", this.state.form?.image)
+        fd.append("_id", this.state.form?._id,)
+        fd.append("RU", cookies.get("RU"))
        await axios.post(`${url}/create`,
-        {
-          _id: this.state.form?._id,
-          RU: cookies.get("RU"),
-          image: this.state.form?.image,
-        }
+        fd
         ).then(response=>{
           this.modalInsertar();
           this.peticionGet();
@@ -109,59 +110,21 @@ class MiPerfil extends Component {
       }
 
     
-    avatar = () => {
-        Swal.fire({
-            title: 'Subir foto de perfil',
-            input: 'file',
-            inputAttributes: {
-              autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Look up',
-            showLoaderOnConfirm: true,
-            preConfirm: (login) => {
-              return fetch(`//api.github.com/users/${login}`)
-                .then(response => {
-                  if (!response.ok) {
-                    throw new Error(response.statusText)
-                  }
-                  return response.json()
-                })
-                .catch(error => {
-                  Swal.showValidationMessage(
-                    `Request failed: ${error}`
-                  )
-                })
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: `${result.value.login}'s avatar`,
-                imageUrl: result.value.avatar_url
-              })
-            }
-          })
-    }
+    
 
-    handleChange=async e=>{
-      e.persist();
-      await this.setState({
-        form:{
-          ...this.state.form,
-          [e.target.name]: e.target.files["0"]
+      handleChange=async e=>{
+        e.persist();
+        await this.setState({
+          form:{
+            ...this.state.form,
+            image: e.target.files[0]
+          }
+        });
         }
-      });
-      console.log(this.state.form);
-      }
       
     
     
-    click = () => {
-      true===false? this.setState({photo : this.state.data.filter(e => e.RU === cookies.get("RU"))}): this.setState({photo : ""});
-      console.log(this.state.photo)
-      console.log(this.state.data)
-    }
+    
     render (){
       const { user  } = this.state;
       return (
@@ -228,7 +191,7 @@ class MiPerfil extends Component {
           <ModalBody>
             <div className="form-group">
             <label>Seleccionar archivo...</label>
-            <input className="form-control" type="file" name= "image" onChange={()=>this.handleChange} />
+            <input className="form-control" type="file" name= "image" onChange={this.handleChange} />
             </div>
           </ModalBody>
           <ModalFooter>
