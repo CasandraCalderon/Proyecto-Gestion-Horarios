@@ -19,8 +19,6 @@ class MiPerfil extends Component {
       tipoModal: "",
       data: [],
       user: [],
-      photo: "",
-      photos:"",
       form: {
         _id:"",
         RU: "",
@@ -42,6 +40,7 @@ class MiPerfil extends Component {
       })
       axios.get(url).then(response=>{
         this.setState({data: response.data.filter(e => e.RU === cookies.get("RU"))});
+        console.log(this.state.data)
       }).catch(error=>{
         console.log(error.message);
       })
@@ -106,9 +105,6 @@ class MiPerfil extends Component {
         })
       }
 
-    
-    
-
       handleChange=async e=>{
         e.persist();
         await this.setState({
@@ -129,9 +125,10 @@ class MiPerfil extends Component {
           <section>
             <img
               className="photo"
-              src={this.state.photo!==""? this.state.photo[0]?.image : "https://i.imgur.com/ddiph8r.jpeg"}
+              src={this.state.data.length !== 0? `http://localhost:8000/${this.state.data[0]?.image}` : "http://localhost:8000/uploads/gerente.png" }
               alt=""
             />
+            
             <div className="options">
               <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: "insertar"}); this.modalInsertar()}}><FaUserEdit/> Editar</button>{"  "}<button className="btn btn-dark" onClick={()=>this.modalEliminar()}><FaTrash/>Eliminar</button>
             </div>
