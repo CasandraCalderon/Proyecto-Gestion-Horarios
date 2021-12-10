@@ -1,21 +1,32 @@
 .card {
     background-image: url(https://p4.wallpaperbetter.com/wallpaper/27/995/633/simple-background-violet-gradient-wallpaper-preview.jpg);
 	background-size: cover;
-    height: 200px;
-    width: 800px;
     border-radius: 30px;
     border: 1px solid #131212;
-    margin-top: 70px;
+    margin: 0 auto;
+    max-width: auto;
+    max-height: auto;
+    width: 35%;
+    height: 40%;
+    
 }
 .card-img{
-    width: 120px;
-    height: 120px;
-    margin: 40px;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    padding: 10px 5px 10px 15px;
+    border-radius: 50%;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    transition: all 500ms ease-out;
 
 }
 #cardText{
-    margin: 0 20px 50px 85px;
+    width: 400px;
+    margin-left: 105px;
     text-shadow: 2px 2px rgb(131, 95, 95);
+    
 }
 .cargo{
     background-color: rgb(126, 92, 128);
