@@ -15,6 +15,7 @@ import 'jspdf-autotable'
 import VerDisponibilidad from '../../Horarios/VerDisponibilidad';
 
 const url="http://localhost:8000/api/docente";
+const urlAvatar = "http://localhost:8000/api/avatar";
 const columns = [
   {title: "Nombre", field: "Nombre"},
   {title: "Ap_Paterno", field: "Ap_Paterno"},
@@ -29,6 +30,7 @@ const columns = [
 class IDocentes extends Component {
   state={
     data:[],
+    avatar:[],
     modalInsertar: false,
     modalVer: false,
     modalDisponibilidad: false,
@@ -54,6 +56,11 @@ class IDocentes extends Component {
   peticionGet=()=>{
   axios.get(url).then(response=>{
     this.setState({data: response.data});
+  }).catch(error=>{
+    console.log(error.message);
+  })
+  axios.get(urlAvatar).then(response=>{
+    this.setState({avatar: response.data});
   }).catch(error=>{
     console.log(error.message);
   })
@@ -115,6 +122,13 @@ class IDocentes extends Component {
   }
     
     peticionDelete=()=>{
+      this.state.avatar.forEach(e => {
+        if(e.RU === this.state.form.RU){
+          axios.delete(`${urlAvatar}/delete/${e._id}`).then(response =>{
+            this.peticionGet();
+          })
+        }
+      })
       axios.delete(`${url}/delete/${this.state.form._id}`).then(response=>{
         this.peticionGet();
       })
@@ -205,7 +219,7 @@ class IDocentes extends Component {
     modalEliminar = () => {
       Swal.fire({
         title: `¡Espera!`,
-        text: `¿Esta seguro de eliminar a ${this.state.form.Nombre} ${this.state.form.Ap_Paterno} ${this.state.form.Ap_Materno}?`,
+        text: `¿Esta seguro de eliminar a este Usuario?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

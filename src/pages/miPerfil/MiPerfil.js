@@ -6,6 +6,7 @@ import axios from "axios";
 import "./MiPerfil.css";
 import Cookies from "universal-cookie";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import Datos from "./Datos";
 
 const cookies = new Cookies();
 const url = "http://localhost:8000/api/avatar";
@@ -15,6 +16,7 @@ class MiPerfil extends Component {
   state = {
     modalInsertar: false,
     modalEliminar: false,
+    modalDatos: false,
     tipoModal: "",
     prueba: false,
     data: [],
@@ -24,6 +26,11 @@ class MiPerfil extends Component {
       RU: "",
       image: null,
     },
+    formData : {
+      Email : "",
+      Telefono : "",
+      username : "",
+    }
   };
 
   componentDidMount() {
@@ -47,12 +54,29 @@ class MiPerfil extends Component {
         this.setState({
           data: response.data.filter((e) => e.RU === cookies.get("RU")),
         });
-        console.log(this.state.data);
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
+  peticionPutUser() {
+    axios.put(`${usuario}/edit/${this.state.user[0]?._id}`, {
+      Email: this.state.formData.Email,
+      Telefono : this.state.formData.Telefono,
+      username: this.state.formData.username,
+    }).then(response=>{
+      this.setState({modalDatos : false});
+      this.peticionGet();
+    Swal.fire({
+      title: 'Usuario actualizado correctamente',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  })
+
+  }
 
   peticionPost = async () => {
     delete this.state.form?._id;
@@ -81,6 +105,10 @@ class MiPerfil extends Component {
 
   modalInsertar = () => {
     this.setState({ modalInsertar: !this.state.modalInsertar });
+  };
+
+  modalDatos = () => {
+    this.setState({ modalDatos: !this.state.modalInsertar });
   };
 
   seleccionarAvatar = (avatar) => {
@@ -152,8 +180,27 @@ class MiPerfil extends Component {
     });
   };
 
+  handleChangeForm=async e=>{
+    e.persist();
+    await this.setState({
+      formData:{
+        ...this.state.formData,
+        [e.target.name]: e.target.value
+      }
+    });
+    }
+
+    seleccionarUsuario=(usuario)=>{
+      this.setState({
+        formData: {
+          Email: usuario.Email,
+          Telefono: usuario.Telefono,
+          username: usuario.username,
+        }
+      })
+    }
+
   render() {
-    const { user } = this.state;
     return (
       <div id="Perfil">
         <div className="contenedor">
@@ -167,7 +214,6 @@ class MiPerfil extends Component {
               }
               alt=""
             />
-
             <div className="options">
               {this.state.data.length !== 0 ? (
                 <button
@@ -205,46 +251,16 @@ class MiPerfil extends Component {
             </div>
           </section>
           <section id="data">
-            <div id="user-input">
-              <span>Nombre</span>
-              <span>{user[0]?.Nombre}</span>
-            </div>
-            <div id="user-input">
-              <span>Apellido Paterno</span>
-              <span>{user[0]?.Ap_Paterno}</span>
-            </div>
-            <div id="user-input">
-              <span>Apellido Materno</span>
-              <span>{user[0]?.Ap_Materno}</span>
-            </div>
-            <div id="user-input">
-              <span>CI</span>
-              <span>{user[0]?.CI}</span>
-            </div>
-            <div id="user-input">
-              <span>RU</span>
-              <span>{user[0]?.RU}</span>
-            </div>
-            <div id="user-input">
-              <span>Email</span>
-              <span>{user[0]?.Email}</span>
-            </div>
-            <div id="user-input">
-              <span>Telefono</span>
-              <span>{user[0]?.Telefono}</span>
-            </div>
-            <div id="user-input">
-              <span>Nombre de Usuario</span>
-              <span>{user[0]?.username}</span>
-            </div>
-            <div id="user-input">
-              <span>Contraseña</span>
-              <span>********</span>
-            </div>
-            <div id="user-input">
-              <span>Cargo</span>
-              <span>{user[0]?.Cargo}</span>
-            </div>
+          <Datos user = {this.state.user}/>
+          <button
+                  className="btn btn-dark"
+                  onClick={() => {this.modalDatos(); this.seleccionarUsuario(this.state.user[0])
+                    
+                  }}
+                >
+                  <FaUserEdit />{" "}
+                   Editar datos
+                </button>
           </section>
         </div>
 
@@ -295,6 +311,41 @@ class MiPerfil extends Component {
             </button>
           </ModalFooter>
         </Modal>
+
+        <Modal isOpen={this.state.modalDatos}>
+                <ModalHeader style={{display: 'block'}}>
+                  <span style={{float: 'right'}} onClick={()=>this.setState({modalDatos : false})}>x</span>
+                </ModalHeader>
+                <ModalBody>
+                  <form className="form-group">
+                    <div>
+                    <label htmlFor="Email">Correo Electronico</label>
+                    <input className="form-control" type="text" name="Email" id="Email" placeholder = "example@example.com" onChange={this.handleChangeForm} value={this.state.formData.Email}/>
+                    </div>
+                    <br/>
+                    <div>
+                    <label htmlFor="Telefono">Telefono</label>
+                    <input className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChangeForm} value={this.state.formData.Telefono}/>
+                    </div>
+                    <br/>
+                    <div>
+                    <label htmlFor="username">Nombre de usuario</label>
+                    <input className="form-control" type="text" name="username" id="username" onChange={this.handleChangeForm} value={this.state.formData.username}/>
+                    </div>
+        
+                    
+                    
+                  </form>
+                </ModalBody>
+
+                <ModalFooter>
+                  <button className="btn btn-success" onClick={()=>this.peticionPutUser()}>
+                    Actualizar
+                  </button>
+
+                    <button className="btn btn-danger" onClick={()=>this.setState({modalDatos : false})}>Cancelar</button>
+                </ModalFooter>
+          </Modal>
       </div>
     );
   }

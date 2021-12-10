@@ -72,12 +72,11 @@
 }
 
 #data {
-    /* background-color: green; */
     flex-grow: 1;
   }
   
 #user-input:nth-child(odd) {
-    background-color: #eee;
+    background-color: rgb(231, 210, 235);
   }
   
 #data div {

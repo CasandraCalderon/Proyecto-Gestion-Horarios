@@ -172,7 +172,7 @@ class IEstudiantes extends Component {
   modalEliminar = () => {
     Swal.fire({
       title: `¡Espera!`,
-      text: `¿Esta seguro de eliminar a ${this.state.form.Nombre} ${this.state.form.Ap_Paterno} ${this.state.form.Ap_Materno}?`,
+      text: `¿Esta seguro de eliminar a este Usuario?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

@@ -4,7 +4,6 @@ import Swal from 'sweetalert2'
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AiFillPrinter } from "react-icons/ai";
@@ -15,6 +14,7 @@ import 'jspdf-autotable'
 
 
 const url="http://localhost:8000/api/administrador";
+const urlAvatar = "http://localhost:8000/api/avatar";
 const columns = [
   {title: "Nombre", field: "Nombre"},
   {title: "Ap_Paterno", field: "Ap_Paterno"},
@@ -29,6 +29,7 @@ const columns = [
 class IAdminstrador extends Component {
 state={
   data:[],
+  avatar:[],
   modalInsertar: false,
   busquedaRU: '', 
   busqueda: '',
@@ -50,6 +51,11 @@ state={
 peticionGet=()=>{
 axios.get(url).then(response=>{
   this.setState({data: response.data});
+}).catch(error=>{
+  console.log(error.message);
+})
+axios.get(urlAvatar).then(response=>{
+  this.setState({avatar: response.data});
 }).catch(error=>{
   console.log(error.message);
 })
@@ -107,11 +113,19 @@ peticionPut=()=>{
   }
   
   peticionDelete=()=>{
+    this.state.avatar.forEach(e => {
+      if(e.RU === this.state.form.RU){
+        axios.delete(`${urlAvatar}/delete/${e._id}`).then(response =>{
+          this.peticionGet();
+        })
+      }
+    })
     axios.delete(`${url}/delete/${this.state.form._id}`).then(response=>{
       this.setState({modalEliminar: false});
       this.peticionGet();
     })
   }
+
 
 modalInsertar=()=>{
   this.setState({modalInsertar: !this.state.modalInsertar});
@@ -154,7 +168,7 @@ console.log(this.state.form);
 modalEliminar = () => {
   Swal.fire({
     title: `¡Espera!`,
-    text: `¿Esta seguro de eliminar a ${this.state.form.Nombre} ${this.state.form.Ap_Paterno} ${this.state.form.Ap_Materno}?`,
+    text: `¿Esta seguro de eliminar a este Usuario?`,
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
