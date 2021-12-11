@@ -1,9 +1,10 @@
 import React from 'react'
-import Swal from 'sweetalert2'
-export const alerts = () => {
+
+const LaOsa = () => {
     return (
         <div>
-            
+            holis
         </div>
     )
 }
+export default LaOsa;

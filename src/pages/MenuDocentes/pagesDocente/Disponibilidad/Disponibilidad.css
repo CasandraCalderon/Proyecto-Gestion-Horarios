@@ -1,3 +1,29 @@
+#fondoH {
+    width: fluid;
+    height: 912px;
+    background: linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      background: -moz-linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      background: -webkit-linear-gradient(
+        45deg,
+        hsla(211, 66%, 87%, 1) 0%,
+        hsla(348, 67%, 88%, 1) 50%,
+        hsla(272, 26%, 72%, 1) 100%
+      );
+    
+      filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#c9def4", endColorstr="#f5ccd4", GradientType=1 );
+}
 #Disponible {
     background-color: #bdecb6;
 }

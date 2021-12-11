@@ -1,16 +1,13 @@
 import React from "react";
-import "./Horario.css"
+import "../../../../css/Horario.css"
 import { Table } from "react-bootstrap";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2'
 import axios from "axios";
 import PresentCard from "../../../PresentCard/PresentCard";
 import VerDisponibilidad from "./VerDisponibilidad";
-
-
-
+import Turno from "./Turno";
+import Formulario from "./Formulario";
 
 const urlMaterias = "http://localhost:8000/api/materia"
 const urlDocentes = "http://localhost:8000/api/Docente"
@@ -77,7 +74,6 @@ class Horario extends React.Component {
     });
     this.peticionGet();
   }
-
   peticionGet=()=>{
     let {url} = this.props; 
     axios.get(`http://localhost:8000/api/${url}`).then(response=>{
@@ -135,16 +131,16 @@ class Horario extends React.Component {
       })
     }
 
-    seleccionarAula=(aula)=>{
+    seleccionarAula= (aula)=>{
       this.setState({
         tipoModal: 'actualizar',
         form: {
-          _id: aula._id,
-          Dia: aula.Dia,
-          Materia: aula.Materia,
-          Docente: aula.Docente,
-          Aula: aula.Aula,
-          Turno: aula.Turno,
+          _id: aula?._id,
+          Dia: aula?.Dia,
+          Materia: aula?.Materia,
+          Docente: aula?.Docente,
+          Aula: aula?.Aula,
+          Turno: aula?.Turno,
         }
       })
     }
@@ -218,8 +214,9 @@ class Horario extends React.Component {
       })
       }
 
-      actDias =()=> {
-        this.state.form.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
+      actDias =async()=> {
+        console.log(this.state.form)
+        await this.state.form.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
           elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
           this.setState({verificar:true})
           this.getDocentes(elemento.DisOcupada, elemento._id);
@@ -246,7 +243,6 @@ class Horario extends React.Component {
                     
                   }) :console.log('chale no se pudo');
       }
-
       alert1=()=>{
         Swal.fire({
           title: `Este dia ya esta ocupado por otra materia`,
@@ -268,8 +264,6 @@ class Horario extends React.Component {
         })
       }
       
-
-
       alert=()=>{
         Swal.fire({
           title: 'Docente no disponible para ese dia',
@@ -313,99 +307,8 @@ class Horario extends React.Component {
               <th>Sabado</th>
             </tr>
           </thead>
-          <tbody>
-            <tr className="text-center">
-              <td id="turno">7:45-10:00</td>
-                {this.state.Primero.find(elemento => elemento.Dia==='Lunes')? this.state.Primero.filter(elemento => elemento.Dia === 'Lunes').map(elemento => {
-                  if(elemento.Dia==='Lunes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Primero.find(elemento => elemento.Dia==='Martes')? this.state.Primero.filter(elemento => elemento.Dia === 'Martes').map(elemento => {
-                  if(elemento.Dia==='Martes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Primero.find(elemento => elemento.Dia==='Miercoles')? this.state.Primero.filter(elemento => elemento.Dia === 'Miercoles').map(elemento => {
-                  if(elemento.Dia==='Miercoles'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Primero.find(elemento => elemento.Dia==='Jueves')? this.state.Primero.filter(elemento => elemento.Dia === 'Jueves').map(elemento => {
-                  if(elemento.Dia==='Jueves'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Primero.find(elemento => elemento.Dia==='Viernes')? this.state.Primero.filter(elemento => elemento.Dia === 'Viernes').map(elemento => {
-                  if(elemento.Dia==='Viernes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Primero.find(elemento => elemento.Dia==='Sabado')? this.state.Primero.filter(elemento => elemento.Dia === 'Sabado').map(elemento => {
-                  if(elemento.Dia==='Sabado'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-              
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="text-center">
-              <td id="turno">10:00-12:15</td>
-              {this.state.Segundo.find(elemento => elemento.Dia==='Lunes')? this.state.Segundo.filter(elemento => elemento.Dia === 'Lunes').map(elemento => {
-                  if(elemento.Dia==='Lunes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Segundo.find(elemento => elemento.Dia==='Martes')? this.state.Segundo.filter(elemento => elemento.Dia === 'Martes').map(elemento => {
-                  if(elemento.Dia==='Martes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Segundo.find(elemento => elemento.Dia==='Miercoles')? this.state.Segundo.filter(elemento => elemento.Dia === 'Miercoles').map(elemento => {
-                  if(elemento.Dia==='Miercoles'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Segundo.find(elemento => elemento.Dia==='Jueves')? this.state.Segundo.filter(elemento => elemento.Dia === 'Jueves').map(elemento => {
-                  if(elemento.Dia==='Jueves'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Segundo.find(elemento => elemento.Dia==='Viernes')? this.state.Segundo.filter(elemento => elemento.Dia === 'Viernes').map(elemento => {
-                  if(elemento.Dia==='Viernes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Segundo.find(elemento => elemento.Dia==='Sabado')? this.state.Segundo.filter(elemento => elemento.Dia === 'Sabado').map(elemento => {
-                  if(elemento.Dia==='Sabado'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-            </tr>
-          </tbody>
+          <Turno Turno = {this.state.Primero} Hora = "07:45-10:00" seleccionar={this.seleccionarAula} eliminar= {()=>this.setState({modalEliminar: true})}/>
+          <Turno Turno = {this.state.Segundo} Hora = "10:00-12:15" seleccionar={this.seleccionarAula} eliminar= {()=>this.setState({modalEliminar: true})}/>
           <tbody>
             <tr className="text-center">
               <td id="turno">12:15-14:00</td>
@@ -417,144 +320,9 @@ class Horario extends React.Component {
               <td>RECESO</td>
             </tr>
           </tbody>
-          <tbody>
-            <tr className="text-center">
-              <td id="turno">14:00-16:15</td>
-              {this.state.Tercero.find(elemento => elemento.Dia==='Lunes')? this.state.Tercero.filter(elemento => elemento.Dia === 'Lunes').map(elemento => {
-                  if(elemento.Dia==='Lunes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Tercero.find(elemento => elemento.Dia==='Martes')? this.state.Tercero.filter(elemento => elemento.Dia === 'Martes').map(elemento => {
-                  if(elemento.Dia==='Martes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Tercero.find(elemento => elemento.Dia==='Miercoles')? this.state.Tercero.filter(elemento => elemento.Dia === 'Miercoles').map(elemento => {
-                  if(elemento.Dia==='Miercoles'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Tercero.find(elemento => elemento.Dia==='Jueves')? this.state.Tercero.filter(elemento => elemento.Dia === 'Jueves').map(elemento => {
-                  if(elemento.Dia==='Jueves'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Tercero.find(elemento => elemento.Dia==='Viernes')? this.state.Tercero.filter(elemento => elemento.Dia === 'Viernes').map(elemento => {
-                  if(elemento.Dia==='Viernes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Tercero.find(elemento => elemento.Dia==='Sabado')? this.state.Tercero.filter(elemento => elemento.Dia === 'Sabado').map(elemento => {
-                  if(elemento.Dia==='Sabado'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="text-center">
-              <td id="turno">16:15-18:30</td>
-              {this.state.Cuarto.find(elemento => elemento.Dia==='Lunes')? this.state.Cuarto.filter(elemento => elemento.Dia === 'Lunes').map(elemento => {
-                  if(elemento.Dia==='Lunes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Cuarto.find(elemento => elemento.Dia==='Martes')? this.state.Cuarto.filter(elemento => elemento.Dia === 'Martes').map(elemento => {
-                  if(elemento.Dia==='Martes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Cuarto.find(elemento => elemento.Dia==='Miercoles')? this.state.Cuarto.filter(elemento => elemento.Dia === 'Miercoles').map(elemento => {
-                  if(elemento.Dia==='Miercoles'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Cuarto.find(elemento => elemento.Dia==='Jueves')? this.state.Cuarto.filter(elemento => elemento.Dia === 'Jueves').map(elemento => {
-                  if(elemento.Dia==='Jueves'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Cuarto.find(elemento => elemento.Dia==='Viernes')? this.state.Cuarto.filter(elemento => elemento.Dia === 'Viernes').forEa(elemento => {
-                  if(elemento.Dia==='Viernes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Cuarto.find(elemento => elemento.Dia==='Sabado')? this.state.Cuarto.filter(elemento => elemento.Dia === 'Sabado').map(elemento => {
-                  if(elemento.Dia==='Sabado'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="text-center">
-              <td id="turno">18:30-20:00</td>
-              {this.state.Quinto.find(elemento => elemento.Dia==='Lunes')? this.state.Quinto.filter(elemento => elemento.Dia === 'Lunes').map(elemento => {
-                  if(elemento.Dia==='Lunes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Quinto.find(elemento => elemento.Dia==='Martes')? this.state.Quinto.filter(elemento => elemento.Dia === 'Martes').map(elemento => {
-                  if(elemento.Dia==='Martes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Quinto.find(elemento => elemento.Dia==='Miercoles')? this.state.Quinto.filter(elemento => elemento.Dia === 'Miercoles').map(elemento => {
-                  if(elemento.Dia==='Miercoles'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Quinto.find(elemento => elemento.Dia==='Jueves')? this.state.Quinto.filter(elemento => elemento.Dia === 'Jueves').map(elemento => {
-                  if(elemento.Dia==='Jueves'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Quinto.find(elemento => elemento.Dia==='Viernes')? this.state.Quinto.filter(elemento => elemento.Dia === 'Viernes').map(elemento => {
-                  if(elemento.Dia==='Viernes'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-
-                {this.state.Quinto.find(elemento => elemento.Dia==='Sabado')? this.state.Quinto.filter(elemento => elemento.Dia === 'Sabado').map(elemento => {
-                  if(elemento.Dia==='Sabado'){
-                    return <td key= {elemento._id}>{elemento.Materia}<br />{elemento.Aula}<br />
-                    <button className="btn btn-danger" onClick={()=>{this.seleccionarAula(elemento); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
-                  }
-                }): <td>Vacio</td>}
-            </tr>
-          </tbody>
+          <Turno Turno = {this.state.Tercero} Hora = "14:00-16:15" seleccionar={this.seleccionarAula} eliminar= {()=>this.setState({modalEliminar: true})}/>
+          <Turno Turno = {this.state.Cuarto} Hora = "16:15-18:30" seleccionar={this.seleccionarAula} eliminar= {()=>this.setState({modalEliminar: true})}/>
+          <Turno Turno = {this.state.Quinto} Hora = "18:30-20:00" seleccionar={this.seleccionarAula} eliminar= {()=>this.setState({modalEliminar: true})}/>
         </Table>
 
         <Modal isOpen={this.state.modalInsertar}>
@@ -562,55 +330,7 @@ class Horario extends React.Component {
             <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
         </ModalHeader>
         <ModalBody>
-            <div className="form-group">
-              <label htmlFor="Dia">Dia</label>
-              <select name="Dia" className="form-select" id="TipoSala" onChange={this.handleChange}>
-              <option >Seleccionar Dia...</option>
-                <option value='Lunes'>Lunes</option>
-                <option value='Martes'>Martes</option>
-                <option value='Miercoles'>Miercoles</option>
-                <option value='Jueves'>Jueves</option>
-                <option value='Viernes'>Viernes</option>
-                <option value='Sabado'>Sabado</option>
-              </select>
-              <br/>
-              <label htmlFor="Materia">Materia</label>
-              <select name="Materia" className="form-select" id="Materia" onChange={this.handleChange}>
-                <option>Selecionar Materia...</option>
-                {this.state.Materias.filter(elemento => elemento.Semestre === this.click()).map(elemento => (
-                <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre} ({elemento.Sigla})</option>
-                )
-                )}
-                </select>
-                <br/>
-              <label htmlFor="Docente">Docente</label>
-              <select name="Docente" className="form-select" id="Docente" onChange={this.handleChange}>
-                <option>Selecionar Docente...</option>
-                {this.state.Docentes.map(elemento => (
-                <option key={elemento._id} value={elemento.RU}>{elemento.Nombre} {elemento.Ap_Paterno} {elemento.Ap_Materno}</option>
-                )
-                )}
-                </select>
-                <br/>
-                <label htmlFor="Aula">Aula</label>
-              <select name="Aula" className="form-select" id="Aula" onChange={this.handleChange}>
-                <option>Selecionar Aula...</option>
-                {this.state.Aulas.map(elemento => (
-                <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre} ({elemento.TipoSala})</option>
-                )
-                )}
-                </select>
-                <br/>
-                <label htmlFor="Turno">Turno</label>
-              <select name="Turno" className="form-select" id="Turno" onChange={this.handleChange}>
-                <option>Selecionar Turno...</option>
-                <option value='PRIMER TURNO'>PRIMER TURNO</option>
-                <option value='SEGUNDO TURNO'>SEGUNDO TURNO</option>
-                <option value='TERCER TURNO'>TERCER TURNO</option>
-                <option value='CUARTO TURNO'>CUARTO TURNO</option>
-                <option value='QUINTO TURNO'>QUINTO TURNO</option>
-                </select>
-            </div>
+          <Formulario onChange = {this.handleChange} materias={this.state.Materias} docentes={this.state.Docentes} aulas={this.state.Aulas} click={this.click}/>
         </ModalBody>
         <ModalFooter>
                       {this.state.tipoModal==='insertar'?

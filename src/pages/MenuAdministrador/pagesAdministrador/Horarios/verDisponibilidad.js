@@ -28,11 +28,11 @@ export default class VerDisponibilidad extends React.Component {
     render() {
         let {RU} = this.props;
     return (
-        <div>
+        <>
             {this.state.data.filter(docente => docente.RU === RU).map(usuario=>{
               return(
                   <div key={usuario._id}>
-                    <table className="table table-bordered container">
+                    <table className="table table-bordered container" striped bordered hover>
                         <thead className="thead-dark text-center">
                                 <tr>
                                 <th scope="col">Hora</th>
@@ -105,7 +105,7 @@ export default class VerDisponibilidad extends React.Component {
                     </div>
             )
         })}
-        </div>
+        </>
     )
     }
 }

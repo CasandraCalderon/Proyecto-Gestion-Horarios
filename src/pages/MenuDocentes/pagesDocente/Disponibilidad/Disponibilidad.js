@@ -165,7 +165,7 @@ class Disponibilidad extends Component {
     
     
       return (
-        <div>
+        <div id="fondoH">
             <PresentCard />
         <div className="text-left container">
         <br />
