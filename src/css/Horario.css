@@ -41,3 +41,6 @@ table.table-bordered > thead > tr > th{
     color:rgb(0, 0, 0);
     font-weight: 900;
 }
+#DiaProgramado{
+  background-color: rgb(184, 160, 240);
+}

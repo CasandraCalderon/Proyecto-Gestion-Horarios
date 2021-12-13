@@ -14,7 +14,7 @@ function Rutas() {
         <Route exact path="/*" element={<Login/>} />
         <Route exact path="/menu/*" element={<Menu/>} />
         <Route exact path="/menuDocentes/*" element={<MenuDocentes/>} />
-        <Route exact path="/menuEstudiantes" element={<MenuEstudiantes/>} />
+        <Route exact path="/menuEstudiantes/*" element={<MenuEstudiantes/>} />
       </Routes>
     </Fragment>
   );

@@ -91,7 +91,7 @@ const Login = () => {
               } else if (respuesta.Cargo === "DOCENTE") {
                 history("/menuDocentes/InicioDocente");
               } else if (respuesta.Cargo === "ESTUDIANTE") {
-                history("./menuEstudiantes");
+                history("./menuEstudiantes/InicioEstudiante");
               }
             }
           });
@@ -190,9 +190,8 @@ const Login = () => {
                     onChange={handleChange}
                   />
                 </InputGroup>
-                <div className="form-text text-danger"><strong>{errorUser}</strong></div>
+                {errorUser.length!==0? <div className="form-text text-danger"><strong>{errorUser}</strong></div> : <br/>}
               </Form.Group>
-              <br/>
               <Form.Group controlId="formBasicPassword">
                 <InputGroup>
                   <InputGroupText>
@@ -205,9 +204,8 @@ const Login = () => {
                     onChange={handleChange}
                   />
                 </InputGroup>
-                <div className="form-text text-danger"><strong>{errorPassword}</strong></div>
+                {errorPassword.length!==0? <div className="form-text text-danger"><strong>{errorPassword}</strong></div> : <br/>}
               </Form.Group>
-              <br/>
               <button id="botonPersonalizado" onClick={iniciarSesion}>
                 Login
               </button>

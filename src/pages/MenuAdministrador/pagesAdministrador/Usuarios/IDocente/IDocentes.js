@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import VerDisponibilidad from '../../Horarios/VerDisponibilidad';
+import FormUsuario from '../Forms/FormUsuario';
 
 const url="http://localhost:8000/api/docente";
 const urlAvatar = "http://localhost:8000/api/avatar";
@@ -30,7 +31,7 @@ const columns = [
 class IDocentes extends Component {
   state={
     data:[],
-    avatar:[],
+    error:"",
     modalInsertar: false,
     modalVer: false,
     modalDisponibilidad: false,
@@ -67,26 +68,32 @@ class IDocentes extends Component {
   }
   
   peticionPost=async()=>{
-      delete this.state.form._id;
+      delete this.state.form?._id;
      await axios.post(`${url}/create`,
       {
-        _id: this.state.form._id,
-        Nombre: this.state.form.Nombre,
-        Ap_Paterno: this.state.form.Ap_Paterno,
-        Ap_Materno: this.state.form.Ap_Materno,
-        CI: this.state.form.CI,
-        Email: this.state.form.Email,
-        RU: this.state.form.RU,
-        Telefono: this.state.form.Telefono,
+        _id: this.state.form?._id,
+        Nombre: this.state.form?.Nombre,
+        Ap_Paterno: this.state.form?.Ap_Paterno,
+        Ap_Materno: this.state.form?.Ap_Materno,
+        CI: this.state.form?.CI,
+        Email: this.state.form?.Email,
+        RU: this.state.form?.RU,
+        Telefono: this.state.form?.Telefono,
         Cargo: "DOCENTE",
-        username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
-        password: `${this.state.form.Ap_Paterno}${this.state.form.CI}`,
-        Disponibilidad: this.state.form.Disponibilidad,
-        DisOcupada: this.state.form.DisOcupada
+        username: `${this.state.form?.Nombre}_${this.state.form?.Ap_Paterno}`,
+        password: `${this.state.form?.Ap_Paterno}${this.state.form?.CI}`,
+        Disponibilidad: this.state.form?.Disponibilidad,
+        DisOcupada: this.state.form?.DisOcupada
       }
       ).then(response=>{
-        this.modalInsertar();
-        this.peticionGet();
+        if("error" in response.data === true){
+          this.setState({error: response.data.error});
+        } else {
+          this.setState({error: ""});
+          this.modalInsertar();
+          this.alertCreate();
+          this.peticionGet();
+        }
       }).catch(error=>{
         console.log(error.message);
       })
@@ -248,6 +255,14 @@ class IDocentes extends Component {
     seleccionarBusqueda= () =>{
       this.setState({busqueda:this.state.busquedaRU})
     }
+    alertCreate= () =>{
+      Swal.fire({
+        icon: 'success',
+        title: `Usuario creado correctamente`,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
 
     DownloadPdf=()=>{
       const doc= new jsPDF()
@@ -320,29 +335,9 @@ class IDocentes extends Component {
                     <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
                   </ModalHeader>
                   <ModalBody>
-                    <div className="form-group">
-                      <label htmlFor="RU">RU</label>
-                      <input className="form-control" type="text" name="RU" id="RU" onChange={this.handleChange} value={form?form.RU:''}/>
-                      <br />
-                      <label htmlFor="Nombre">Nombres</label>
-                      <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
-                      <br />
-                      <label htmlFor="Ap_Paterno">Apellido Paterno</label>
-                      <input className="form-control" type="text" name="Ap_Paterno" id="Ap_Paterno" onChange={this.handleChange} value={form?form.Ap_Paterno: ''}/>
-                      <br />
-                      <label htmlFor="Ap_Materno">Apellido Materno</label>
-                      <input className="form-control" type="text" name="Ap_Materno" id="Ap_Materno" onChange={this.handleChange} value={form?form.Ap_Materno: ''}/>
-                      <br />
-                      <label htmlFor="RU">CI</label>
-                      <input className="form-control" type="text" name="CI" id="CI" onChange={this.handleChange} value={form?form.CI:''}/>
-                      <br />
-                      <label htmlFor="Email">Correo Electronico</label>
-                      <input className="form-control" type="text" name="Email" id="Email" onChange={this.handleChange} value={form?form.Email: ''}/>
-                      <br />
-                      <label htmlFor="Telefono">Telefono</label>
-                      <input className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChange} value={form?form.Telefono:''}/>
-                      <br />
-                    </div>
+                  <form className="form-group">
+                  <FormUsuario handleChange={this.handleChange} form={form} error={this.state.error}/>
+                  </form>
                   </ModalBody>
   
                   <ModalFooter>

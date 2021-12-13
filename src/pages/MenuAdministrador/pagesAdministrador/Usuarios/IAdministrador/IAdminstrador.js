@@ -7,10 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AiFillPrinter } from "react-icons/ai";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import PresentCard from '../../../../PresentCard/PresentCard';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import FormUsuario from '../Forms/FormUsuario';
 
 
 const url="http://localhost:8000/api/administrador";
@@ -29,6 +30,7 @@ const columns = [
 class IAdminstrador extends Component {
 state={
   data:[],
+  error:"",
   avatar:[],
   modalInsertar: false,
   busquedaRU: '', 
@@ -62,24 +64,30 @@ axios.get(urlAvatar).then(response=>{
 }
 
 peticionPost=async()=>{
-    delete this.state.form._id;
+    delete this.state.form?._id;
    await axios.post(`${url}/create`,
     {
-      _id: this.state.form._id,
-      Nombre: this.state.form.Nombre,
-      Ap_Paterno: this.state.form.Ap_Paterno,
-      Ap_Materno: this.state.form.Ap_Materno,
-      CI: this.state.form.CI,
-      Email: this.state.form.Email,
-      Telefono: this.state.form.Telefono,
-      RU: this.state.form.RU,
+      _id: this.state.form?._id,
+      Nombre: this.state.form?.Nombre,
+      Ap_Paterno: this.state.form?.Ap_Paterno,
+      Ap_Materno: this.state.form?.Ap_Materno,
+      CI: this.state.form?.CI,
+      Email: this.state.form?.Email,
+      Telefono: this.state.form?.Telefono,
+      RU: this.state.form?.RU,
       Cargo: 'ADMINISTRADOR',
-      username: `${this.state.form.Nombre}_${this.state.form.Ap_Paterno}`,
-      password: `${this.state.form.Ap_Paterno}${this.state.form.CI}`,
+      username: `${this.state.form?.Nombre}_${this.state.form?.Ap_Paterno}`,
+      password: `${this.state.form?.Ap_Paterno}${this.state.form?.CI}`,
     }
     ).then(response=>{
-      this.modalInsertar();
-      this.peticionGet();
+      if("error" in response.data === true){
+        this.setState({error: response.data.error});
+      } else {
+        this.setState({error: ""});
+        this.modalInsertar();
+        this.alertCreate();
+        this.peticionGet();
+      }
     }).catch(error=>{
       console.log(error.message);
     })
@@ -158,7 +166,6 @@ await this.setState({
     [e.target.name]: e.target.value
   }
 });
-console.log(this.state.form);
 }
 
   componentDidMount() {
@@ -195,6 +202,14 @@ onChange=async e=>{
 
 seleccionarBusqueda= () =>{
   this.setState({busqueda:this.state.busquedaRU})
+}
+alertCreate= () =>{
+  Swal.fire({
+    icon: 'success',
+    title: `Usuario creado correctamente`,
+    showConfirmButton: false,
+    timer: 1500
+  })
 }
 DownloadPdf=()=>{
   const doc= new jsPDF()
@@ -269,41 +284,9 @@ DownloadPdf=()=>{
                 </ModalHeader>
                 <ModalBody>
                   <form className="form-group">
-                    <div>
-                    <label htmlFor="RU">RU</label>
-                    <input className="form-control" type="text" name="RU" id="RU" placeholder = "0000" onChange={this.handleChange} value={form?form.RU:''}/>
-                    {true===true? <div id="emailHelp" className="form-text text-danger">We'll never share your email with anyone else.</div> : console.log("hola")}
-                    </div>
-                    <br/>
-                    <div>
-                    <label htmlFor="Nombre">Nombres</label>
-                    <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
-                    </div>
-                    <div>
-                    <label htmlFor="Ap_Paterno">Apellido Paterno</label>
-                    <input className="form-control" type="text" name="Ap_Paterno" id="Ap_Paterno" onChange={this.handleChange} value={form?form.Ap_Paterno: ''}/>
-                    </div>
-                    <div>
-                    <label htmlFor="Ap_Materno">Apellido Materno</label>
-                    <input className="form-control" type="text" name="Ap_Materno" id="Ap_Materno" onChange={this.handleChange} value={form?form.Ap_Materno: ''}/>
-                    </div>
-                    <div>
-                    <label htmlFor="RU">CI</label>
-                    <input className="form-control" type="text" name="CI" id="CI" onChange={this.handleChange} value={form?form.CI:''}/>
-                    </div>
-                    <div>
-                    <label htmlFor="Email">Correo Electronico</label>
-                    <input className="form-control" type="text" name="Email" id="Email" placeholder = "example@example.com" onChange={this.handleChange} value={form?form.Email: ''}/>
-                    </div>
-                    <div>
-                    <label htmlFor="Telefono">Telefono</label>
-                    <input className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChange} value={form?form.Telefono:''}/>
-                    </div>
-                    
-                    
+                    <FormUsuario handleChange={this.handleChange} form={form} error={this.state.error}/>
                   </form>
                 </ModalBody>
-
                 <ModalFooter>
                   {this.state.tipoModal==='insertar'?
                     <button className="btn btn-dark" onClick={()=>this.peticionPost()}>
@@ -312,7 +295,7 @@ DownloadPdf=()=>{
                     Actualizar
                   </button>
                   }
-                    <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
+                    <button className="btn btn-danger" onClick={()=>{this.modalInsertar(); this.setState({error: ""})}}>Cancelar</button>
                 </ModalFooter>
           </Modal>
         </div>

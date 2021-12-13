@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "./Programacion.css"
 import Cookies from "universal-cookie";
+import PresentCard from '../../../PresentCard/PresentCard';
 
 const url = "http://localhost:8000/api/materia";
 const cookies = new Cookies();
@@ -43,6 +44,7 @@ const Programacion = () => {
   
   return (
     <div>
+      <PresentCard />
         <div className="text-left container">
             <br />
           <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Materia</button>

@@ -11,6 +11,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PresentCard from "../../../PresentCard/PresentCard";
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import FormAulas from "./FormAulas";
 
 const url = "http://localhost:8000/api/aula";
 const columns = [
@@ -23,6 +24,7 @@ class IAulas extends Component {
   //Almacenar estado
   state = {
     data: [],
+    error: "",
     modalInsertar: false,
     selectedOption: null,
     busqueda1: "Filtrar todas las salas",
@@ -51,18 +53,24 @@ class IAulas extends Component {
     }
     
     peticionPost=async()=>{
-        delete this.state.form._id;
+        delete this.state.form?._id;
        await axios.post(`${url}/create`,
         {
-          _id: this.state.form._id,
-          Nombre: this.state.form.Nombre,
-          Piso: this.state.form.Piso,
-          TipoSala: this.state.form.TipoSala,
-          Capacidad: this.state.form.Capacidad,
+          _id: this.state.form?._id,
+          Nombre: this.state.form?.Nombre,
+          Piso: this.state.form?.Piso,
+          TipoSala: this.state.form?.TipoSala,
+          Capacidad: this.state.form?.Capacidad,
         }
         ).then(response=>{
-          this.modalInsertar();
-          this.peticionGet();
+          if("error" in response.data === true){
+            this.setState({error: response.data.error});
+          } else {
+            this.setState({error: ""});
+            this.modalInsertar();
+            this.alertCreate();
+            this.peticionGet();
+          }
         }).catch(error=>{
           console.log(error.message);
         })
@@ -167,6 +175,14 @@ class IAulas extends Component {
         }
       })
     }
+    alertCreate= () =>{
+      Swal.fire({
+        icon: 'success',
+        title: `Aula creada correctamente`,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
     DownloadPdf=()=>{
       const doc= new jsPDF()
       doc.text("AULAS REGISTRADAS",20,10)
@@ -266,33 +282,7 @@ class IAulas extends Component {
                       <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
                     </ModalHeader>
                     <ModalBody>
-                      <div className="form-group">
-                        <label htmlFor="Nombre">Nombre</label>
-                        <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
-                        <br />
-                        <label htmlFor="Piso">Planta</label>
-                        <select name="Piso" className="form-select" id="Piso" onChange={this.handleChange}>
-                          <option>Selecionar planta...</option>
-                          <option>PLANTA BAJA</option>
-                          <option>PRIMER PISO</option>
-                          <option>SEGUNDO PISO</option>
-                          <option>TERCER PISO</option>
-                          <option>CUARTO PISO</option>
-                          
-                        </select>
-                        <br />
-                        <label htmlFor="TipoSala">Sala</label>
-                        <select name="TipoSala" className="form-select" id="TipoSala" onChange={this.handleChange}>
-                          <option>Selecionar tipo de sala...</option>
-                          <option>SALA NORMAL</option>
-                          <option>LABORATORIO</option>
-                          <option>SALA DE COMPUTACION</option>
-                        </select>
-                        <br />
-                        <label htmlFor="Capacidad">Capacidad</label>
-                        <input className="form-control" type="number" name="Capacidad" id="Capacidad" onChange={this.handleChange} value={form?form.Capacidad:''}/>
-                        <br />
-                      </div>
+                      <FormAulas handleChange={this.handleChange} form={form} error={this.state.error}/>
                     </ModalBody>
     
                     <ModalFooter>
@@ -303,7 +293,7 @@ class IAulas extends Component {
                         Actualizar
                       </button>
       }
-                        <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
+                        <button className="btn btn-danger" onClick={()=>{this.modalInsertar(); this.setState({error: ""})}}>Cancelar</button>
                     </ModalFooter>
               </Modal>
       </div>

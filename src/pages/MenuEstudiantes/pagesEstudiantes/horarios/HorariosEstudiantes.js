@@ -1,12 +1,12 @@
 import React from 'react'
 import PresentCard from '../../../PresentCard/PresentCard';
 
-const InicioEstudiantes = () => {
+export const HorariosEstudiantes = () => {
     return (
         <div>
             <PresentCard />
-            INICIO
+            horarios
         </div>
     )
 }
-export default InicioEstudiantes;
+export default HorariosEstudiantes;

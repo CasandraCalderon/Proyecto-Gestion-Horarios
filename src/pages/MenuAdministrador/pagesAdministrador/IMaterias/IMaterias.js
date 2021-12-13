@@ -11,6 +11,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PresentCard from "../../../PresentCard/PresentCard";
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import FormMateria from "./FormMateria";
 
 
 const url = "http://localhost:8000/api/materia";
@@ -26,6 +27,7 @@ class IMaterias extends Component {
   //Almacenar estado
   state = {
     data: [],
+    error: "",
     Docentes: [],
     Semestres: [],
     Aulas: [],
@@ -66,18 +68,24 @@ class IMaterias extends Component {
     }
     
     peticionPost=async()=>{
-        delete this.state.form._id;
+        delete this.state.form?._id;
        await axios.post(`${url}/create`,
         {
-          _id: this.state.form._id,
-          Nombre: this.state.form.Nombre,
-          Sigla: this.state.form.Sigla,
-          Semestre: this.state.form.Semestre,
-          CantHSemanas: this.state.form.CantHSemanas,
+          _id: this.state.form?._id,
+          Nombre: this.state.form?.Nombre,
+          Sigla: this.state.form?.Sigla,
+          Semestre: this.state.form?.Semestre,
+          CantHSemanas: this.state.form?.CantHSemanas,
         }
         ).then(response=>{
-          this.modalInsertar();
-          this.peticionGet();
+          if("error" in response.data === true){
+            this.setState({error: response.data.error});
+          } else {
+            this.setState({error: ""});
+            this.modalInsertar();
+            this.alertCreate();
+            this.peticionGet();
+          }
         }).catch(error=>{
           console.log(error.message);
         })
@@ -178,6 +186,14 @@ class IMaterias extends Component {
         } else {
           this.setState({modalEliminar: false})
         }
+      })
+    }
+    alertCreate= () =>{
+      Swal.fire({
+        icon: 'success',
+        title: `Materia creada correctamente`,
+        showConfirmButton: false,
+        timer: 1500
       })
     }
     DownloadPdf=()=>{
@@ -282,26 +298,7 @@ class IMaterias extends Component {
                       <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
                     </ModalHeader>
                     <ModalBody>
-                      <div className="form-group">
-                      <label htmlFor="Nombre">Nombre</label>
-                        <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={this.handleChange} value={form?form.Nombre: ''}/>
-                        <br />
-                        <label htmlFor="Sigla">Sigla</label>
-                        <input className="form-control" type="text" name="Sigla" id="Sigla" onChange={this.handleChange} value={form?form.Sigla: ''}/>
-                        <br />
-                        <label htmlFor="Semestre">Semestre</label>
-                        <select name="Semestre" className="form-select" id="Semestre" onChange={this.handleChange}>
-                          <option>Selecionar Semestre...</option>
-                          {this.state.Semestres.map(elemento => (
-                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
-                            )
-                          )}
-                        </select>
-                        <br />
-                        <label htmlFor="CantHSemanas">CantHSemanas</label>
-                        <input className="form-control" type="number" name="CantHSemanas" id="CantHSemanas" onChange={this.handleChange} value={form?form.CantHSemanas:''}/>
-                        <br />
-                      </div>
+                      <FormMateria handleChange={this.handleChange} form={form} error={this.state.error} Semestres={this.state.Semestres}/>
                     </ModalBody>
     
                     <ModalFooter>

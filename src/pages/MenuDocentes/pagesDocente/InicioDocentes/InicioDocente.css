@@ -1,0 +1,38 @@
+#imagenDocente {
+    width: 40%; 
+    float:left;
+    color: red;
+    align-items: left;
+    vertical-align: middle;
+}
+
+#Contenido {
+    background-image: linear-gradient(to right bottom, #30083b, #48124c, #621d5d, #7e286e, #9b337d, #aa4c91, #ba62a5, #c979b9, #cd9cd1, #d5bce3, #e3dbf0, #f8f8f8);
+    filter: drop-shadow(16px 16px 20px rgb(78, 67, 78));
+    width: 47%;
+    float:right;
+    height: 480px;
+    border: rgb(0, 0, 0) 1px solid;
+    border-radius: 30px;
+    margin-top: 40px;
+    margin-right: 130px;
+    padding: 20px;
+    color: white;
+    text-shadow: 2px 2px rgb(131, 95, 95);
+}
+#imgDocente{
+    height: 550px;
+    width: 650px;
+    filter: brightness(1.1);
+    mix-blend-mode: multiply;
+    margin-left: 180px;
+}
+#ContenidoInicio{
+    padding-left: 20px;
+    padding-right: 10px;
+    font-size: 18px;
+}
+#Funciones{
+    padding-left: 30px;
+    font-size: 18px;
+}

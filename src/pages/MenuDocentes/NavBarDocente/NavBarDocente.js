@@ -1,6 +1,10 @@
 import React from "react";
 import { Nav, Navbar, NavLink } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BsFillCalendarWeekFill } from "react-icons/bs";
+import { AiFillHome  } from "react-icons/ai";
+import { RiNewspaperFill } from "react-icons/ri";
+import { FaCalendarCheck } from "react-icons/fa";
 import { BiExit } from "react-icons/bi";
 import escudo from "../../../img/escudo.png";
 import Swal from "sweetalert2";
@@ -33,11 +37,11 @@ export default class NavBarDocente extends React.Component {
             <Navbar.Collapse>
               <Nav>
                 <NavLink as={Link} to={"InicioDocente"}>
-                  Inicio
+                  <AiFillHome /> Inicio
                 </NavLink>
-                <NavLink as={Link} to={"verHorarios"}>Ver Horarios</NavLink>
-                <NavLink as={Link} to={"Disponibilidad"}>Disponibilidad</NavLink>
-                <NavLink as={Link} to={"miPerfil"}>Mi Perfil</NavLink>
+                <NavLink as={Link} to={"verHorarios"}><BsFillCalendarWeekFill /> Ver Horarios</NavLink>
+                <NavLink as={Link} to={"Disponibilidad"}><FaCalendarCheck /> Disponibilidad</NavLink>
+                <NavLink as={Link} to={"miPerfil"}><RiNewspaperFill /> Mi Perfil</NavLink>
               </Nav>
             </Navbar.Collapse>
             <button id= "Exit" onClick={this.salir} type="button" className="btn btn-secondary"><BiExit size={30}/></button>
