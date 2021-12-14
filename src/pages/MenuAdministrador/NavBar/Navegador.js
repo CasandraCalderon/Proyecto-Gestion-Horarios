@@ -1,5 +1,5 @@
 import React from "react";
-import './Navegador.css'
+import '../../../css/Navegador.css'
 import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BiExit } from "react-icons/bi";
@@ -9,9 +9,6 @@ import { BsFillDoorClosedFill } from "react-icons/bs";
 import { RiNewspaperFill } from "react-icons/ri";
 import escudo from "../../../img/escudo.png";
 import Swal from "sweetalert2";
-
-
-
 
 export default class Navegador extends React.Component {
   salir=()=> {

@@ -3,10 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FaUserEdit, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
-import "./MiPerfil.css";
+import "../../css/MiPerfil.css";
 import Cookies from "universal-cookie";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Datos from "./Datos";
+
+
 
 const cookies = new Cookies();
 const url = "http://localhost:8000/api/avatar";

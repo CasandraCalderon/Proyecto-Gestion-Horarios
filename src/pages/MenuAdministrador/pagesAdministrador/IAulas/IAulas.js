@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./IAulas.css";
+import "../../../../css/IAulas.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from 'sweetalert2'

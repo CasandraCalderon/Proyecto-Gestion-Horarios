@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Table, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import "./Disponibilidad.css"
+import "../../../../css/Disponibilidad.css"
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "universal-cookie";
@@ -186,7 +186,6 @@ class Disponibilidad extends Component {
                     <ModalHeader>
                 MODIFICAR DISPONIBILIDAD
             </ModalHeader>
-
             <ModalBody>
             <Table bordered>
                 <thead className="thead-dark text-center">

@@ -1,5 +1,5 @@
 import React from 'react'
-import "./MiPerfil.css";
+import "../../css/MiPerfil.css";
 const Datos = (props) => {
     return (
         <>

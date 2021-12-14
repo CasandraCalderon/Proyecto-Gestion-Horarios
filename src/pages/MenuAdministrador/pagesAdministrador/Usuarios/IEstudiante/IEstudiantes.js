@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import "./IEstudiantes.css";
+import "../../../../../css/IEstudiantes.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -266,7 +266,6 @@ class IEstudiantes extends Component {
                           <option value="OCTAVO">OCTAVO SEMESTRE</option>
               
             </select>{"   "}
-
             <input
               className="textField"
               placeholder="Buscar por RU"

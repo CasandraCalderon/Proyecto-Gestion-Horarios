@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
-import './PresentCard.css';
+import '../../css/PresentCard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser} from "@fortawesome/free-solid-svg-icons";
 import Cookies from "universal-cookie";
 import axios from "axios";
+
 
 const url = "http://localhost:8000/api/avatar"
 const cookies = new Cookies();

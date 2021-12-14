@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table } from "react-bootstrap";
-import "./Horarios.css"
+import "../../../../css/Horarios.css"
 import TablaHorario from '../../../MenuDocentes/pagesDocente/verHorarios/TablaHorario';
 import PresentCard from '../../../PresentCard/PresentCard';
 import axios from "axios";

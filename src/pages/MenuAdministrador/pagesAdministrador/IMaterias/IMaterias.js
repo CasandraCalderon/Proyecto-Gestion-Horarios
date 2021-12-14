@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import './IMaterias.css';
+import '../../../../css/IMaterias.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +12,7 @@ import PresentCard from "../../../PresentCard/PresentCard";
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import FormMateria from "./FormMateria";
+
 
 
 const url = "http://localhost:8000/api/materia";

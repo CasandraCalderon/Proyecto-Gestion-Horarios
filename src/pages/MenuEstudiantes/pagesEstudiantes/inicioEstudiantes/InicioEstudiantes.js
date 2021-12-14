@@ -1,6 +1,6 @@
 import React from 'react'
 import Cookies from "universal-cookie";
-import "./inicioEstudiantes.css";
+import "../../../../css/inicioEstudiantes.css";
 import imgInicio from '../../../../img/19197642.jpg';
 import img1 from '../../../../img/imgEstudiante.jpg';
 import img2 from '../../../../img/imgDocente.jpg';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './IDocentes.css';
+import '../../../../../css/IDocentes.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +14,7 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import VerDisponibilidad from '../../Horarios/VerDisponibilidad';
 import FormUsuario from '../Forms/FormUsuario';
+
 
 const url="http://localhost:8000/api/docente";
 const urlAvatar = "http://localhost:8000/api/avatar";
@@ -350,10 +351,6 @@ class IDocentes extends Component {
                       <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
                   </ModalFooter>
             </Modal>
-  
-  
-            
-
           <Modal isOpen={this.state.modalVer} centered fullscreen="" size="xl">
             <ModalHeader>
                 Disponibilidad de {form && form.username}

@@ -1,6 +1,6 @@
 import React from 'react'
 import PresentCard from '../../../PresentCard/PresentCard';
-import "./Programacion.css"
+import "../../../../css/Programacion.css"
 import Cookies from "universal-cookie";
 import axios from "axios";
 
@@ -48,7 +48,7 @@ class Programacion extends React.Component {
     return (
       <div id="Programacion">
         <PresentCard />
-        <table class="table table-striped text-center container">
+        <table className="table table-striped text-center container">
     <thead>
       <tr>
         <th scope="col">Materia</th>

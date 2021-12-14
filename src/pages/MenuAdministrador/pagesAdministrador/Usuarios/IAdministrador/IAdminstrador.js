@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import './IAdministrador.css';
+import '../../../../../css/IAdministrador.css';
 import Swal from 'sweetalert2'
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,6 +12,7 @@ import PresentCard from '../../../../PresentCard/PresentCard';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import FormUsuario from '../Forms/FormUsuario';
+
 
 
 const url="http://localhost:8000/api/administrador";
