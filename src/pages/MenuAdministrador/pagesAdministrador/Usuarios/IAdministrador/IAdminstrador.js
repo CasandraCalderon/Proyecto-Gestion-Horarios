@@ -197,7 +197,6 @@ modalEliminar = () => {
 onChange=async e=>{
   e.persist();
   await this.setState({...this.state.busquedaRU, [e.target.name]: e.target.value});
-  console.log(this.state.busquedaRU);
 }
 
 seleccionarBusqueda= () =>{

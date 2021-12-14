@@ -129,7 +129,6 @@ class IAulas extends Component {
         [e.target.name]: e.target.value
       }
     });
-    console.log(this.state.form);
     }
     
     onChange = async (e) => {
@@ -138,7 +137,6 @@ class IAulas extends Component {
         ...this.state.busquedaRU,
         [e.target.name]: e.target.value,
       });
-      console.log(this.state.busquedaRU);
     };
   
     onChange1 = async (e) => {

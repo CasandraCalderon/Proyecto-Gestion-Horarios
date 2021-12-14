@@ -139,7 +139,6 @@ class Disponibilidad extends Component {
         [e.target.name]: e.target.value
       }
     });
-    console.log(this.state.form);
     }
       componentDidMount() {
         this.peticionGet();
@@ -156,7 +155,6 @@ class Disponibilidad extends Component {
           }
         })
         this.modalEliminar();
-        console.log(this.state.form);
 
       };
       

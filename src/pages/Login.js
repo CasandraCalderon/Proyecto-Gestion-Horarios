@@ -44,7 +44,6 @@ const Login = () => {
         [e.target.name]: e.target.value,
       },
     });
-    console.log(state.form);
   };
 
   const iniciarSesion = async (e) => {

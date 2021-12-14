@@ -216,7 +216,6 @@ class IDocentes extends Component {
       [e.target.name]: e.target.value
     }
   });
-  console.log(this.state.form);
   }
   
     componentDidMount() {

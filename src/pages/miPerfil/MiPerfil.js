@@ -237,7 +237,7 @@ class MiPerfil extends Component {
                   Agregar
                 </button>
               )}{" "}
-              {this.state.data.length !== 0 ? (
+              {this.state.data.length !== 0  && 
                 <button
                   className="btn btn-dark"
                   onClick={() => this.modalEliminar()}
@@ -245,9 +245,7 @@ class MiPerfil extends Component {
                   <FaTrash />
                   Eliminar
                 </button>
-              ) : (
-                console.log("prueba")
-              )}
+               }
             </div>
           </section>
           <section id="data">

@@ -15,7 +15,6 @@ import FormUsuario from "../Forms/FormUsuario";
 
 
 const url = "http://localhost:8000/api/estudiante";
-const urlSemestres = "http://localhost:8000/api/semestres";
 const columns = [
   {title: "Nombre", field: "Nombre"},
   {title: "Ap_Paterno", field: "Ap_Paterno"},
@@ -35,7 +34,6 @@ class IEstudiantes extends Component {
     busqueda1: "Filtrar todos los semestres",
     busquedaRU: "",
     busqueda: "",
-    Semestres: [],
     form: {
       _id: "",
       Nombre: "",
@@ -165,15 +163,6 @@ class IEstudiantes extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get(urlSemestres)
-      .then((response) => {
-        console.log(response);
-        this.setState({ Semestres: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     this.peticionGet();
   }
 
@@ -206,7 +195,6 @@ class IEstudiantes extends Component {
       ...this.state.busquedaRU,
       [e.target.name]: e.target.value,
     });
-    console.log(this.state.busquedaRU);
   };
 
   onChange1 = async (e) => {
@@ -268,11 +256,14 @@ class IEstudiantes extends Component {
               value={this.state.busqueda1}
             >
               <option>Filtrar todos los semestres</option>
-              {this.state.Semestres.map((elemento) => (
-                  <option key={elemento._id} value={elemento._Nombre}>
-                    {elemento.Nombre}
-                  </option>
-                ))}
+              <option value="PRIMERO">PRIMER SEMESTRE</option>
+                          <option value="SEGUNDO">SEGUNDO SEMESTRE</option>
+                          <option value="TERCERO">TERCER SEMESTRE</option>
+                          <option value="CUARTO">CUARTO SEMESTRE</option>
+                          <option value="QUINTO">QUINTO SEMESTRE</option>
+                          <option value="SEXTO">SEXTO SEMESTRE</option>
+                          <option value="SEPTIMO">SEPTIMO SEMESTRE</option>
+                          <option value="OCTAVO">OCTAVO SEMESTRE</option>
               
             </select>{"   "}
 
@@ -370,19 +361,17 @@ class IEstudiantes extends Component {
             <form className="form-group">
             <FormUsuario handleChange={this.handleChange} form={form} error={this.state.error}/>
               <label htmlFor="Semestre">Semestre</label>
-              <select
-                name="Semestre"
-                className="form-select"
-                id="Semestre"
-                onChange={this.handleChange}
-              >
-                <option>Seleccionar semestre...</option>
-                {this.state.Semestres.map((elemento) => (
-                  <option key={elemento._id} value={elemento._Nombre}>
-                    {elemento.Nombre}
-                  </option>
-                ))}
-              </select>
+              <select name="Semestre" className="form-select" id="Semestre" onChange={this.handleChange}>
+                          <option>Seleccionar semestre...</option>
+                          <option value="PRIMERO">PRIMER SEMESTRE</option>
+                          <option value="SEGUNDO">SEGUNDO SEMESTRE</option>
+                          <option value="TERCERO">TERCER SEMESTRE</option>
+                          <option value="CUARTO">CUARTO SEMESTRE</option>
+                          <option value="QUINTO">QUINTO SEMESTRE</option>
+                          <option value="SEXTO">SEXTO SEMESTRE</option>
+                          <option value="SEPTIMO">SEPTIMO SEMESTRE</option>
+                          <option value="OCTAVO">OCTAVO SEMESTRE</option>
+                        </select>
             </form>
           </ModalBody>
 

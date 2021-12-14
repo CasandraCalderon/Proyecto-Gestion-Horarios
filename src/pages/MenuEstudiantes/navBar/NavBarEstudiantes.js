@@ -1,6 +1,6 @@
 import React from "react";
 import { Nav, Navbar, NavLink } from "react-bootstrap";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BsFillCalendarWeekFill } from "react-icons/bs";
 import { AiFillHome  } from "react-icons/ai";
 import { RiNewspaperFill } from "react-icons/ri";

@@ -11,13 +11,12 @@
     
 }
 .card-img{
-    width: 200px;
-    height: 200px;
+    width: 210px;
+    height: 210px;
     margin: 0 auto;
-    padding: 10px 5px 10px 15px;
     border-radius: 50%;
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 210px;
+    max-height: 210px;
     object-fit: cover;
     transition: all 500ms ease-out;
 

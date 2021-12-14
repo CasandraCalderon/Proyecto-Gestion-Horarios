@@ -50,7 +50,6 @@ class IMaterias extends Component {
   componentDidMount() {
     axios.get(urlSemestres)
     .then((response) => {
-      console.log(response);
       this.setState({Semestres: response.data});
     })
     .catch((error) => {
@@ -144,7 +143,6 @@ class IMaterias extends Component {
         [e.target.name]: e.target.value
       }
     });
-    console.log(this.state.form);
     }
     onChange = async (e) => {
       e.persist();
@@ -152,7 +150,6 @@ class IMaterias extends Component {
         ...this.state.busquedaRU,
         [e.target.name]: e.target.value,
       });
-      console.log(this.state.busquedaRU);
     };
   
     onChange1 = async (e) => {
@@ -215,7 +212,7 @@ class IMaterias extends Component {
             <br />
           <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Materia</button>
           <div className="barraBusqueda">
-            <select
+          <select
               className="textField"
               placeholder="Buscar Semestre"
               type="text"
@@ -225,11 +222,14 @@ class IMaterias extends Component {
               value={this.state.busqueda1}
             >
               <option>Filtrar todos los semestres</option>
-              {this.state.Semestres.map((elemento) => (
-                  <option key={elemento._id} value={elemento._Nombre}>
-                    {elemento.Nombre}
-                  </option>
-                ))}
+              <option value="PRIMERO">PRIMER SEMESTRE</option>
+                          <option value="SEGUNDO">SEGUNDO SEMESTRE</option>
+                          <option value="TERCERO">TERCER SEMESTRE</option>
+                          <option value="CUARTO">CUARTO SEMESTRE</option>
+                          <option value="QUINTO">QUINTO SEMESTRE</option>
+                          <option value="SEXTO">SEXTO SEMESTRE</option>
+                          <option value="SEPTIMO">SEPTIMO SEMESTRE</option>
+                          <option value="OCTAVO">OCTAVO SEMESTRE</option>
               
             </select>{"   "}
 

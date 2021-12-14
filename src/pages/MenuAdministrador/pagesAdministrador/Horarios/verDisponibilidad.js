@@ -32,7 +32,7 @@ export default class VerDisponibilidad extends React.Component {
             {this.state.data.filter(docente => docente.RU === RU).map(usuario=>{
               return(
                   <div key={usuario._id}>
-                    <table className="table table-bordered container" striped bordered hover>
+                    <table className="table table-bordered container">
                         <thead className="thead-dark text-center">
                                 <tr>
                                 <th scope="col">Hora</th>

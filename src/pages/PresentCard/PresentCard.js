@@ -19,7 +19,6 @@ class PresentCard extends Component {
   peticionGet=()=>{
     axios.get(url).then(response=>{
       this.setState({data: response.data.filter(e => e.RU === cookies.get("RU"))});
-      console.log(this.state.data)
     }).catch(error=>{
       console.log(error.message);
     })
@@ -27,24 +26,26 @@ class PresentCard extends Component {
     }
   render() {
     return (
-      <div>
-        <br /><br /><br /><br /><br />
-          <div className="card col-md-6 offset-md-3 text-white bg-dark mb-3" id= 'card'>
-            <div className="row no-gutters">
-              <div className="col-md-2">
-                <img src={this.state.data.length !== 0? `http://localhost:8000/${this.state.data[0]?.image}` : "http://localhost:8000/uploads/gerente.png" } className="card-img" alt="..."/>
-              </div>
-              <div className="col-md-8">
-                <div className="text-center" id="cardText">
-                <br /><br />
-                  <h4 className="card-title"><FontAwesomeIcon icon={faUser} /> {cookies.get("Nombre")} {cookies.get("Ap_Paterno")} {cookies.get("Ap_Materno")}</h4>
-                  <h4 className="card-title">RU: {cookies.get("RU")}</h4>
-                  <p className="cargo">{cookies.get("Cargo")}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div >
+        <br/><br/><br/><br/>
+        <div className="row mb-2 justify-content-center">
+    <div className="row col-md-5">
+      <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-light text-dark rounded">
+        <div className="col-md-8 p-4 d-flex flex-column position-static ">
+          <br/><br/>
+          <h3 className="mb-0 text-center"><FontAwesomeIcon icon={faUser} /> {cookies.get("Nombre")} {cookies.get("Ap_Paterno")} {cookies.get("Ap_Materno")}</h3>
+          <hr size="8px" color="black" />
+          <strong className="card-text mb-3 text-center">RU: {cookies.get("RU")}</strong>
+          <strong className="btn btn-dark rounded" type="button">{cookies.get("Cargo")}</strong>
         </div>
+        <div className="col-md-4 p-4 d-flex flex-column position-static">
+        <img className="card-img" src={this.state.data.length !== 0? `http://localhost:8000/${this.state.data[0]?.image}` : "http://localhost:8000/uploads/gerente.png" } alt="..."/>
+        </div>
+      </div>
+    </div>
+  </div>
+      </div>
+      
         
     )
   }

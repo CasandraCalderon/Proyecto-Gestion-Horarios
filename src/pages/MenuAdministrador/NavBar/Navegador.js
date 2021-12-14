@@ -1,7 +1,7 @@
 import React from "react";
 import './Navegador.css'
 import { Nav, Navbar, NavDropdown, NavLink } from "react-bootstrap";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BiExit } from "react-icons/bi";
 import { AiTwotoneHome } from "react-icons/ai";
 import { GiBookshelf } from "react-icons/gi";

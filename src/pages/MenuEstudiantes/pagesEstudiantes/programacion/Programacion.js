@@ -1,85 +1,79 @@
-import React, {useState, useEffect, useMemo} from 'react'
-import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
+import React from 'react'
+import PresentCard from '../../../PresentCard/PresentCard';
 import "./Programacion.css"
 import Cookies from "universal-cookie";
-import PresentCard from '../../../PresentCard/PresentCard';
+import axios from "axios";
 
-const url = "http://localhost:8000/api/materia";
 const cookies = new Cookies();
 
-const Programacion = () => {
-  const [materias, setMaterias] = useState([]);
-  const [progMaterias, setProgMaterias] = useState({});
-  
-  useEffect(()=> {
-    axios.get(url)
-    .then(res=>{
-      const data = res.data;
-      setMaterias(data);
-    });
-  }, []);
-
-  const totalMaterias = useMemo(()=> {
-    let aux = {};
-    materias.forEach((materia)=>{
-      aux = {...aux, [materia.Nombre]: false};
-    });
-    return aux;
-  }, [materias]);
-
-  useEffect(()=> {
-    setProgMaterias(totalMaterias);
-  }, [totalMaterias]);
-
-  const handleChangeCheckBox = (e) => {
-    console.dir(e.target);
-    /*setProgMaterias((prevState)=>{
-      return {
-        ...prevState, [e.target.value]: e.target.checked,
-      };
-    });
-    console.log(progMaterias);*/
+const url = "http://localhost:8000/api/estudiante";
+const urlMaterias = "http://localhost:8000/api/materia"
+const urlDocentes = "http://localhost:8000/api/docente"
+class Programacion extends React.Component {
+  state = {
+    data: [],
+    horario: [],
+    materias: [],
+    docentes: []
+  };
+  componentDidMount() {
+    this.peticionGet();
   }
-  
-  return (
-    <div>
-      <PresentCard />
-        <div className="text-left container">
-            <br />
-          <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Materia</button>
-          </div>
-          <br />
-        <table className="table table-fixed text-center container">
-          <thead className="row">
-            <tr>
-              <th className="Primero">Nombre</th>
-              <th className="Primero">Sigla</th>
-              <th className="Primero">Semestre</th>
-              <th className="Primero">Tipo de Aula</th>
-              <th className="Primero">CantHSemanas</th>
-              <th className="Primero">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {materias.filter(materia => materia.Semestre === cookies.get("Semestre")).map(materia=>{
+  peticionGet= ()=>{
+    axios.get(url).then(response=>{
+      this.setState({data: response.data.filter(e => e._id === cookies.get("_id"))});
+      this.peticionGetMaterias();
+    }).catch(error=>{
+      console.log(error.message);
+    })
+    axios.get(urlDocentes).then(response=>{
+      this.setState({docentes: response.data});
+    }).catch(error=>{
+      console.log(error.message);
+    })
+    }
+    peticionGetMaterias=()=>{
+      axios.get(urlMaterias).then(response=>{
+          this.setState({materias: response.data.filter(e=> e.Semestre === this.state.data[0].Semestre)});
+        }).catch(error=>{
+          console.log(error.message);
+        })
+        axios.get(`http://localhost:8000/api/${this.state.data[0]?.Semestre}S`).then(response=>{
+          this.setState({horario: response.data});
+        }).catch(error=>{
+          console.log(error.message);
+        })
+  }
+  render() {
+    return (
+      <div id="Programacion">
+        <PresentCard />
+        <table class="table table-striped text-center container">
+    <thead>
+      <tr>
+        <th scope="col">Materia</th>
+        <th scope="col">Sigla</th>
+        <th scope="col">Docente</th>
+      </tr>
+    </thead>
+    <tbody>
+            {this.state.materias
+              .map(materia=>{
+                
                 return(
                     <tr key={materia._id}>
-                        <td className="Primero">{materia.Sigla}</td>
-                        <td className="Primero">{materia.Nombre}</td>
-                        <td className="Primero">{materia.Semestre}</td>
-                        <td className="Primero">{materia.TipoAula}</td>
-                        <td className="Primero">{materia.CantHSemanas}</td>
-                        <td className="Primero">
-                        <input type="checkbox" value={materia.Nombre} onChange={handleChangeCheckBox}/>
-                    </td>
+                        <td >{materia.Nombre}</td>
+                        <td >{materia.Sigla}</td>
+                        {this.state.horario.find(e => e.Materia.includes(materia.Sigla))? this.state.horario.filter(e => e.Materia.includes(materia.Sigla)).forEach(e => 
+                          <td >{e.Docente}</td>
+                        ) : <td >No asignado</td>}
               </tr>
               )
-            }
-            )}
+            })}
           </tbody>
-        </table>
-    </div>    
-  )
+  </table>
+      </div>
+    )
+  }
 }
 export default Programacion;

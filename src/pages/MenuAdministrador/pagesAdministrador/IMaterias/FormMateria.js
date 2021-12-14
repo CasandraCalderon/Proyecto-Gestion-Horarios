@@ -13,11 +13,15 @@ const FormMateria = (props) => {
                         {props.error?.includes("sigla")? <div id="emailHelp" className="form-text text-danger">{props.error}</div> : <br/> }
                         <label htmlFor="Semestre">Semestre</label>
                         <select name="Semestre" className="form-select" id="Semestre" onChange={props.handleChange}>
-                          <option>Selecionar semestre...</option>
-                          {props.Semestres.map(elemento => (
-                            <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre}</option>
-                            )
-                          )}
+                          <option>Seleccionar semestre...</option>
+                          <option value="PRIMERO">PRIMER SEMESTRE</option>
+                          <option value="SEGUNDO">SEGUNDO SEMESTRE</option>
+                          <option value="TERCERO">TERCER SEMESTRE</option>
+                          <option value="CUARTO">CUARTO SEMESTRE</option>
+                          <option value="QUINTO">QUINTO SEMESTRE</option>
+                          <option value="SEXTO">SEXTO SEMESTRE</option>
+                          <option value="SEPTIMO">SEPTIMO SEMESTRE</option>
+                          <option value="OCTAVO">OCTAVO SEMESTRE</option>
                         </select>
                         <br />
                         <label htmlFor="CantHSemanas">Cantidad de horas a la semanas</label>

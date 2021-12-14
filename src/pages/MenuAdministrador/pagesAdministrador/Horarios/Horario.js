@@ -161,7 +161,6 @@ class Horario extends React.Component {
           [e.target.name]: e.target.value
         }
       });
-      console.log(this.state.form);
       }
 
       modalInsertar=()=>{
@@ -215,34 +214,34 @@ class Horario extends React.Component {
       }
 
       actDias =async()=> {
-        console.log(this.state.form)
         await this.state.form.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
           elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
           this.setState({verificar:true})
           this.getDocentes(elemento.DisOcupada, elemento._id);
             
           }) : this.state.form.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
-            elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+            elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`2${this.state.form.Dia}`),1);
             this.setState({verificar:true})
             this.getDocentes(elemento.DisOcupada, elemento._id);
               
             }) : this.state.form.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
-              elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+              elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`3${this.state.form.Dia}`),1);
               this.setState({verificar:true})
               this.getDocentes(elemento.DisOcupada, elemento._id);
                 
               }) : this.state.form.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
-                elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+                elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`4${this.state.form.Dia}`),1);
                 this.setState({verificar:true})
                 this.getDocentes(elemento.DisOcupada, elemento._id);
                   
                 }) : this.state.form.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
-                  elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
+                  elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`5${this.state.form.Dia}`),1);
                   this.setState({verificar:true})
                   this.getDocentes(elemento.DisOcupada, elemento._id);
                     
                   }) :console.log('chale no se pudo');
       }
+
       alert1=()=>{
         Swal.fire({
           title: `Este dia ya esta ocupado por otra materia`,
