@@ -20,7 +20,7 @@ const InicioDocente = () => {
                         <br/><br/>
                             <div className="text-center my-5">
                                 <h1 className="fw-bolder mb-3">Bienvenid@ {cookies.get("Nombre")} {cookies.get("Ap_Paterno")} {cookies.get("Ap_Materno")}</h1>
-                                <p className="lead fw-normal text-muted mb-4">En esta plataforma cuenta con una herramienta que permite organizar los horarios de la Universidad Autonoma Tomas Frias de la carrera de Ingenieria de sistemas de forma eficiente y segura</p>
+                                <p className="lead fw-normal text-muted mb-4">En esta plataforma podras tener acceso facil y sencillo a la informacion de tus horarios, optimizando con su modificacion tu disponibilidad de tiempos.</p>
                                 <a className="btn btn-warning btn-lg" href="#scroll-target">Ver mas</a>
                             </div>
                         </div>
@@ -38,8 +38,8 @@ const InicioDocente = () => {
                     <div className="row gx-5 align-items-center">
                         <div className="col-lg-6"><img className="img-fluid rounded mb-5 mb-lg-0" src={img2? img2 : <h1>Cargando...</h1>} alt="..." id="imgEstudiante"/></div>
                         <div className="col-lg-6">
-                            <h2 className="fw-bolder">Control de usuarios</h2>
-                            <p className="lead fw-normal text-muted mb-0">Contara con el control de informacion de los diferentes usuarios que sean necesarios para la creacion de horarios ademas de poder agregar y modificar su informacion de manera segura.</p>
+                            <h2 className="fw-bolder">Optimiza tus horarios</h2>
+                            <p className="lead fw-normal text-muted mb-0">De acuerdo a tu tiempo y actividades, ten control de la disponibilidad de tus horarios.</p>
                         </div>
                     </div>
                 </div>
@@ -50,8 +50,8 @@ const InicioDocente = () => {
                     <div className="row gx-5 align-items-center">
                         <div className="col-lg-6 order-first order-lg-last"><img className="img-fluid rounded mb-5 mb-lg-0" src={img1? img1 : <h1>Cargando...</h1>} alt="..." id="imgEstudiante"/></div>
                         <div className="col-lg-6">
-                            <h2 className="fw-bolder">Control de Ambientes y Materias</h2>
-                            <p className="lead fw-normal text-muted mb-0">Tendra acceso a la creacion de listas para los distintos ambientes que presenta la carrera de ingenieria de sistemas ademas de poder agrergar las distintas materias que se lleva en dicha institucion.</p>
+                            <h2 className="fw-bolder">Visualiza tus horarios</h2>
+                            <p className="lead fw-normal text-muted mb-0">De forma sensilla y oportuna puedes tener acceso a la visualizacion de tus horarios asignados para un mejor control de tus tiempos en materia.</p>
                         </div>
                     </div>
                 </div>
@@ -62,8 +62,8 @@ const InicioDocente = () => {
                     <div className="row gx-5 align-items-center">
                         <div className="col-lg-6"><img className="img-fluid rounded mb-5 mb-lg-0" src={img3? img3 : <h1>Cargando...</h1>} alt="..." id="imgEstudiante"/></div>
                         <div className="col-lg-6">
-                            <h2 className="fw-bolder">Control de usuarios</h2>
-                            <p className="lead fw-normal text-muted mb-0">Contara con el control de informacion de los diferentes usuarios que sean necesarios para la creacion de horarios ademas de poder agregar y modificar su informacion de manera segura.</p>
+                            <h2 className="fw-bolder">Herramienta virtual segura y confiable</h2>
+                            <p className="lead fw-normal text-muted mb-0">Esta plataforma virtual que te ofrece la carrera de Ingenieria de Sistemas es una herramienta en la que puedes confiar para mejorar tu servicio Docente.</p>
                         </div>
                     </div>
                 </div>
