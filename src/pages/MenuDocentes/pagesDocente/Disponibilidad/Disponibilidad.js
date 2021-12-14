@@ -167,7 +167,7 @@ class Disponibilidad extends Component {
             <PresentCard />
         <div className="text-left container">
         <br />
-        {this.state.data.filter(docente => docente.RU === cookies.get("RU")).map(usuario=>{
+        {this.state.data.filter(docente => docente._id === cookies.get("_id")).map(usuario=>{
               return(
                   <div key={usuario._id}>
                 {usuario.Disponibilidad.length === 0? <button className="btn btn-dark" onClick={()=>{this.seleccionarUsuario(usuario); this.modalInsertar()}}>Modificar Disponibilidad</button> :
@@ -176,7 +176,7 @@ class Disponibilidad extends Component {
             )
         })}
         <br /> <br />       
-                  <VerDisponibilidad RU={cookies.get("RU")}/>
+                  <VerDisponibilidad ID={cookies.get("_id")}/>
         </div>
         
         <Modal isOpen={this.state.modalInsertar} centered fullscreen="" size="xl">

@@ -170,33 +170,33 @@ class Horario extends React.Component {
         this.setState({modalInsertar: !this.state.modalInsertar});
       }
       verificar=()=> {
-        this.state.form?.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+        this.state.form?.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form?.Docente).forEach(elemento => 
           {if (elemento.Disponibilidad.includes(`1${this.state.form.Dia}`) && !elemento.DisOcupada.includes(`1${this.state.form.Dia}`)){
             elemento.DisOcupada.push(`1${this.state.form.Dia}`);
             this.getDocentes(elemento.DisOcupada, elemento._id);
           }else {
             this.alert();
           }}) 
-          : this.state.form?.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+          : this.state.form?.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form?.Docente).forEach(elemento => 
             {if (elemento.Disponibilidad.includes(`1${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`2${this.state.form?.Dia}`)){
               elemento.DisOcupada.push(`2${this.state.form?.Dia}`);
               this.getDocentes(elemento.DisOcupada, elemento._id);
             }else {
               this.alert();
             }}) :
-            this.state.form?.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+            this.state.form?.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form?.Docente).forEach(elemento => 
               {if (elemento.Disponibilidad.includes(`3${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`3${this.state.form?.Dia}`)){
                 elemento.DisOcupada.push(`3${this.state.form?.Dia}`);
                 this.getDocentes(elemento.DisOcupada, elemento._id);
               }else {
                 this.alert();
-              }}) : this.state.form?.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+              }}) : this.state.form?.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form?.Docente).forEach(elemento => 
                 {if (elemento.Disponibilidad.includes(`4${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`4${this.state.form?.Dia}`)){
                   elemento.DisOcupada.push(`4${this.state.form?.Dia}`);
                   this.getDocentes(elemento.DisOcupada, elemento._id);
                 }else {
                   this.alert();
-                }}) : this.state.form?.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+                }}) : this.state.form?.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form?.Docente).forEach(elemento => 
                   {if (elemento.Disponibilidad.includes(`5${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`5${this.state.form?.Dia}`)){
                     elemento.DisOcupada.push(`5${this.state.form?.Dia}`);
                     this.getDocentes(elemento.DisOcupada, elemento._id);
@@ -217,27 +217,27 @@ class Horario extends React.Component {
       }
 
       actDias =async()=> {
-        await this.state.form.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
+        await this.state.form.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form.Docente).forEach(elemento =>{
           elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`1${this.state.form.Dia}`),1);
           this.setState({verificar:true})
           this.getDocentes(elemento.DisOcupada, elemento._id);
             
-          }) : this.state.form.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
+          }) : this.state.form.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form.Docente).forEach(elemento =>{
             elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`2${this.state.form.Dia}`),1);
             this.setState({verificar:true})
             this.getDocentes(elemento.DisOcupada, elemento._id);
               
-            }) : this.state.form.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
+            }) : this.state.form.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form.Docente).forEach(elemento =>{
               elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`3${this.state.form.Dia}`),1);
               this.setState({verificar:true})
               this.getDocentes(elemento.DisOcupada, elemento._id);
                 
-              }) : this.state.form.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
+              }) : this.state.form.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form.Docente).forEach(elemento =>{
                 elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`4${this.state.form.Dia}`),1);
                 this.setState({verificar:true})
                 this.getDocentes(elemento.DisOcupada, elemento._id);
                   
-                }) : this.state.form.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento =>{
+                }) : this.state.form.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento._id === this.state.form.Docente).forEach(elemento =>{
                   elemento.DisOcupada.splice(elemento.DisOcupada.indexOf(`5${this.state.form.Dia}`),1);
                   this.setState({verificar:true})
                   this.getDocentes(elemento.DisOcupada, elemento._id);
@@ -360,7 +360,7 @@ class Horario extends React.Component {
                   <div><h2>Ver Disponibilidad</h2></div>
                 </ModalHeader>
                 <ModalBody>
-                   <VerDisponibilidad RU={this.state.form?.Docente}/>
+                   <VerDisponibilidad ID={this.state.form?.Docente}/>
                 </ModalBody>
                 <ModalFooter>
                   <button className="btn btn-secundary" onClick={()=>this.setState({modalVerDisponibilidad: false})}>Cerrar</button>

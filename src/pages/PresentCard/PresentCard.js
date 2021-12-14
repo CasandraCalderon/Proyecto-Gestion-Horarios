@@ -18,7 +18,7 @@ class PresentCard extends Component {
   }
   peticionGet=()=>{
     axios.get(url).then(response=>{
-      this.setState({data: response.data.filter(e => e.RU === cookies.get("RU"))});
+      this.setState({data: response.data.filter(e => e.RU === cookies.get("_id"))});
     }).catch(error=>{
       console.log(error.message);
     })

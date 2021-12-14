@@ -359,7 +359,7 @@ class IDocentes extends Component {
                 Disponibilidad de {form && form.username}
               </ModalHeader>
               <ModalBody>
-              <VerDisponibilidad RU={form?.RU}/>
+              <VerDisponibilidad ID={form?._id}/>
               </ModalBody>
               
               <ModalFooter>

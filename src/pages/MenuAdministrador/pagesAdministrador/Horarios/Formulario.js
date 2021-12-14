@@ -29,7 +29,7 @@ const Formulario = (props) => {
               <select name="Docente" className="form-select" id="Docente" onChange={props.onChange}>
                 <option>Seleccionar Docente...</option>
                 {props.docentes.map(elemento => (
-                <option key={elemento._id} value={elemento.RU}>{elemento.Nombre} {elemento.Ap_Paterno} {elemento.Ap_Materno}</option>
+                <option key={elemento._id} value={elemento._id}>{elemento.Nombre} {elemento.Ap_Paterno} {elemento.Ap_Materno}</option>
                 )
                 )}
                 </select>

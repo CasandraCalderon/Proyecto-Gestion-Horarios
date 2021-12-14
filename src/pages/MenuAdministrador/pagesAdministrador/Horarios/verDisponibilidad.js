@@ -26,10 +26,10 @@ export default class VerDisponibilidad extends React.Component {
       }
 
     render() {
-        let {RU} = this.props;
+        let {ID} = this.props;
     return (
         <>
-            {this.state.data.filter(docente => docente.RU === RU).map(usuario=>{
+            {this.state.data.filter(docente => docente._id === ID).map(usuario=>{
               return(
                   <div key={usuario._id}>
                     <table className="table table-bordered container">

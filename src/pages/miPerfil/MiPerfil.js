@@ -42,7 +42,7 @@ class MiPerfil extends Component {
       .get(usuario)
       .then((response) => {
         this.setState({
-          user: response.data.filter((e) => e.RU === cookies.get("RU")),
+          user: response.data.filter((e) => e._id === cookies.get("_id")),
         });
       })
       .catch((error) => {
@@ -52,7 +52,7 @@ class MiPerfil extends Component {
       .get(url)
       .then((response) => {
         this.setState({
-          data: response.data.filter((e) => e.RU === cookies.get("RU")),
+          data: response.data.filter((e) => e.RU === cookies.get("_id")),
         });
       })
       .catch((error) => {
@@ -83,7 +83,7 @@ class MiPerfil extends Component {
     const fd = new FormData();
     fd.append("image", this.state.form?.image);
     fd.append("_id", this.state.form?._id);
-    fd.append("RU", cookies.get("RU"));
+    fd.append("RU", cookies.get("_id"));
     await axios
       .post(`${url}/create`, fd)
       .then((response) => {
