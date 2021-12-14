@@ -17,6 +17,8 @@ import Segundo from './pagesAdministrador/Horarios/Segundo/Segundo';
 import Cuarto from './pagesAdministrador/Horarios/Cuarto/Cuarto';
 import Quinto from './pagesAdministrador/Horarios/Quinto/Quinto';
 import Sexto from './pagesAdministrador/Horarios/Sexto/Sexto';
+import Septimo from './pagesAdministrador/Horarios/Septimo/Septimo';
+import Octavo from './pagesAdministrador/Horarios/Octavo/Octavo';
 
 const cookies = new Cookies();
 
@@ -67,6 +69,10 @@ const Menu = () => {
             <Route path="Quinto" element={<Quinto />}>
             </Route>
             <Route path="Sexto" element={<Sexto />}>
+            </Route>
+            <Route path="Septimo" element={<Septimo />}>
+            </Route>
+            <Route path="Octavo" element={<Octavo />}>
             </Route>
             <Route path="Materias" element={<IMaterias />}>
             </Route>
