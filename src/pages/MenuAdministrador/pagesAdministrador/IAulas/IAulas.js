@@ -225,6 +225,7 @@ class IAulas extends Component {
               id="busqueda2"
               onChange={this.onChange}
               value={this.state.busqueda2}
+              autocomplete="off"
             />
             <button
               type="button"

@@ -279,6 +279,7 @@ class MiPerfil extends Component {
                 type="file"
                 name="image"
                 onChange={this.handleChange}
+                autocomplete="off"
               />
             </div>
           </ModalBody>
@@ -318,17 +319,17 @@ class MiPerfil extends Component {
                   <form className="form-group">
                     <div>
                     <label htmlFor="Email">Correo Electronico</label>
-                    <input className="form-control" type="text" name="Email" id="Email" placeholder = "example@example.com" onChange={this.handleChangeForm} value={this.state.formData.Email}/>
+                    <input autocomplete="off" className="form-control" type="text" name="Email" id="Email" placeholder = "example@example.com" onChange={this.handleChangeForm} value={this.state.formData.Email}/>
                     </div>
                     <br/>
                     <div>
                     <label htmlFor="Telefono">Telefono</label>
-                    <input className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChangeForm} value={this.state.formData.Telefono}/>
+                    <input autocomplete="off" className="form-control" type="text" name="Telefono" id="Telefono" onChange={this.handleChangeForm} value={this.state.formData.Telefono}/>
                     </div>
                     <br/>
                     <div>
                     <label htmlFor="username">Nombre de usuario</label>
-                    <input className="form-control" type="text" name="username" id="username" onChange={this.handleChangeForm} value={this.state.formData.username}/>
+                    <input autocomplete="off" className="form-control" type="text" name="username" id="username" onChange={this.handleChangeForm} value={this.state.formData.username}/>
                     </div>
         
                     

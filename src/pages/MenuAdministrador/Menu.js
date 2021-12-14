@@ -14,6 +14,7 @@ import MiPerfil from '../miPerfil/MiPerfil';
 import Primero from './pagesAdministrador/Horarios/Primero/Primero';
 import Tercero from './pagesAdministrador/Horarios/Tercero/Tercero';
 import Segundo from './pagesAdministrador/Horarios/Segundo/Segundo';
+import Cuarto from './pagesAdministrador/Horarios/Cuarto/Cuarto';
 
 const cookies = new Cookies();
 
@@ -58,6 +59,8 @@ const Menu = () => {
             <Route path="Segundo" element={<Segundo />}>
             </Route>
             <Route path="Tercero" element={<Tercero />}>
+            </Route>
+            <Route path="Cuarto" element={<Cuarto />}>
             </Route>
             <Route path="Materias" element={<IMaterias />}>
             </Route>

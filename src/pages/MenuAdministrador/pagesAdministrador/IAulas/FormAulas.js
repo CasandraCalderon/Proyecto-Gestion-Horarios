@@ -6,7 +6,7 @@ const FormAulas = (props) => {
             <div className="form-group">
             {props.error?.includes("vacios") && <div id="alertHelp" className="form-text">{props.error}</div>}
                         <label htmlFor="Nombre">Nombre</label>
-                        <input className="form-control" type="text" name="Nombre" id="Nombre" onChange={props.handleChange} value={props.form?props.form.Nombre: ''}/>
+                        <input autocomplete="off" className="form-control" type="text" name="Nombre" id="Nombre" onChange={props.handleChange} value={props.form?props.form.Nombre: ''}/>
                         {props.error?.includes("ambiente")? <div id="emailHelp" className="form-text text-danger">{props.error}</div> : <br/> }
                         <label htmlFor="Piso">Planta</label>
                         <select name="Piso" className="form-select" id="Piso" onChange={props.handleChange}>
@@ -27,7 +27,7 @@ const FormAulas = (props) => {
                         </select>
                         <br />
                         <label htmlFor="Capacidad">Capacidad</label>
-                        <input className="form-control" type="number" name="Capacidad" id="Capacidad" onChange={props.handleChange} value={props.form?props.form.Capacidad:''}/>
+                        <input autocomplete="off" className="form-control" type="number" name="Capacidad" id="Capacidad" onChange={props.handleChange} value={props.form?props.form.Capacidad:''}/>
                         <br />
                       </div>
         </>

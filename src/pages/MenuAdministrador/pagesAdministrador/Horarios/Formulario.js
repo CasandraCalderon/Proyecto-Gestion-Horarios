@@ -4,6 +4,7 @@ const Formulario = (props) => {
     return (
         <>
         <div className="form-group">
+        {props.error?.includes("vacios") && <div id="alertHelp">{props.error}</div>}
               <label htmlFor="Dia">Dia</label>
               <select name="Dia" className="form-select" id="TipoSala" onChange={props.onChange}>
               <option >Seleccionar Dia...</option>
@@ -17,7 +18,7 @@ const Formulario = (props) => {
               <br/>
               <label htmlFor="Materia">Materia</label>
               <select name="Materia" className="form-select" id="Materia" onChange={props.onChange}>
-                <option>Selecionar Materia...</option>
+                <option>Seleccionar Materia...</option>
                 {props.materias.filter(elemento => elemento.Semestre === props.click()).map(elemento => (
                 <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre} ({elemento.Sigla})</option>
                 )
@@ -26,7 +27,7 @@ const Formulario = (props) => {
                 <br/>
               <label htmlFor="Docente">Docente</label>
               <select name="Docente" className="form-select" id="Docente" onChange={props.onChange}>
-                <option>Selecionar Docente...</option>
+                <option>Seleccionar Docente...</option>
                 {props.docentes.map(elemento => (
                 <option key={elemento._id} value={elemento.RU}>{elemento.Nombre} {elemento.Ap_Paterno} {elemento.Ap_Materno}</option>
                 )
@@ -35,7 +36,7 @@ const Formulario = (props) => {
                 <br/>
                 <label htmlFor="Aula">Aula</label>
               <select name="Aula" className="form-select" id="Aula" onChange={props.onChange}>
-                <option>Selecionar Aula...</option>
+                <option>Seleccionar Aula...</option>
                 {props.aulas.map(elemento => (
                 <option key={elemento._id} value={elemento._Nombre}>{elemento.Nombre} ({elemento.TipoSala})</option>
                 )
@@ -44,7 +45,7 @@ const Formulario = (props) => {
                 <br/>
                 <label htmlFor="Turno">Turno</label>
               <select name="Turno" className="form-select" id="Turno" onChange={props.onChange}>
-                <option>Selecionar Turno...</option>
+                <option>Seleccionar Turno...</option>
                 <option value='PRIMER TURNO'>PRIMER TURNO</option>
                 <option value='SEGUNDO TURNO'>SEGUNDO TURNO</option>
                 <option value='TERCER TURNO'>TERCER TURNO</option>

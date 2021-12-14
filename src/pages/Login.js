@@ -187,6 +187,7 @@ const Login = () => {
                     placeholder="Username"
                     name="username"
                     onChange={handleChange}
+                    autocomplete="off"
                   />
                 </InputGroup>
                 {errorUser.length!==0? <div className="form-text text-danger"><strong>{errorUser}</strong></div> : <br/>}
@@ -201,6 +202,7 @@ const Login = () => {
                     placeholder="Password"
                     name="password"
                     onChange={handleChange}
+                    autocomplete="off"
                   />
                 </InputGroup>
                 {errorPassword.length!==0? <div className="form-text text-danger"><strong>{errorPassword}</strong></div> : <br/>}

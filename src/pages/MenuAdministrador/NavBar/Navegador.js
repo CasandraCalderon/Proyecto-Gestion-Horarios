@@ -61,6 +61,7 @@ export default class Navegador extends React.Component {
                   <NavDropdown.Item  as={Link} to={"Primero"}>Primer Semestre</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={"Segundo"}>Segundo Semestre</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={"Tercero"}>Tercer Semestre</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"Cuarto"}>Cuarto Semestre</NavDropdown.Item>
                   </div>
                 </NavDropdown>
                 <NavLink as={Link} to={"miPerfil"}><RiNewspaperFill/>Mi perfil</NavLink>

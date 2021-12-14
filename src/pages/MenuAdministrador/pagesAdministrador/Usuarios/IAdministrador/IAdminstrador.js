@@ -76,7 +76,7 @@ peticionPost=async()=>{
       Telefono: this.state.form?.Telefono,
       RU: this.state.form?.RU,
       Cargo: 'ADMINISTRADOR',
-      username: `${this.state.form?.Nombre}_${this.state.form?.Ap_Paterno}`,
+      username: this.state.form?.RU,
       password: `${this.state.form?.Ap_Paterno}${this.state.form?.CI}`,
     }
     ).then(response=>{
@@ -231,7 +231,7 @@ DownloadPdf=()=>{
         <br />
       <button className="btn btn-dark" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Agregar Administrador</button>
       <div className="barraBusqueda">
-        <input className="textField" placeholder="Buscar por RU" type="text" name="busquedaRU" id="busquedaRU" onChange={this.onChange} value={this.state.busquedaRU}/>
+        <input autocomplete="off" className="textField" placeholder="Buscar por RU" type="text" name="busquedaRU" id="busquedaRU" onChange={this.onChange} value={this.state.busquedaRU}/>
         <button type="button" className="btn btn-dark" onClick={this.seleccionarBusqueda}>
               {" "}
               <FontAwesomeIcon icon={faSearch} />

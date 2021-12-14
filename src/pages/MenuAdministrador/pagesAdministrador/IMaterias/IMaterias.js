@@ -241,6 +241,7 @@ class IMaterias extends Component {
               id="busquedaRU"
               onChange={this.onChange}
               value={this.state.busquedaRU}
+              autocomplete="off"
             />
             <button
               type="button"

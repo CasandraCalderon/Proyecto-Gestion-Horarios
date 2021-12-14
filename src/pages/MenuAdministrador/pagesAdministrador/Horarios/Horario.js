@@ -18,6 +18,7 @@ class Horario extends React.Component {
     data: [],
     Materias: [],
     Docentes: [],
+    error: [],
     formD : {
       _id : [],
       DisOcupada : [],
@@ -102,13 +103,15 @@ class Horario extends React.Component {
         Turno: this.state.form.Turno,
       }
       ).then(response=>{
-        if(response.data.message==="Este horario ya esta ocupado"){
-          this.alert1();
-        }
-        else{
-          this.modalInsertar();
-          this.peticionGet();
-        }
+          if(response.data.message==="Este horario ya esta ocupado"){
+            this.setState({error: ""})
+            this.alert1();
+          }
+          else{
+            this.setState({error: ""})
+            this.modalInsertar();
+            this.peticionGet();
+          }
       }).catch(error=>{
         console.log(error.message);
       })
@@ -167,39 +170,39 @@ class Horario extends React.Component {
         this.setState({modalInsertar: !this.state.modalInsertar});
       }
       verificar=()=> {
-        this.state.form.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento => 
+        this.state.form?.Turno === "PRIMER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
           {if (elemento.Disponibilidad.includes(`1${this.state.form.Dia}`) && !elemento.DisOcupada.includes(`1${this.state.form.Dia}`)){
             elemento.DisOcupada.push(`1${this.state.form.Dia}`);
             this.getDocentes(elemento.DisOcupada, elemento._id);
           }else {
             this.alert();
           }}) 
-          : this.state.form.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento => 
-            {if (elemento.Disponibilidad.includes(`1${this.state.form.Dia}`) && !elemento.DisOcupada.includes(`2${this.state.form.Dia}`)){
-              elemento.DisOcupada.push(`2${this.state.form.Dia}`);
+          : this.state.form?.Turno === "SEGUNDO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+            {if (elemento.Disponibilidad.includes(`1${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`2${this.state.form?.Dia}`)){
+              elemento.DisOcupada.push(`2${this.state.form?.Dia}`);
               this.getDocentes(elemento.DisOcupada, elemento._id);
             }else {
               this.alert();
             }}) :
-            this.state.form.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento => 
-              {if (elemento.Disponibilidad.includes(`3${this.state.form.Dia}`) && !elemento.DisOcupada.includes(`3${this.state.form.Dia}`)){
-                elemento.DisOcupada.push(`3${this.state.form.Dia}`);
+            this.state.form?.Turno === "TERCER TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+              {if (elemento.Disponibilidad.includes(`3${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`3${this.state.form?.Dia}`)){
+                elemento.DisOcupada.push(`3${this.state.form?.Dia}`);
                 this.getDocentes(elemento.DisOcupada, elemento._id);
               }else {
                 this.alert();
-              }}) : this.state.form.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento => 
-                {if (elemento.Disponibilidad.includes(`4${this.state.form.Dia}`) && !elemento.DisOcupada.includes(`4${this.state.form.Dia}`)){
-                  elemento.DisOcupada.push(`4${this.state.form.Dia}`);
+              }}) : this.state.form?.Turno === "CUARTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+                {if (elemento.Disponibilidad.includes(`4${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`4${this.state.form?.Dia}`)){
+                  elemento.DisOcupada.push(`4${this.state.form?.Dia}`);
                   this.getDocentes(elemento.DisOcupada, elemento._id);
                 }else {
                   this.alert();
-                }}) : this.state.form.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form.Docente).forEach(elemento => 
-                  {if (elemento.Disponibilidad.includes(`5${this.state.form.Dia}`) && !elemento.DisOcupada.includes(`5${this.state.form.Dia}`)){
-                    elemento.DisOcupada.push(`5${this.state.form.Dia}`);
+                }}) : this.state.form?.Turno === "QUINTO TURNO"? this.state.Docentes.filter(elemento => elemento.RU === this.state.form?.Docente).forEach(elemento => 
+                  {if (elemento.Disponibilidad.includes(`5${this.state.form?.Dia}`) && !elemento.DisOcupada.includes(`5${this.state.form?.Dia}`)){
+                    elemento.DisOcupada.push(`5${this.state.form?.Dia}`);
                     this.getDocentes(elemento.DisOcupada, elemento._id);
                   }else {
                     this.alert();
-                  }}) : console.log("No escogio un turno");
+                  }}) : this.setState({error: "Llene los espacios vacios"});
       }
       
       getDocentes=(Dias, ID)=>{
@@ -329,7 +332,7 @@ class Horario extends React.Component {
             <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
         </ModalHeader>
         <ModalBody>
-          <Formulario onChange = {this.handleChange} materias={this.state.Materias} docentes={this.state.Docentes} aulas={this.state.Aulas} click={this.click}/>
+          <Formulario onChange = {this.handleChange} materias={this.state.Materias} docentes={this.state.Docentes} aulas={this.state.Aulas} click={this.click} error={this.state.error}/>
         </ModalBody>
         <ModalFooter>
                       {this.state.tipoModal==='insertar'?
@@ -339,7 +342,7 @@ class Horario extends React.Component {
                         Actualizar
                       </button>
       }
-                        <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
+                        <button className="btn btn-danger" onClick={()=>{this.modalInsertar(); this.setState({error: ""})}}>Cancelar</button>
                     </ModalFooter>
         </Modal>
         <Modal isOpen={this.state.modalEliminar}>
@@ -354,7 +357,7 @@ class Horario extends React.Component {
 
               <Modal isOpen={this.state.modalVerDisponibilidad} centered fullscreen="" size="xl">
                 <ModalHeader>
-                  <h2>Ver Disponibilidad</h2>
+                  <div><h2>Ver Disponibilidad</h2></div>
                 </ModalHeader>
                 <ModalBody>
                    <VerDisponibilidad RU={this.state.form?.Docente}/>

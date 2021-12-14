@@ -75,7 +75,7 @@ class IEstudiantes extends Component {
         RU: this.state.form?.RU,
         Cargo: "ESTUDIANTE",
         Semestre: this.state.form?.Semestre,
-        username: `${this.state.form?.Nombre}_${this.state.form?.Ap_Paterno}`,
+        username: this.state.form?.RU,
         password: `${this.state.form?.Ap_Paterno}${this.state.form?.CI}`,
       })
       .then(response=>{
@@ -275,6 +275,7 @@ class IEstudiantes extends Component {
               id="busquedaRU"
               onChange={this.onChange}
               value={this.state.busquedaRU}
+              autocomplete="off"
             />
             <button
               type="button"
